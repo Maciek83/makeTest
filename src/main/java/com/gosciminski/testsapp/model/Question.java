@@ -13,8 +13,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.gosciminski.testsapp.buildiers.QuestionBuildier;
-
 import org.springframework.lang.NonNull;
 
 @Entity
@@ -39,8 +37,10 @@ public class Question extends BaseEntity {
     public Question() {
     }
 
-    public Question(QuestionBuildier questionBuildier) {
-        this.content = questionBuildier.getName();
+    public Question(String content, Set<TestQa> tests, Set<Answer> answers) {
+        this.content = content;
+        this.tests = tests;
+        this.answers = answers;
     }
 
     public String getContent() {
@@ -66,4 +66,5 @@ public class Question extends BaseEntity {
     public void setAnswers(Set<Answer> answers) {
         this.answers = answers;
     }
+
 }
