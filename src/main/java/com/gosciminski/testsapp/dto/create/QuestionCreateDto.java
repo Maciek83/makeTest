@@ -6,16 +6,15 @@ import java.util.Set;
 public class QuestionCreateDto {
 
     private String content;
-    Set<AnswerCreateDto> goodAnswers = new HashSet<>();
-    Set<AnswerCreateDto> badAnswers = new HashSet<>();
+    Set<AnswerCreateDto> answers = new HashSet<>();
+
 
     public QuestionCreateDto() {
     }
 
-    public QuestionCreateDto(String content, Set<AnswerCreateDto> goodAnswers, Set<AnswerCreateDto> badAnswers) {
+    public QuestionCreateDto(String content, Set<AnswerCreateDto> answers) {
         this.content = content;
-        this.goodAnswers = goodAnswers;
-        this.badAnswers = badAnswers;
+        this.answers = answers;
     }
 
     public String getContent() {
@@ -26,20 +25,11 @@ public class QuestionCreateDto {
         this.content = content;
     }
 
-    public Set<AnswerCreateDto> getGoodAnswers() {
-        return goodAnswers;
+    public Set<AnswerCreateDto> getAnswers() {
+        return answers;
     }
 
-    public void setGoodAnswers(Set<AnswerCreateDto> goodAnswers) {
-        this.goodAnswers = goodAnswers;
+    public void setAnswers(Set<AnswerCreateDto> answers) {
+        this.answers = answers;
     }
-
-    public Set<AnswerCreateDto> getBadAnswers() {
-        return badAnswers;
-    }
-
-    public void setBadAnswers(Set<AnswerCreateDto> badAnswers) {
-        this.badAnswers = badAnswers;
-    }
-    
 }

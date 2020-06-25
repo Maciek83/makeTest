@@ -5,14 +5,14 @@ import java.util.Set;
 
 public class TestQaCreateDto {
     private String name;
-    private Set<QuestionCreateDto> questions = new HashSet<>();
+    private Set<Long> questionsIds = new HashSet<>();
 
     public TestQaCreateDto() {
     }
 
-    public TestQaCreateDto(String name, Set<QuestionCreateDto> questions) {
+    public TestQaCreateDto(String name, Set<Long> questionsIds) {
         this.name = name;
-        this.questions = questions;
+        this.questionsIds = questionsIds;
     }
 
     public String getName() {
@@ -23,12 +23,12 @@ public class TestQaCreateDto {
         this.name = name;
     }
 
-    public Set<QuestionCreateDto> getQuestions() {
-        return questions;
+    public Set<Long> getQuestionsIds() {
+        return questionsIds;
     }
 
-    public void setQuestions(Set<QuestionCreateDto> questions) {
-        this.questions = questions;
+    public void setQuestionsIds(Set<Long> questionsIds) {
+        this.questionsIds = questionsIds;
     }
     
 }
