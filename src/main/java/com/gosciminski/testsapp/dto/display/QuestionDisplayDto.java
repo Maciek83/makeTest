@@ -1,9 +1,10 @@
-package com.gosciminski.testsapp.dto;
+package com.gosciminski.testsapp.dto.display;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class QuestionDisplayDto {
+    private Long id;
     private String content;
     private Set<Long> testsIds = new HashSet<>();
     private Set<AnswerDisplayDto> answers = new HashSet<>();
@@ -11,10 +12,20 @@ public class QuestionDisplayDto {
     public QuestionDisplayDto() {
     }
 
-    public QuestionDisplayDto(String content, Set<Long> testsIds, Set<AnswerDisplayDto> answers) {
+    public QuestionDisplayDto(Long id, String content, Set<Long> testsIds, Set<AnswerDisplayDto> answers,
+            Set<AnswerDisplayDto> badAnswers) {
+        this.id = id;
         this.content = content;
         this.testsIds = testsIds;
         this.answers = answers;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getContent() {

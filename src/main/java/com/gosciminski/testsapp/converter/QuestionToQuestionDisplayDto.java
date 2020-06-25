@@ -3,8 +3,8 @@ package com.gosciminski.testsapp.converter;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.gosciminski.testsapp.dto.AnswerDisplayDto;
-import com.gosciminski.testsapp.dto.QuestionDisplayDto;
+import com.gosciminski.testsapp.dto.display.AnswerDisplayDto;
+import com.gosciminski.testsapp.dto.display.QuestionDisplayDto;
 import com.gosciminski.testsapp.model.Question;
 
 import org.springframework.core.convert.converter.Converter;
@@ -23,6 +23,7 @@ public class QuestionToQuestionDisplayDto implements Converter<Question, Questio
     public QuestionDisplayDto convert(Question source) {
         QuestionDisplayDto dto = new QuestionDisplayDto();
         dto.setContent(source.getContent());
+        dto.setId(source.getId());
 
         Set<AnswerDisplayDto> answerDisplayDto = new HashSet<>();
         source.getAnswers().forEach(a-> answerDisplayDto.add(answerToAnswerDisplayDto.convert(a)));
@@ -33,7 +34,5 @@ public class QuestionToQuestionDisplayDto implements Converter<Question, Questio
         dto.setTestsIds(testsIds);
 
         return dto;
-    }
-
-    
+    } 
 }

@@ -3,8 +3,8 @@ package com.gosciminski.testsapp.converter;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.gosciminski.testsapp.dto.QuestionDisplayDto;
-import com.gosciminski.testsapp.dto.TestQaDisplayDto;
+import com.gosciminski.testsapp.dto.display.QuestionDisplayDto;
+import com.gosciminski.testsapp.dto.display.TestQaDisplayDto;
 import com.gosciminski.testsapp.model.TestQa;
 
 import org.springframework.core.convert.converter.Converter;

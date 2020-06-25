@@ -34,6 +34,7 @@ public class Question extends BaseEntity {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "question")
     private Set<Answer> answers = new HashSet<>();
 
+
     public Question() {
     }
 

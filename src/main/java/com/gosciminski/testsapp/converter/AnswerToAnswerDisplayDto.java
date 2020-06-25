@@ -1,6 +1,6 @@
 package com.gosciminski.testsapp.converter;
 
-import com.gosciminski.testsapp.dto.AnswerDisplayDto;
+import com.gosciminski.testsapp.dto.display.AnswerDisplayDto;
 import com.gosciminski.testsapp.model.Answer;
 
 import org.springframework.core.convert.converter.Converter;

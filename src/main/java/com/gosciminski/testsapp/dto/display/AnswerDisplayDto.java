@@ -1,4 +1,4 @@
-package com.gosciminski.testsapp.dto;
+package com.gosciminski.testsapp.dto.display;
 
 public class AnswerDisplayDto {
     private Long id;

@@ -15,6 +15,8 @@ public class Answer extends BaseEntity {
     @Column(name = "content")
     @NonNull
     private String content;
+    @NonNull
+    private Boolean correct;
     @ManyToOne(fetch = FetchType.LAZY)
     private Question question;
 
@@ -32,6 +34,14 @@ public class Answer extends BaseEntity {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Boolean getCorrect() {
+        return correct;
+    }
+
+    public void setCorrect(Boolean correct) {
+        this.correct = correct;
     }
 
     public Question getQuestion() {

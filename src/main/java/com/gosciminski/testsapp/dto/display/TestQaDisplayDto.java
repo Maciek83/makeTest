@@ -1,4 +1,4 @@
-package com.gosciminski.testsapp.dto;
+package com.gosciminski.testsapp.dto.display;
 
 import java.util.HashSet;
 import java.util.Set;
