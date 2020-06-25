@@ -5,6 +5,7 @@ import java.util.Set;
 
 public class TestQaDisplayDto {
 
+    private Long id;
     private String name;
     private Set<QuestionDisplayDto> questionDisplayDto = new HashSet<>();
 
@@ -14,6 +15,14 @@ public class TestQaDisplayDto {
     public TestQaDisplayDto(String name, Set<QuestionDisplayDto> questionDisplayDto) {
         this.name = name;
         this.questionDisplayDto = questionDisplayDto;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
