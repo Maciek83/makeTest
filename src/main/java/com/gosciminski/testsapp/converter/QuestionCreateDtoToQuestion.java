@@ -25,7 +25,12 @@ public class QuestionCreateDtoToQuestion implements Converter<QuestionCreateDto,
         newQuestion.setContent(source.getContent());
         
         Set<Answer> answers = new HashSet<>();
-        source.getAnswers().forEach(a-> answers.add(answerCreateDtoToAnswer.convert(a)));
+        source.getAnswers().forEach(a-> 
+        {
+            Answer answer = answerCreateDtoToAnswer.convert(a);
+            answer.setQuestion(newQuestion);
+            answers.add(answer);
+        });
         newQuestion.setAnswers(answers);
         return newQuestion;
     }

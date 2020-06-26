@@ -43,7 +43,12 @@ public class TestQaServiceJpa implements TestQaService {
         newTest.setName(createDto.getName());
 
         Set<Question> questions = new HashSet<>();
-        createDto.getQuestionsIds().forEach(i-> questions.add(questionService.findById(i)));
+        createDto.getQuestionsIds().forEach(i-> 
+        {
+            Question questionFromDb = questionService.findById(i);
+            questionFromDb.getTests().add(newTest);
+            questions.add(questionFromDb);
+        });
         newTest.setQuestions(questions);
 
         TestQa savedTest = testRepository.save(newTest);
