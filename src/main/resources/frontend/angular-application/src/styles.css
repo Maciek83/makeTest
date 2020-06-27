@@ -5,13 +5,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     display: flex;
     justify-content: center;
 }
-.column-center{
-    display: flex;
-    justify-content: center;
-}
 .wrapper {
     margin: 15px;
     width: 75%;
+    justify-content: center;
   }
   
 .row {
