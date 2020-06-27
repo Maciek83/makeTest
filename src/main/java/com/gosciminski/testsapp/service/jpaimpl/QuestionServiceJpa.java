@@ -1,6 +1,8 @@
 package com.gosciminski.testsapp.service.jpaimpl;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import com.gosciminski.testsapp.converter.QuestionCreateDtoToQuestion;
@@ -28,9 +30,9 @@ public class QuestionServiceJpa implements QuestionService {
     }
 
     @Override
-    public Set<QuestionDisplayDto> findAll() {
+    public List<QuestionDisplayDto> findAll() {
         Iterable<Question> questions = questionRepository.findAll();
-        Set<QuestionDisplayDto> questionsDisplayDto = new HashSet<>();
+        List<QuestionDisplayDto> questionsDisplayDto = new LinkedList<>();
         questions.forEach(q->questionsDisplayDto.add(questionToQuestionDisplayDto.convert(q)));
         return questionsDisplayDto;
     }

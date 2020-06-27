@@ -1,10 +1,28 @@
 <div class="center">
-    <div class='some-page-wrapper'>
+    <div class='wrapper'>
         <div class='row'>
             <div class='column'>
-                <div class='blue-column'>
-                    Some Text in Column One
-                </div>
+              <mat-table [dataSource]="questions" class="mat-elevation-z8">
+            
+                <ng-container matColumnDef="id">
+                  <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+                </ng-container>
+              
+             
+                <ng-container matColumnDef="content">
+                  <mat-header-cell *matHeaderCellDef> Content </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.content}} </mat-cell>
+                </ng-container>
+              
+                <ng-container matColumnDef="select">
+                  <mat-header-cell *matHeaderCellDef> Select </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> <button mat-raised-button color="primary">Select</button> </mat-cell>
+                </ng-container>
+              
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+              </mat-table>
             </div>
             <div class='column'>
                 <div class='green-column'>

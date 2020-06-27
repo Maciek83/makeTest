@@ -8,6 +8,7 @@ import { MatCardModule }from '@angular/material/card';
 import { MatDialogModule }from '@angular/material/dialog';
 import { MatButtonToggleModule } from '@angular/material/button-toggle'
 import { CommonModule } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { CommonModule } from '@angular/common';
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatTableModule
   ],
   exports:[
     CommonModule,
@@ -30,7 +32,8 @@ import { CommonModule } from '@angular/common';
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatTableModule
   ]
 })
 export class AppMateriaModule { }

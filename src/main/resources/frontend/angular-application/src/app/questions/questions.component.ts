@@ -11,6 +11,7 @@ import { retry, catchError } from 'rxjs/operators';
 })
 export class QuestionsComponent implements OnInit {
 
+  displayedColumns: string[] = ['id', 'content', 'select'];
   public questions: QuestionDisplayModel[];
   public errorMessage:string = '';
 

@@ -10,7 +10,7 @@ export class QuestionService{
     constructor(private http:HttpClient){};
     
     getQuestions(): Observable<QuestionDisplayModel[]>{
-        return this.http.get<QuestionDisplayModel[]>('api/project');
+        return this.http.get<QuestionDisplayModel[]>('api/question');
     }
     
 }
