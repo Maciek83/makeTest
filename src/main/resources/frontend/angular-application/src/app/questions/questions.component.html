@@ -17,7 +17,7 @@
               
                 <ng-container matColumnDef="select">
                   <mat-header-cell *matHeaderCellDef> Select </mat-header-cell>
-                  <mat-cell *matCellDef="let element"> <button mat-raised-button color="primary">Select</button> </mat-cell>
+                  <mat-cell *matCellDef="let element"> <button mat-raised-button color="primary" (click)="setSelectedQuestion(element.id)"> Select </button></mat-cell>
                 </ng-container>
               
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -25,9 +25,7 @@
               </mat-table>
             </div>
             <div class='column'>
-                <div class='green-column'>
-                    Some Text in Column Two
-                </div>
+                <app-editquestion></app-editquestion>
             </div>
         </div>
     </div>

@@ -1,1 +1,6 @@
-<p>editquestion works!</p>
+<mat-card>
+<div *ngIf="questionService.getSelectedQuestion()!==null; else noquestionselected">
+    <p>{{questionService.getSelectedQuestion().id}}</p>
+</div>
+<ng-template #noquestionselected>Select question to edit.</ng-template>
+</mat-card>

@@ -10,6 +10,7 @@ import { QuestionsComponent } from './questions/questions.component';
 import { QuestionComponent } from './questions/question/question.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
+import { EditquestionComponent } from './questions/editquestion/editquestion.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { HomeComponent } from './home/home.component';
     MenuComponent,
     QuestionsComponent,
     QuestionComponent,
-    HomeComponent
+    HomeComponent,
+    EditquestionComponent
   ],
   imports: [
     BrowserModule,

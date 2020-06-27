@@ -25,6 +25,12 @@ export class QuestionsComponent implements OnInit {
     .subscribe(data=>this.questions=data);
   }
 
+  setSelectedQuestion(id:number)
+  {
+      let element = this.questions.find(q=>q.id===id);
+      this.questionService.setSelectedQuestion(element);
+  }
+
   handleError(error) {
     if(error.error instanceof ErrorEvent) {
       // Get client-side error
