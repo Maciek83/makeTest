@@ -7,7 +7,8 @@ export interface QuestionDisplayModel{
 
 export interface AnswerDisplayModel{
     id:number,
-    content:string
+    content:string,
+    correct:boolean
 }
 
 export class QuestionCreateModel{

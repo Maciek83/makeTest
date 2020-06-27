@@ -13,6 +13,7 @@ public class AnswerToAnswerDisplayDto implements Converter<Answer, AnswerDisplay
     public AnswerDisplayDto convert(Answer source) {
         AnswerDisplayDto dto = new AnswerDisplayDto();
         dto.setContent(source.getContent());
+        dto.setCorrect(source.getCorrect());
         dto.setId(source.getId());
         return dto;
     }
