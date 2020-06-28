@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { QuestionDisplayModel } from './question.models';
+import { QuestionDisplayModel, QuestionCreateModel } from './question.models';
 import { Observable } from 'rxjs';
 
 
@@ -13,6 +13,11 @@ export class QuestionService{
     
     getQuestions(): Observable<QuestionDisplayModel[]>{
         return this.http.get<QuestionDisplayModel[]>('api/question');
+    }
+
+    addQuestion(questionCreateModel: QuestionCreateModel) : Observable<QuestionDisplayModel>
+    {
+        return this.http.post<QuestionDisplayModel>('api/question', questionCreateModel);
     }
 
     setSelectedQuestion(q:QuestionDisplayModel)

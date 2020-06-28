@@ -1,3 +1,21 @@
-<div class="center">
-<p>addquestion works!</p>
-</div>
+<form [formGroup]="questionForm" (ngSubmit)="onSubmit()" class="center column">
+  <mat-form-field appearance="fill">
+    <mat-label for="content">Content of the question</mat-label>
+    <input type="text" id="content" formControlName="content" matInput> 
+  </mat-form-field>
+  <mat-error *ngIf="!questionForm.get('content').valid && questionForm.get('content').touched">Please enter question content</mat-error>
+  <div formArrayName="answers">
+    <div *ngFor="let answer of getControls(); let i = index">
+      <div [formGroupName]="i">
+        <mat-form-field appearance="fill">
+          <mat-label for="content">Content of the answer</mat-label>
+          <input type="text" id="content" formControlName="content" matInput> 
+        </mat-form-field>
+        <mat-checkbox formControlName="correct">Is Correct</mat-checkbox>
+        <button mat-fab color="warn" class="marginleft20p" type="button" (click)="onRemoveQuestion(i)">Remove</button>
+      </div>
+    </div>
+  </div>
+  <button mat-raised-button color="primary" type="button" class="width10p20m" (click)="onAddQuestion()">Add answer</button>
+  <button mat-raised-button color="primary" type="submit" class="width10p20m">Create</button>
+</form>
