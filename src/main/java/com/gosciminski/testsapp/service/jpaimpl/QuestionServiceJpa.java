@@ -9,6 +9,7 @@ import com.gosciminski.testsapp.converter.QuestionCreateDtoToQuestion;
 import com.gosciminski.testsapp.converter.QuestionToQuestionDisplayDto;
 import com.gosciminski.testsapp.dto.create.QuestionCreateDto;
 import com.gosciminski.testsapp.dto.display.QuestionDisplayDto;
+import com.gosciminski.testsapp.exceptions.QuestionException;
 import com.gosciminski.testsapp.model.Question;
 import com.gosciminski.testsapp.repisitory.QuestionRepository;
 import com.gosciminski.testsapp.service.QuestionService;
@@ -38,7 +39,18 @@ public class QuestionServiceJpa implements QuestionService {
     }
 
     @Override
-    public QuestionDisplayDto save(QuestionCreateDto createDto) {
+    public QuestionDisplayDto save(QuestionCreateDto createDto) throws QuestionException {
+
+        if(createDto.getAnswers().size() < 2)
+        {
+            throw new QuestionException("Not enough answers in question. Add at least two answers.");
+        }
+
+        if(!createDto.getAnswers().stream().anyMatch(t -> t.getCorrect() == true))
+        {
+            throw new QuestionException("At least one answer must be true.");
+        }
+
         Question tosave = questionCreateDtoToQuestion.convert(createDto);
         Question savedInDb = questionRepository.save(tosave);
         return questionToQuestionDisplayDto.convert(savedInDb);

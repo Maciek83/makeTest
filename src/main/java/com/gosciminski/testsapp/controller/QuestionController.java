@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.gosciminski.testsapp.dto.create.QuestionCreateDto;
 import com.gosciminski.testsapp.dto.display.QuestionDisplayDto;
+import com.gosciminski.testsapp.exceptions.QuestionException;
 import com.gosciminski.testsapp.service.QuestionService;
 
 import org.springframework.http.HttpStatus;
@@ -25,13 +26,13 @@ public class QuestionController {
     }
 
     @GetMapping(value = "/question")
-    public ResponseEntity<List<QuestionDisplayDto>> findAll()
-    {
+    public ResponseEntity<List<QuestionDisplayDto>> findAll() {
         return new ResponseEntity<>(questionService.findAll(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/question")
-    public ResponseEntity<QuestionDisplayDto> save(@RequestBody QuestionCreateDto questionCreateDto){        
+    public ResponseEntity<QuestionDisplayDto> save(@RequestBody QuestionCreateDto questionCreateDto)
+            throws QuestionException {
         return new ResponseEntity<>(questionService.save(questionCreateDto), HttpStatus.CREATED);
     }
 }

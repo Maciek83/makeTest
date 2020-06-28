@@ -1,14 +1,18 @@
 package com.gosciminski.testsapp.dto.create;
 
+import org.springframework.lang.NonNull;
+
 public class AnswerCreateDto {
 
+    @NonNull
     private Boolean correct;
+    @NonNull
     private String content;
 
     public AnswerCreateDto() {
     }
 
-    public AnswerCreateDto(Boolean correct, String content) {
+    public AnswerCreateDto(@NonNull Boolean correct, @NonNull String content) {
         this.correct = correct;
         this.content = content;
     }

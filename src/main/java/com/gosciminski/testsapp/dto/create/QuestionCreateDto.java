@@ -3,8 +3,11 @@ package com.gosciminski.testsapp.dto.create;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.lang.NonNull;
+
 public class QuestionCreateDto {
 
+    @NonNull
     private String content;
     Set<AnswerCreateDto> answers = new HashSet<>();
 
@@ -12,7 +15,7 @@ public class QuestionCreateDto {
     public QuestionCreateDto() {
     }
 
-    public QuestionCreateDto(String content, Set<AnswerCreateDto> answers) {
+    public QuestionCreateDto(@NonNull String content, Set<AnswerCreateDto> answers) {
         this.content = content;
         this.answers = answers;
     }
