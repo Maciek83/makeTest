@@ -7,15 +7,16 @@
   <div formArrayName="answers">
     <div *ngFor="let answer of getControls(); let i = index">
       <div [formGroupName]="i">
-        <mat-form-field appearance="fill">
+        <mat-form-field  appearance="fill">
           <mat-label for="content">Content of the answer</mat-label>
-          <input type="text" id="content" formControlName="content" matInput> 
-        </mat-form-field>
+          <input  type="text" id="content" formControlName="content" matInput> 
+        </mat-form-field> 
         <mat-checkbox formControlName="correct">Is Correct</mat-checkbox>
         <button mat-fab color="warn" class="marginleft20p" type="button" (click)="onRemoveQuestion(i)">Remove</button>
+        <mat-error *ngIf="getControls()[i].invalid && getControls()[i].touched">Please enter answer content.</mat-error>
       </div>
     </div>
   </div>
   <button mat-raised-button color="primary" type="button" class="width10p20m" (click)="onAddQuestion()">Add answer</button>
-  <button mat-raised-button color="primary" type="submit" class="width10p20m">Create</button>
+  <button mat-raised-button color="primary" [disabled]="!questionForm.valid" type="submit" class="width10p20m">Create</button>  
 </form>

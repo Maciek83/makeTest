@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { QuestionCreateModel } from '../question.models';
 import { QuestionService } from '../question.service';
-import { catchError, retry } from 'rxjs/operators';
-import { throwError } from 'rxjs/internal/observable/throwError';
+
 
 @Component({
   selector: 'app-addquestion',
@@ -12,7 +11,7 @@ import { throwError } from 'rxjs/internal/observable/throwError';
 })
 export class AddquestionComponent implements OnInit {
   questionForm: FormGroup;
-  public errorMessage:string = '';
+  
 
   constructor(private questionServiec:QuestionService){ }
 
@@ -20,7 +19,7 @@ export class AddquestionComponent implements OnInit {
     this.questionForm = new FormGroup({
       'content': new FormControl(null, Validators.required),
       'answers' : new FormArray([])
-    })
+    },[this.numberOfQuestionsValidator])
   }
 
   onSubmit(){
@@ -29,19 +28,22 @@ export class AddquestionComponent implements OnInit {
       this.questionForm.value.answers
     );
 
-    this.questionForm.reset();
+    this.questionServiec.addQuestion(model).subscribe();
+    this.clearForm();
+  }
 
+  private clearForm() {
+    for (const key in this.questionForm.controls) {
+      this.questionForm.get(key).clearValidators();
+      this.questionForm.get(key).updateValueAndValidity();
+    }
+    
+    this.questionForm.reset();
+    
     const formarray = (<FormArray>this.questionForm.get('answers'));
-    while(formarray.length !== 0){
+    while (formarray.length !== 0) {
       formarray.removeAt(0);
     }
-
-    console.log(model);
-    this.questionServiec.addQuestion(model)
-    .pipe(
-      retry(1),
-      catchError(this.handleError))
-    .subscribe();
   }
 
   onRemoveQuestion(id:number)
@@ -61,14 +63,27 @@ export class AddquestionComponent implements OnInit {
     return (<FormArray>this.questionForm.get('answers')).controls;
   }
 
-  handleError(error) {
-    if(error.error instanceof ErrorEvent) {
-      // Get client-side error
-      this.errorMessage = error.error.message;
-    } else {
-      // Get server-side error
-      this.errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+  numberOfQuestionsValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    
+    const formArray = (<FormArray>control.get('answers'));
+    let x = 0;
+
+    if(formArray.length < 2)
+    {
+      return {'answers': false};
     }
-    return throwError(this.errorMessage);
+
+    for(let i=0; i<formArray.length; i++){
+      if(formArray.controls[i].value.correct === true){
+        x++;
+      }
+    }
+
+    if(x === 0)
+    {
+      return {'answers': false};
+    }
+
+    return null;
   }
 }

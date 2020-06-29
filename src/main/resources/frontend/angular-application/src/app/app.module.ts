@@ -8,11 +8,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppMateriaModule } from './app-materia.module';
 import { QuestionsComponent } from './questions/questions.component';
 import { QuestionComponent } from './questions/question/question.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { EditquestionComponent } from './questions/editquestion/editquestion.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AddquestionComponent } from './questions/addquestion/addquestion.component';
+import { HttpInterceptorClass } from './interceptor/http.interceptor';
 
 
 @NgModule({
@@ -34,7 +35,11 @@ import { AddquestionComponent } from './questions/addquestion/addquestion.compon
     AppMateriaModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpInterceptorClass,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

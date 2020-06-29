@@ -13,16 +13,11 @@ export class QuestionsComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'content', 'select'];
   public questions: QuestionDisplayModel[];
-  public errorMessage:string = '';
 
   constructor(private questionService: QuestionService) { }
 
   ngOnInit(): void {
-    this.questionService.getQuestions()
-    .pipe(
-      retry(1),
-      catchError(this.handleError))
-    .subscribe(data=>this.questions=data);
+    this.questionService.getQuestions().subscribe(data=>this.questions=data);
   }
 
   setSelectedQuestion(id:number)
@@ -30,16 +25,5 @@ export class QuestionsComponent implements OnInit {
       let element = this.questions.find(q=>q.id===id);
       this.questionService.setSelectedQuestion(element);
   }
-
-  handleError(error) {
-    if(error.error instanceof ErrorEvent) {
-      // Get client-side error
-      this.errorMessage = error.error.message;
-    } else {
-      // Get server-side error
-      this.errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    return throwError(this.errorMessage);
- }
 
 }
