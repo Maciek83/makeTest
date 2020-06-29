@@ -3,17 +3,23 @@ package com.gosciminski.testsapp.dto.create;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class TestQaCreateDto {
+    
+    @NotNull
+    @NotEmpty
     private String name;
     private Set<Long> questionsIds = new HashSet<>();
 
     public TestQaCreateDto() {
     }
 
-    public TestQaCreateDto(String name, Set<Long> questionsIds) {
-        this.name = name;
-        this.questionsIds = questionsIds;
-    }
+    public TestQaCreateDto(@NotNull @NotEmpty String name, Set<Long> questionsIds) {
+		this.name = name;
+		this.questionsIds = questionsIds;
+	}
 
     public String getName() {
         return name;

@@ -66,6 +66,7 @@ export class AddquestionComponent implements OnInit {
   numberOfQuestionsValidator(control: AbstractControl): { [key: string]: boolean } | null {
     
     const formArray = (<FormArray>control.get('answers'));
+    
     let x = 0;
 
     if(formArray.length < 2)

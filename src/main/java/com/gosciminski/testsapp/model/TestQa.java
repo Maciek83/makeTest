@@ -8,21 +8,28 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-import org.springframework.lang.NonNull;
 
 @Entity
 @Table(name = "testqa")
 public class TestQa extends BaseEntity{
     
     @Column(name = "name")
-    @NonNull
+    @NotNull
+    @NotEmpty
     private String name;
     @ManyToMany(mappedBy = "tests", fetch = FetchType.EAGER)
     private Set<Question> questions = new HashSet<>();
 
     public TestQa() {
     }
+
+    public TestQa(@NotNull @NotEmpty String name, Set<Question> questions) {
+		this.name = name;
+		this.questions = questions;
+	}
 
     public String getName() {
         return name;
@@ -39,4 +46,5 @@ public class TestQa extends BaseEntity{
     public void setQuestions(Set<Question> questions) {
         this.questions = questions;
     }
+    
 }

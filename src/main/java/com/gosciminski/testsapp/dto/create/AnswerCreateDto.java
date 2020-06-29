@@ -1,18 +1,21 @@
 package com.gosciminski.testsapp.dto.create;
 
-import org.springframework.lang.NonNull;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class AnswerCreateDto {
 
-    @NonNull
+    @NotNull
+    @NotEmpty
     private Boolean correct;
-    @NonNull
+    @NotNull
+    @NotEmpty
     private String content;
 
     public AnswerCreateDto() {
     }
 
-    public AnswerCreateDto(@NonNull Boolean correct, @NonNull String content) {
+    public AnswerCreateDto(@NotNull @NotEmpty Boolean correct, @NotNull @NotEmpty String content) {
         this.correct = correct;
         this.content = content;
     }

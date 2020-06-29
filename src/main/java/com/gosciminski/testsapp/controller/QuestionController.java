@@ -1,7 +1,8 @@
 package com.gosciminski.testsapp.controller;
 
 import java.util.List;
-import java.util.Set;
+
+import javax.validation.Valid;
 
 import com.gosciminski.testsapp.dto.create.QuestionCreateDto;
 import com.gosciminski.testsapp.dto.display.QuestionDisplayDto;
@@ -31,7 +32,7 @@ public class QuestionController {
     }
 
     @PostMapping(value = "/question")
-    public ResponseEntity<QuestionDisplayDto> save(@RequestBody QuestionCreateDto questionCreateDto)
+    public ResponseEntity<QuestionDisplayDto> save(@Valid @RequestBody QuestionCreateDto questionCreateDto)
             throws QuestionException {
         return new ResponseEntity<>(questionService.save(questionCreateDto), HttpStatus.CREATED);
     }

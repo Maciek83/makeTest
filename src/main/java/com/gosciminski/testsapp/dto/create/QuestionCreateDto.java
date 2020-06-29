@@ -3,22 +3,24 @@ package com.gosciminski.testsapp.dto.create;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.lang.NonNull;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 
 public class QuestionCreateDto {
 
-    @NonNull
+    @NotNull
+    @NotEmpty
     private String content;
     Set<AnswerCreateDto> answers = new HashSet<>();
-
 
     public QuestionCreateDto() {
     }
 
-    public QuestionCreateDto(@NonNull String content, Set<AnswerCreateDto> answers) {
-        this.content = content;
-        this.answers = answers;
-    }
+	public QuestionCreateDto(@NotNull @NotEmpty String content, Set<AnswerCreateDto> answers) {
+		this.content = content;
+		this.answers = answers;
+	}
 
     public String getContent() {
         return content;
@@ -35,4 +37,5 @@ public class QuestionCreateDto {
     public void setAnswers(Set<AnswerCreateDto> answers) {
         this.answers = answers;
     }
+    
 }

@@ -1,21 +1,24 @@
 package com.gosciminski.testsapp.model;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-import org.springframework.lang.NonNull;
+
 
 @Entity
 @Table(name="answer")
 public class Answer extends BaseEntity {
     @Column(name = "content")
-    @NonNull
+    @NotNull
+    @NotEmpty
     private String content;
-    @NonNull
+    @NotNull
+    @NotEmpty
     private Boolean correct;
     @ManyToOne(fetch = FetchType.LAZY)
     private Question question;
@@ -23,8 +26,9 @@ public class Answer extends BaseEntity {
     public Answer() {
     }
 
-    public Answer(String content, Question question) {
+    public Answer(@NotNull @NotEmpty String content, @NotNull @NotEmpty Boolean correct, Question question) {
         this.content = content;
+        this.correct = correct;
         this.question = question;
     }
 

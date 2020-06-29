@@ -12,15 +12,17 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-import org.springframework.lang.NonNull;
 
 @Entity
 @Table(name = "question")
 public class Question extends BaseEntity {
     
     @Column(name = "content")
-    @NonNull
+    @NotNull
+    @NotEmpty
     private String content;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -38,11 +40,11 @@ public class Question extends BaseEntity {
     public Question() {
     }
 
-    public Question(String content, Set<TestQa> tests, Set<Answer> answers) {
-        this.content = content;
-        this.tests = tests;
-        this.answers = answers;
-    }
+    public Question(@NotNull @NotEmpty String content, Set<TestQa> tests, Set<Answer> answers) {
+		this.content = content;
+		this.tests = tests;
+		this.answers = answers;
+	}
 
     public String getContent() {
         return content;
@@ -67,5 +69,6 @@ public class Question extends BaseEntity {
     public void setAnswers(Set<Answer> answers) {
         this.answers = answers;
     }
+
 
 }
