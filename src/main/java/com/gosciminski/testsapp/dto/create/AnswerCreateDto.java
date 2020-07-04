@@ -6,7 +6,6 @@ import javax.validation.constraints.NotNull;
 public class AnswerCreateDto {
 
     @NotNull
-    @NotEmpty
     private Boolean correct;
     @NotNull
     @NotEmpty
@@ -15,7 +14,7 @@ public class AnswerCreateDto {
     public AnswerCreateDto() {
     }
 
-    public AnswerCreateDto(@NotNull @NotEmpty Boolean correct, @NotNull @NotEmpty String content) {
+    public AnswerCreateDto(@NotNull Boolean correct, @NotNull @NotEmpty String content) {
         this.correct = correct;
         this.content = content;
     }

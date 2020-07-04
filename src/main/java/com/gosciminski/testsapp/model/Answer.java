@@ -18,7 +18,6 @@ public class Answer extends BaseEntity {
     @NotEmpty
     private String content;
     @NotNull
-    @NotEmpty
     private Boolean correct;
     @ManyToOne(fetch = FetchType.LAZY)
     private Question question;
@@ -26,7 +25,7 @@ public class Answer extends BaseEntity {
     public Answer() {
     }
 
-    public Answer(@NotNull @NotEmpty String content, @NotNull @NotEmpty Boolean correct, Question question) {
+    public Answer(@NotNull @NotEmpty String content, @NotNull Boolean correct, Question question) {
         this.content = content;
         this.correct = correct;
         this.question = question;
