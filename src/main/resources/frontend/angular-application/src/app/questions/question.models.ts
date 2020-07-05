@@ -15,6 +15,14 @@ export class QuestionCreateModel{
     constructor(public content:string, public answers: AnswerCreateModel[]){};
 }
 
+export class QuestionEditModel{
+    constructor(public content:string, public answerEditDto: AnswerEditModel[], public answerCreateDto: AnswerCreateModel[]){};
+}
+
 export class AnswerCreateModel{
     constructor(public correct:boolean, public content:string){};
+}
+
+export class AnswerEditModel{
+    constructor(public id:number, public correct:boolean, public content:string){};
 }

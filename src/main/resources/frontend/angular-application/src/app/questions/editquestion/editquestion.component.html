@@ -1,6 +1,42 @@
-<mat-card>
-<div *ngIf="questionService.getSelectedQuestion()!==null; else noquestionselected">
-    <p>{{questionService.getSelectedQuestion().id}}</p>
-</div>
-<ng-template #noquestionselected>Select question to edit.</ng-template>
-</mat-card>
+<form [formGroup]="questionForm" (ngSubmit)="onSubmit()" class="center column">
+  <mat-form-field appearance="fill">
+    <mat-label for="content">Content of the question</mat-label>
+    <input type="text" id="content" formControlName="content" matInput>
+  </mat-form-field>
+  <mat-error *ngIf="!questionForm.get('content').valid && questionForm.get('content').touched">Please enter question
+    content</mat-error>
+  <div formArrayName="answerEditDto">
+    <div *ngFor="let answer of getAnswerEditDtoControls(); let i = index">
+      <div [formGroupName]="i">
+        <mat-form-field appearance="fill">
+          <mat-label for="content">Content of the answer</mat-label>
+          <input type="text" id="content" formControlName="content" matInput>
+        </mat-form-field>
+        <mat-checkbox formControlName="correct">Is Correct</mat-checkbox>
+        <button mat-fab color="warn" class="marginleft20p" type="button"
+          (click)="onRemoveAnswerEditDtoControls(i)">Remove</button>
+        <mat-error *ngIf="getAnswerEditDtoControls()[i].invalid && getAnswerEditDtoControls()[i].touched">Please enter
+          answer content.</mat-error>
+      </div>
+    </div>
+  </div>
+  <div formArrayName="answerCreateDto">
+    <div *ngFor="let answer of getAnswerCreateDtoControls(); let i = index">
+      <div [formGroupName]="i">
+        <mat-form-field appearance="fill">
+          <mat-label for="content">Content of the answer</mat-label>
+          <input type="text" id="content" formControlName="content" matInput>
+        </mat-form-field>
+        <mat-checkbox formControlName="correct">Is Correct</mat-checkbox>
+        <button mat-fab color="warn" class="marginleft20p" type="button"
+          (click)="onRemoveQuestionCreateDtoControls(i)">Remove</button>
+        <mat-error *ngIf="getAnswerCreateDtoControls()[i].invalid && getAnswerCreateDtoControls()[i].touched">Please
+          enter answer content.</mat-error>
+      </div>
+    </div>
+  </div>
+  <button mat-raised-button color="primary" type="button" class="width10p20m"
+    (click)="onAddQuestionCreateDtoControls()">Add answer</button>
+  <button mat-raised-button color="primary" [disabled]="!questionForm.valid" type="submit"
+    class="width10p20m">Create</button>
+</form>

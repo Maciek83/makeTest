@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../question.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-question',
@@ -8,9 +9,14 @@ import { QuestionService } from '../question.service';
 })
 export class QuestionComponent implements OnInit {
 
-  constructor(public questionService:QuestionService) { }
+  constructor(public questionService:QuestionService, private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  navigateToEditPage()
+  {
+    this.router.navigate(['/editquestion']);
   }
 
 }
