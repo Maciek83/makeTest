@@ -1,6 +1,6 @@
 <div class='row'>
   <div class='column'>
-    <mat-table [dataSource]="questions" class="mat-elevation-z8">
+    <mat-table [dataSource]="questionService.getQuestions()" class="mat-elevation-z8">
 
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>

@@ -7,12 +7,15 @@ import { Observable } from 'rxjs';
 @Injectable({providedIn: 'root' })
 export class QuestionService{
     
+    private questions: QuestionDisplayModel[]
     private selectedQuestion: QuestionDisplayModel = null;
 
     constructor(private http:HttpClient){};
     
-    getQuestions(): Observable<QuestionDisplayModel[]>{
-        return this.http.get<QuestionDisplayModel[]>('api/question');
+    fetchQuestions(): QuestionDisplayModel[]{
+        this.http.get<QuestionDisplayModel[]>('api/question')
+        .subscribe(data => this.questions = data);
+        return this.questions;
     }
 
     addQuestion(questionCreateModel: QuestionCreateModel) : Observable<QuestionDisplayModel>
@@ -20,14 +23,24 @@ export class QuestionService{
         return this.http.post<QuestionDisplayModel>('api/question', questionCreateModel);
     }
 
-    setSelectedQuestion(q:QuestionDisplayModel)
+    setSelectedQuestion(id: number)
     {
-        this.selectedQuestion=q;
+        let element = this.getQuestions().find(q=>q.id===id);
+        this.selectedQuestion= element;
+    }
+
+    deleteQuestion(id: number){
+        this.questions.splice(id,1);
     }
 
     getSelectedQuestion() : QuestionDisplayModel
     {
         return this.selectedQuestion;
+    }
+
+    getQuestions(){
+
+        return this.questions;
     }
     
 }
