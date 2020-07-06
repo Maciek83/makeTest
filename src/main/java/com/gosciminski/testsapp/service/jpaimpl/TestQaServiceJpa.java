@@ -6,6 +6,7 @@ import java.util.Set;
 import com.gosciminski.testsapp.converter.TestQaToTestQaDisplayDto;
 import com.gosciminski.testsapp.dto.create.TestQaCreateDto;
 import com.gosciminski.testsapp.dto.display.TestQaDisplayDto;
+import com.gosciminski.testsapp.exceptions.TestQaException;
 import com.gosciminski.testsapp.model.Question;
 import com.gosciminski.testsapp.model.TestQa;
 import com.gosciminski.testsapp.repisitory.QuestionRepository;
@@ -38,11 +39,16 @@ public class TestQaServiceJpa implements TestQaService {
     }
 
     @Override
-    public TestQaDisplayDto save(TestQaCreateDto createDto) {
+    public TestQaDisplayDto save(TestQaCreateDto createDto) throws TestQaException {
         TestQa newTest = new TestQa();
         newTest.setName(createDto.getName());
 
         Set<Question> questions = new HashSet<>();
+
+        if(createDto.getQuestionsIds().size() <= 0){
+            throw new TestQaException("Test must have at least one question.");
+        }
+
         createDto.getQuestionsIds().forEach(i-> 
         {
             Question questionFromDb = questionService.findById(i);
@@ -54,8 +60,4 @@ public class TestQaServiceJpa implements TestQaService {
         TestQa savedTest = testRepository.save(newTest);
         return testQaToTestQaDisplayDto.convert(savedTest);
     }
-
-
-
-
 }

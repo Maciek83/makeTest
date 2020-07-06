@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.gosciminski.testsapp.dto.create.TestQaCreateDto;
 import com.gosciminski.testsapp.dto.display.TestQaDisplayDto;
+import com.gosciminski.testsapp.exceptions.TestQaException;
 import com.gosciminski.testsapp.service.TestQaService;
 
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class TestController {
     }
 
     @PostMapping(value = "/test")
-    public ResponseEntity<TestQaDisplayDto> createTest(@RequestBody TestQaCreateDto testQaCreateDto){
+    public ResponseEntity<TestQaDisplayDto> createTest(@RequestBody TestQaCreateDto testQaCreateDto) throws TestQaException{
         return new ResponseEntity<>(testQaService.save(testQaCreateDto), HttpStatus.CREATED);
     }
     
