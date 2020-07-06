@@ -11,6 +11,7 @@ import com.gosciminski.testsapp.model.Question;
 public interface QuestionService {
     List<QuestionDisplayDto> findAll();
     Question findById(Long id);
+    QuestionDisplayDto findQuestionDisplayDtoByid(Long id);
     QuestionDisplayDto save(QuestionCreateDto createDto) throws QuestionException;
     QuestionDisplayDto update(Long id ,QuestionEditDto editDto) throws QuestionException;
 }

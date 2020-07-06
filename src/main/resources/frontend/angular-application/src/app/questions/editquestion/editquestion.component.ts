@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../question.service';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { QuestionEditModel, AnswerEditModel } from '../question.models';
+import { QuestionEditModel, AnswerEditModel, QuestionDisplayModel } from '../question.models';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-editquestion',
@@ -10,10 +11,19 @@ import { QuestionEditModel, AnswerEditModel } from '../question.models';
 })
 export class EditquestionComponent implements OnInit {
   questionForm: FormGroup;
+  id: number;
 
-  constructor(public questionService:QuestionService) { }
+  constructor(public questionService:QuestionService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+
+    this.id = this.route.snapshot.params['id'];
+    console.log(this.id);
+
+    this.questionService.fetchQuestionToEdit(this.id);
+
+    console.log(this.questionService.getSelectedQuestion());
+
     this.questionForm = new FormGroup({
       'content': new FormControl(this.questionService.getSelectedQuestion().content, Validators.required),
       'answerEditDto' : new FormArray([]),

@@ -14,9 +14,9 @@ export class QuestionComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  navigateToEditPage()
+  navigateToEditPage(id: number)
   {
-    this.router.navigate(['/editquestion']);
+    this.router.navigate(['/editquestion/'+id]);
   }
 
 }

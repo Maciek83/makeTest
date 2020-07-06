@@ -61,6 +61,11 @@ public class QuestionServiceJpa implements QuestionService {
     }
 
     @Override
+    public QuestionDisplayDto findQuestionDisplayDtoByid(Long id) {
+        return questionToQuestionDisplayDto.convert(findById(id));
+    }
+
+    @Override
     public QuestionDisplayDto update(Long id, QuestionEditDto editDto) throws QuestionException {
         
         if (editDto.getAnswerCreateDto().size() + editDto.getAnswerEditDto().size() < 2) {
@@ -74,7 +79,7 @@ public class QuestionServiceJpa implements QuestionService {
 
         Question questionFromDb = findById(id);
 
-        questionFromDb.setContent(editDto.getContent()
+        questionFromDb.setContent(editDto.getContent());
 
         deleteExistingAnswers(editDto, questionFromDb);
         editExistingAnswers(editDto, questionFromDb);

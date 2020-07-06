@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { QuestionService } from './question.service';
-import { QuestionDisplayModel } from './question.models';
 
 @Component({
   selector: 'app-questions',
@@ -12,9 +11,11 @@ export class QuestionsComponent implements OnInit {
   displayedColumns: string[] = ['id', 'content', 'select'];
 
   constructor(public questionService: QuestionService) { }
+  
 
   ngOnInit(): void {
     this.questionService.fetchQuestions();
+    this.questionService.removeSelectedQuestion();
   }
 
   setSelectedQuestion(id:number)

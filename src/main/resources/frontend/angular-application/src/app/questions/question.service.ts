@@ -18,6 +18,11 @@ export class QuestionService{
         return this.questions;
     }
 
+    fetchQuestionToEdit(id: number){
+        this.http.get<QuestionDisplayModel>('api/question/'+id)
+        .subscribe(data => this.selectedQuestion = data);
+    }
+
     addQuestion(questionCreateModel: QuestionCreateModel) : Observable<QuestionDisplayModel>
     {
         return this.http.post<QuestionDisplayModel>('api/question', questionCreateModel);
@@ -33,13 +38,16 @@ export class QuestionService{
         this.questions.splice(id,1);
     }
 
+    removeSelectedQuestion(){
+        this.selectedQuestion = null;
+    }
+
     getSelectedQuestion() : QuestionDisplayModel
     {
         return this.selectedQuestion;
     }
 
     getQuestions(){
-
         return this.questions;
     }
     

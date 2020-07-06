@@ -11,7 +11,7 @@ const appRoutes: Routes = [
   {path: 'home', component:HomeComponent},
   {path: 'question', component:QuestionsComponent},
   {path: 'addquestion', component:AddquestionComponent},
-  {path: 'editquestion', component:EditquestionComponent}
+  {path: 'editquestion/:id', component:EditquestionComponent}
 ]
 
 

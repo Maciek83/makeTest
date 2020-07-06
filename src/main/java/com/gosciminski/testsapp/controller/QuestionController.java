@@ -34,6 +34,11 @@ public class QuestionController {
         return new ResponseEntity<>(questionService.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/question/{id}")
+    public ResponseEntity<QuestionDisplayDto> findById(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(questionService.findQuestionDisplayDtoByid(id), HttpStatus.OK);
+    }
+
     @PostMapping(value = "/question")
     public ResponseEntity<QuestionDisplayDto> save(@Valid @RequestBody QuestionCreateDto questionCreateDto)
             throws QuestionException {
