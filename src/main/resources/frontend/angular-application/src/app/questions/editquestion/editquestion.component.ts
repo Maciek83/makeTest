@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../question.service';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { QuestionEditModel, AnswerEditModel, QuestionDisplayModel } from '../question.models';
 import { ActivatedRoute } from '@angular/router';
 
@@ -13,42 +13,37 @@ export class EditquestionComponent implements OnInit {
   questionForm: FormGroup;
   id: number;
 
-  constructor(public questionService:QuestionService, private route: ActivatedRoute) { }
+  constructor(public questionService: QuestionService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
 
     this.id = this.route.snapshot.params['id'];
-    console.log(this.id);
-
     this.questionService.fetchQuestionToEdit(this.id);
-
-    console.log(this.questionService.getSelectedQuestion());
 
     this.questionForm = new FormGroup({
       'content': new FormControl(this.questionService.getSelectedQuestion().content, Validators.required),
-      'answerEditDto' : new FormArray([]),
-      'answerCreateDto' : new FormArray([])
-    })
+      'answerEditDto': new FormArray([]),
+      'answerCreateDto': new FormArray([])
+    },[this.numberOfQuestionsValidator])
 
     this.questionService.getSelectedQuestion().answers.forEach(a => {
       this.addExistingAnswers(a);
     });
   }
 
-  getAnswerEditDtoControls(){
+  getAnswerEditDtoControls() {
     return (<FormArray>this.questionForm.get('answerEditDto')).controls;
   }
 
-  getAnswerCreateDtoControls(){
+  getAnswerCreateDtoControls() {
     return (<FormArray>this.questionForm.get('answerCreateDto')).controls;
   }
 
-  onRemoveAnswerEditDtoControls(id:number)
-  {
+  onRemoveAnswerEditDtoControls(id: number) {
     (<FormArray>this.questionForm.get('answerEditDto')).removeAt(id);
   }
-  
-  addExistingAnswers(existingAnswer: AnswerEditModel){
+
+  addExistingAnswers(existingAnswer: AnswerEditModel) {
     (<FormArray>this.questionForm.get('answerEditDto')).push(new FormGroup({
       'id': new FormControl(existingAnswer.id),
       'correct': new FormControl(existingAnswer.correct),
@@ -56,28 +51,26 @@ export class EditquestionComponent implements OnInit {
     }))
   }
 
-  onRemoveQuestionCreateDtoControls(id:number)
-  {
+  onRemoveQuestionCreateDtoControls(id: number) {
     (<FormArray>this.questionForm.get('answerCreateDto')).removeAt(id);
   }
 
-  onAddQuestionCreateDtoControls()
-  {
+  onAddQuestionCreateDtoControls() {
     (<FormArray>this.questionForm.get('answerCreateDto')).push(new FormGroup({
       'correct': new FormControl(false),
       'content': new FormControl(null, Validators.required)
     }));
   }
 
-  onSubmit(){
+  onSubmit() {
     const model = new QuestionEditModel(
       this.questionForm.value.content,
       this.questionForm.value.answerEditDto,
       this.questionForm.value.answerCreateDto
     );
 
-    console.log(model);
-    //this.questionService.addQuestion(model).subscribe();
+    this.questionService.editQuestion(this.id, model).subscribe();
+
     this.clearForm();
   }
 
@@ -86,9 +79,9 @@ export class EditquestionComponent implements OnInit {
       this.questionForm.get(key).clearValidators();
       this.questionForm.get(key).updateValueAndValidity();
     }
-    
+
     this.questionForm.reset();
-    
+
     const formarrayAnswerEditDto = (<FormArray>this.questionForm.get('answerEditDto'));
     while (formarrayAnswerEditDto.length !== 0) {
       formarrayAnswerEditDto.removeAt(0);
@@ -99,6 +92,38 @@ export class EditquestionComponent implements OnInit {
       formarrayAnswerCreateDto.removeAt(0);
     }
 
+  }
+
+  numberOfQuestionsValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    
+    const formArrayAnswerEditDto = (<FormArray>control.get('answerEditDto'));
+    const formArrayAnswerCreateDto = (<FormArray>control.get('answerCreateDto'));
+    
+    let x = 0;
+
+    if(formArrayAnswerEditDto.length + formArrayAnswerCreateDto.length < 2)
+    {
+      return {'answerEditDto': false};
+    }
+
+    for(let i=0; i < formArrayAnswerEditDto.length; i++){
+      if(formArrayAnswerEditDto.controls[i].value.correct === true){
+        x++;
+      }
+    }
+
+    for(let i=0; i < formArrayAnswerCreateDto.length; i++){
+      if(formArrayAnswerCreateDto.controls[i].value.correct === true){
+        x++;
+      }
+    }
+
+    if(x === 0)
+    {
+      return {'answerEditDto': false};
+    }
+
+    return null;
   }
 
 }
