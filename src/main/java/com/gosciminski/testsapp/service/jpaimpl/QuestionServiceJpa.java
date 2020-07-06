@@ -61,26 +61,29 @@ public class QuestionServiceJpa implements QuestionService {
     }
 
     @Override
-    public QuestionDisplayDto update(QuestionEditDto editDto) throws QuestionException {
+    public QuestionDisplayDto update(Long id, QuestionEditDto editDto) throws QuestionException {
         
-        Question questionFromDb = findById(editDto.getId());
+        if (editDto.getAnswerCreateDto().size() + editDto.getAnswerEditDto().size() < 2) {
+            throw new QuestionException("Not enough answers in question. Add at least two answers.");
+        }
 
-        questionFromDb.getAnswers()
-        .removeIf(a-> 
-        !editDto.getAnswerEditDto()
-        .stream()
-        .map(ae->ae.getId()).collect(Collectors.toList())
-        .contains(a.getId()));
+        if (!editDto.getAnswerCreateDto().stream().anyMatch(t -> t.getCorrect() == true) &&
+            !editDto.getAnswerEditDto().stream().anyMatch(t -> t.getCorrect() == true)) {
+            throw new QuestionException("At least one answer must be true.");
+        }
 
-        questionFromDb.getAnswers().forEach(a -> editDto.getAnswerEditDto().stream().forEach(
-            ae -> {
-                if(ae.getId() == a.getId()){
-                    a.setContent(ae.getContent());
-                    a.setCorrect(ae.getCorrect());
-                }
-            }
-        ));
-        
+        Question questionFromDb = findById(id);
+
+        deleteExistingAnswers(editDto, questionFromDb);
+        editExistingAnswers(editDto, questionFromDb);
+        createNewAnswers(editDto, questionFromDb);
+
+        Question questionAfterSaving = questionRepository.save(questionFromDb);
+
+        return questionToQuestionDisplayDto.convert(questionAfterSaving);
+    }
+
+    private void createNewAnswers(QuestionEditDto editDto, Question questionFromDb) {
         editDto.getAnswerCreateDto().forEach( ac -> {
             Answer newAnswer = new Answer();
             newAnswer.setContent(ac.getContent());
@@ -89,12 +92,26 @@ public class QuestionServiceJpa implements QuestionService {
 
             questionFromDb.getAnswers().add(newAnswer);
         });
-
-        Question questionAfterSaving = questionRepository.save(questionFromDb);
-
-        return questionToQuestionDisplayDto.convert(questionAfterSaving);
     }
 
- 
-    
+    private void editExistingAnswers(QuestionEditDto editDto, Question questionFromDb) {
+        questionFromDb.getAnswers().forEach(a -> editDto.getAnswerEditDto().stream().forEach(
+            ae -> {
+                if(ae.getId() == a.getId()){
+                    a.setContent(ae.getContent());
+                    a.setCorrect(ae.getCorrect());
+                }
+            }
+        ));
+    }
+
+    private void deleteExistingAnswers(QuestionEditDto editDto, Question questionFromDb) {
+        List<Long> listOfIds = editDto.getAnswerEditDto()
+        .stream()
+        .map(ae->ae.getId()).collect(Collectors.toList());
+
+        questionFromDb.getAnswers()
+        .removeIf(a->!listOfIds.contains(a.getId()));
+    }
+
 }

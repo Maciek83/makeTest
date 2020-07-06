@@ -3,11 +3,15 @@ package com.gosciminski.testsapp.dto.edit;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import com.gosciminski.testsapp.dto.create.AnswerCreateDto;
 
 public class QuestionEditDto {
 
-    private Long id;
+    @NotNull
+    @NotEmpty
     private String content;
     Set<AnswerEditDto> answerEditDto = new HashSet<>();
     Set<AnswerCreateDto> answerCreateDto = new HashSet<>();
@@ -17,18 +21,10 @@ public class QuestionEditDto {
 
     public QuestionEditDto(Long id, String content, Set<AnswerEditDto> answerEditDto,
             Set<AnswerCreateDto> answerCreateDto) {
-        this.id = id;
+
         this.content = content;
         this.answerEditDto = answerEditDto;
         this.answerCreateDto = answerCreateDto;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getContent() {

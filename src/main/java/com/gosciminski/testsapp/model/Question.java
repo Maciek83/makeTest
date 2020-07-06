@@ -33,7 +33,7 @@ public class Question extends BaseEntity {
     )
     private Set<TestQa> tests = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "question")
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "question")
     private Set<Answer> answers = new HashSet<>();
 
 
