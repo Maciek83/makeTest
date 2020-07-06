@@ -74,6 +74,8 @@ public class QuestionServiceJpa implements QuestionService {
 
         Question questionFromDb = findById(id);
 
+        questionFromDb.setContent(editDto.getContent()
+
         deleteExistingAnswers(editDto, questionFromDb);
         editExistingAnswers(editDto, questionFromDb);
         createNewAnswers(editDto, questionFromDb);
