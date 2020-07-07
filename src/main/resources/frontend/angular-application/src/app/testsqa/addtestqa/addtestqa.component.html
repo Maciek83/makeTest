@@ -1,0 +1,13 @@
+<form [formGroup]="testForm" (ngSubmit)="onSubmit()" class="center column">
+    <mat-form-field appearance="fill">
+      <mat-label for="name">Name of test</mat-label>
+      <input type="text" id="name" formControlName="name" matInput> 
+    </mat-form-field>
+    <mat-error *ngIf="!testForm.get('name').valid && testForm.get('name').touched">Please enter test name</mat-error>
+    
+    <button mat-raised-button color="primary" [disabled]="!testForm.valid || numberOfQuestionsValidator()" type="submit" class="width10p20m">Create</button>  
+</form>
+
+<div class="center column">
+    <mat-card *ngFor="let q of questionsToAdd">{{q.content}}</mat-card>
+</div>

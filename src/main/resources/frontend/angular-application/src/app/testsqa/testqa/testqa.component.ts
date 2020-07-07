@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TestService } from '../test.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { QuestionService } from 'src/app/questions/question.service';
+import { QuestionDisplayModel } from 'src/app/questions/question.models';
 
 @Component({
   selector: 'app-testqa',
@@ -10,14 +11,16 @@ import { QuestionService } from 'src/app/questions/question.service';
 })
 export class TestqaComponent implements OnInit {
 
-  constructor(public testService: TestService, private questionService: QuestionService, private router: Router) {}
+  questions: QuestionDisplayModel[];
+  constructor(public testService: TestService, private questionService: QuestionService, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.questions = this.route.snapshot.data.questions;
   }
 
   navigateToEditGuestion(id: number)
   {
-    this.questionService.setSelectedQuestion(id);
+    this.questionService.setSelectedQuestion(this.questions, id);
     this.router.navigate(['/editquestion/'+id]);
   }
 

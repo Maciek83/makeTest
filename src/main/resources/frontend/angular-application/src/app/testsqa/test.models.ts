@@ -5,3 +5,7 @@ export interface TestDisplayModel{
     name:string,
     questionDisplayDto:QuestionDisplayModel[]
 }
+
+export class TestAddModel{
+    constructor(public name: string, public questionsIds: number[]){}
+}
