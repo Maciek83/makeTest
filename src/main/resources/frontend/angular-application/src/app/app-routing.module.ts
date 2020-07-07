@@ -5,13 +5,15 @@ import { QuestionsComponent } from './questions/questions.component';
 import { HomeComponent } from './home/home.component';
 import { AddquestionComponent } from './questions/addquestion/addquestion.component';
 import { EditquestionComponent } from './questions/editquestion/editquestion.component';
+import { TestsqaComponent } from './testsqa/testsqa.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component:HomeComponent},
   {path: 'question', component:QuestionsComponent},
   {path: 'addquestion', component:AddquestionComponent},
-  {path: 'editquestion/:id', component:EditquestionComponent}
+  {path: 'editquestion/:id', component:EditquestionComponent},
+  {path: 'test', component:TestsqaComponent}
 ]
 
 

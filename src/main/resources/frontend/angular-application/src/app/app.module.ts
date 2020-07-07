@@ -14,6 +14,8 @@ import { EditquestionComponent } from './questions/editquestion/editquestion.com
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AddquestionComponent } from './questions/addquestion/addquestion.component';
 import { HttpInterceptorClass } from './interceptor/http.interceptor';
+import { TestsqaComponent } from './testsqa/testsqa.component';
+import { TestqaComponent } from './testsqa/testqa/testqa.component';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { HttpInterceptorClass } from './interceptor/http.interceptor';
     QuestionComponent,
     HomeComponent,
     EditquestionComponent,
-    AddquestionComponent
+    AddquestionComponent,
+    TestsqaComponent,
+    TestqaComponent
   ],
   imports: [
     BrowserModule,

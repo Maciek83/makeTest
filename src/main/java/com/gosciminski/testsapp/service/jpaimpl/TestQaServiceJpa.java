@@ -1,6 +1,8 @@
 package com.gosciminski.testsapp.service.jpaimpl;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import com.gosciminski.testsapp.converter.TestQaToTestQaDisplayDto;
@@ -9,7 +11,6 @@ import com.gosciminski.testsapp.dto.display.TestQaDisplayDto;
 import com.gosciminski.testsapp.exceptions.TestQaException;
 import com.gosciminski.testsapp.model.Question;
 import com.gosciminski.testsapp.model.TestQa;
-import com.gosciminski.testsapp.repisitory.QuestionRepository;
 import com.gosciminski.testsapp.repisitory.TestQaRepository;
 import com.gosciminski.testsapp.service.QuestionService;
 import com.gosciminski.testsapp.service.TestQaService;
@@ -31,9 +32,9 @@ public class TestQaServiceJpa implements TestQaService {
     }
 
     @Override
-    public Set<TestQaDisplayDto> findAll() {
+    public List<TestQaDisplayDto> findAll() {
         Iterable<TestQa> tests = testRepository.findAll();
-        Set<TestQaDisplayDto> testsDto = new HashSet<>();
+        List<TestQaDisplayDto> testsDto = new LinkedList<>();
         tests.forEach(t -> testsDto.add(testQaToTestQaDisplayDto.convert(t)));
         return testsDto;
     }

@@ -1,5 +1,6 @@
 package com.gosciminski.testsapp.controller;
 
+import java.util.List;
 import java.util.Set;
 
 import com.gosciminski.testsapp.dto.create.TestQaCreateDto;
@@ -26,7 +27,7 @@ public class TestController {
     }
 
     @GetMapping(value = "/test")
-    public ResponseEntity<Set<TestQaDisplayDto>> getAll()
+    public ResponseEntity<List<TestQaDisplayDto>> getAll()
     {
         return new ResponseEntity<>(testQaService.findAll(), HttpStatus.OK);
     }
