@@ -5,6 +5,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     display: flex;
     justify-content: center;
 }
+.space-evently{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.margintop20px{
+  margin: 20px 0px 0px 0px  !important;
+
+}
+
+.justyfy-middle{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .margin20px{
   margin-left: 20px !important;
 }

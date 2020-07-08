@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
-import { TestDisplayModel } from './test.models';
+import { TestDisplayModel, TestAddModel } from './test.models';
+import { Observable } from 'rxjs';
 
 @Injectable({providedIn:'root'})
 export class TestService {
@@ -14,6 +15,10 @@ export class TestService {
         this.http.get<TestDisplayModel[]>('api/test')
             .subscribe(data => this.tests = data);
         return this.tests;
+    }
+
+    addTest(addTestModel: TestAddModel) : Observable<TestDisplayModel>{
+        return this.http.post<TestDisplayModel>('api/test', addTestModel);
     }
 
     setSelectedTestToNull(){

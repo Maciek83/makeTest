@@ -1,4 +1,4 @@
-<form [formGroup]="questionForm" (ngSubmit)="onSubmit()" class="center column">
+<form [formGroup]="questionForm" (ngSubmit)="onSubmit()" #f="ngForm" class="center column">
   <mat-form-field appearance="fill">
     <mat-label for="content">Content of the question</mat-label>
     <input type="text" id="content" formControlName="content" matInput> 

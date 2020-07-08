@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { QuestionService } from './question.service';
+import { ActivatedRoute } from '@angular/router';
+import { QuestionDisplayModel } from './question.models';
 
 @Component({
   selector: 'app-questions',
@@ -9,18 +11,17 @@ import { QuestionService } from './question.service';
 export class QuestionsComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'content', 'select'];
-
-  constructor(public questionService: QuestionService) { }
+  questions: QuestionDisplayModel[];
+  constructor(public questionService: QuestionService, private route: ActivatedRoute) { }
   
-
   ngOnInit(): void {
-    this.questionService.fetchQuestions();
+    this.questions = this.route.snapshot.data.questions;
     this.questionService.removeSelectedQuestion();
   }
 
   setSelectedQuestion(id:number)
   {
-    this.questionService.setSelectedQuestion(id);
+    this.questionService.setSelectedQuestion(this.questions, id);
   }
 
 }

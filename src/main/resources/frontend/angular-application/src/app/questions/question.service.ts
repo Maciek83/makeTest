@@ -3,19 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { QuestionDisplayModel, QuestionCreateModel, QuestionEditModel } from './question.models';
 import { Observable } from 'rxjs';
 
-
 @Injectable({ providedIn: 'root' })
-export class QuestionService {
-
-    private questions: QuestionDisplayModel[]
+export class QuestionService  {
     private selectedQuestion: QuestionDisplayModel = null;
 
-    constructor(private http: HttpClient) { };
+    constructor(private http: HttpClient) { }
 
-    fetchQuestions(): QuestionDisplayModel[] {
-        this.http.get<QuestionDisplayModel[]>('api/question')
-            .subscribe(data => this.questions = data);
-        return this.questions;
+    fetchQuestions(): Observable<QuestionDisplayModel[]> {
+        return this.http.get<QuestionDisplayModel[]>('api/question');
     }
 
     fetchQuestionToEdit(id: number) {
@@ -31,13 +26,9 @@ export class QuestionService {
         return this.http.post<QuestionDisplayModel>('api/question', questionCreateModel);
     }
 
-    setSelectedQuestion(id: number) {
-        let element = this.getQuestions().find(q => q.id === id);
+    setSelectedQuestion(questions:QuestionDisplayModel[], id: number) {
+        let element = questions.find(q => q.id === id);
         this.selectedQuestion = element;
-    }
-
-    deleteQuestion(id: number) {
-        this.questions.splice(id, 1);
     }
 
     removeSelectedQuestion() {
@@ -46,10 +37,6 @@ export class QuestionService {
 
     getSelectedQuestion(): QuestionDisplayModel {
         return this.selectedQuestion;
-    }
-
-    getQuestions() {
-        return this.questions;
     }
 
 }

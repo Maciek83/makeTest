@@ -1,13 +1,60 @@
-<form [formGroup]="testForm" (ngSubmit)="onSubmit()" class="center column">
-    <mat-form-field appearance="fill">
-      <mat-label for="name">Name of test</mat-label>
-      <input type="text" id="name" formControlName="name" matInput> 
-    </mat-form-field>
-    <mat-error *ngIf="!testForm.get('name').valid && testForm.get('name').touched">Please enter test name</mat-error>
-    
-    <button mat-raised-button color="primary" [disabled]="!testForm.valid || numberOfQuestionsValidator()" type="submit" class="width10p20m">Create</button>  
+<form [formGroup]="testForm" (ngSubmit)="onSubmit()" #f="ngForm" class="center column">
+  <mat-form-field appearance="fill">
+    <mat-label for="name">Name of test</mat-label>
+    <input type="text" id="name" formControlName="name" matInput>
+  </mat-form-field>
+  <mat-error *ngIf="!testForm.get('name').valid && testForm.get('name').touched">Please enter test name</mat-error>
+  <button mat-raised-button color="primary" [disabled]="!testForm.valid || numberOfQuestionsValidator()" type="submit"
+    class="width10p20m">Create</button>
 </form>
 
 <div class="center column">
-    <mat-card *ngFor="let q of questionsToAdd">{{q.content}}</mat-card>
+  <div class="justyfy-middle column">
+    <h3 class="margintop20px">Added questions</h3>
+    <mat-error *ngIf="questionsAdded.length <= 0">Add at least one question</mat-error>
+  </div>
+  <mat-table [dataSource]="questionsAdded" class="mat-elevation-z8">
+    <!-- Position Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.content}} </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="add">
+      <mat-header-cell *matHeaderCellDef> Remove </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-raised-button color="primary" type="button"
+          (click)="removeQuestionIdFromModelAndTable(element.id)">Remove question</button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+
+<div class="center column">
+  <div class="justyfy-middle">
+    <h3 class="margintop20px">Available questions</h3>
+  </div>
+  <mat-table [dataSource]="questionsToAdd" class="mat-elevation-z8">
+    <!-- Position Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.content}} </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="add">
+      <mat-header-cell *matHeaderCellDef> Add </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-raised-button color="primary" [disabled]="canAddQuestion(element.id)" type="button"
+          (click)="addQuestionIdToModel(element.id)">Add question</button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
 </div>

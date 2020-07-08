@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormArray, AbstractControl, NgForm } from '@angular/forms';
 import { QuestionCreateModel } from '../question.models';
 import { QuestionService } from '../question.service';
 
@@ -11,9 +11,10 @@ import { QuestionService } from '../question.service';
 })
 export class AddquestionComponent implements OnInit {
   questionForm: FormGroup;
+  @ViewChild('f') questionNgForm: NgForm;
   
 
-  constructor(private questionServiec:QuestionService){ }
+  constructor(private questionService:QuestionService){ }
 
   ngOnInit(): void {
     this.questionForm = new FormGroup({
@@ -28,17 +29,12 @@ export class AddquestionComponent implements OnInit {
       this.questionForm.value.answers
     );
 
-    this.questionServiec.addQuestion(model).subscribe();
+    this.questionService.addQuestion(model).subscribe();
     this.clearForm();
   }
 
   private clearForm() {
-    for (const key in this.questionForm.controls) {
-      this.questionForm.get(key).clearValidators();
-      this.questionForm.get(key).updateValueAndValidity();
-    }
-    
-    this.questionForm.reset();
+    this.questionNgForm.resetForm();
     
     const formarray = (<FormArray>this.questionForm.get('answers'));
     while (formarray.length !== 0) {
