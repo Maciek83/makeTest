@@ -25,12 +25,7 @@ public class Question extends BaseEntity {
     @NotEmpty
     private String content;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name="question_answer",
-        joinColumns = @JoinColumn(name = "question_id"),
-        inverseJoinColumns = @JoinColumn(name = "testqa_id")
-    )
+    @ManyToMany(mappedBy = "questions", fetch = FetchType.LAZY)
     private Set<TestQa> tests = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "question")

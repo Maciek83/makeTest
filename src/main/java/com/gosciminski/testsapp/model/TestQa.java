@@ -3,9 +3,12 @@ package com.gosciminski.testsapp.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
@@ -20,7 +23,12 @@ public class TestQa extends BaseEntity{
     @NotNull
     @NotEmpty
     private String name;
-    @ManyToMany(mappedBy = "tests", fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinTable(
+        name="test_question",
+        joinColumns = @JoinColumn(name = "question_id"),
+        inverseJoinColumns = @JoinColumn(name = "testqa_id")
+    )
     private Set<Question> questions = new HashSet<>();
 
     public TestQa() {

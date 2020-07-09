@@ -17,6 +17,7 @@ import { HttpInterceptorClass } from './interceptor/http.interceptor';
 import { TestsqaComponent } from './testsqa/testsqa.component';
 import { TestqaComponent } from './testsqa/testqa/testqa.component';
 import { AddtestqaComponent } from './testsqa/addtestqa/addtestqa.component';
+import { EdittestqaComponent } from './testsqa/edittestqa/edittestqa.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { AddtestqaComponent } from './testsqa/addtestqa/addtestqa.component';
     AddquestionComponent,
     TestsqaComponent,
     TestqaComponent,
-    AddtestqaComponent
+    AddtestqaComponent,
+    EdittestqaComponent
   ],
   imports: [
     BrowserModule,

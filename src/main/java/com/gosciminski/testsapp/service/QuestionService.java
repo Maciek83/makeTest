@@ -13,5 +13,5 @@ public interface QuestionService {
     Question findById(Long id);
     QuestionDisplayDto findQuestionDisplayDtoByid(Long id);
     QuestionDisplayDto save(QuestionCreateDto createDto) throws QuestionException;
-    QuestionDisplayDto update(Long id ,QuestionEditDto editDto) throws QuestionException;
+    QuestionDisplayDto update(Long id, QuestionEditDto editDto) throws QuestionException;
 }
