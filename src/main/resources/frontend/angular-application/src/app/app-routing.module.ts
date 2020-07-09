@@ -7,8 +7,9 @@ import { AddquestionComponent } from './questions/addquestion/addquestion.compon
 import { EditquestionComponent } from './questions/editquestion/editquestion.component';
 import { TestsqaComponent } from './testsqa/testsqa.component';
 import { AddtestqaComponent } from './testsqa/addtestqa/addtestqa.component';
-import { QuestionsResolver } from './questions/question.resolver';
+import { QuestionsResolver } from './questions/questions.resolver';
 import { EdittestqaComponent } from './testsqa/edittestqa/edittestqa.component';
+import { TestResolver } from './testsqa/test.resolver';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -16,9 +17,9 @@ const appRoutes: Routes = [
   {path: 'question', component:QuestionsComponent, resolve:{questions: QuestionsResolver}},
   {path: 'addquestion', component:AddquestionComponent},
   {path: 'editquestion/:id', component:EditquestionComponent},
-  {path: 'test', component:TestsqaComponent, resolve:{questions: QuestionsResolver}},
+  {path: 'test', component:TestsqaComponent, resolve:{tests: TestResolver, questions: QuestionsResolver}},
   {path: 'addtest', component:AddtestqaComponent, resolve:{questions: QuestionsResolver}},
-  {path: 'edittest/:id', component:EdittestqaComponent}
+  {path: 'edittest/:id', component:EdittestqaComponent }
 ]
 
 

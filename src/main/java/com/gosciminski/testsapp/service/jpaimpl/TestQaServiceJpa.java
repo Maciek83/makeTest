@@ -95,16 +95,13 @@ public class TestQaServiceJpa implements TestQaService {
         listOfIdsFromDb.forEach(i ->{
             if(!listOfIds.contains(i)){
                 Question questionFromDb = questionService.findById(i);
-                questionFromDb.getTests().remove(testFromDb);
                 testFromDb.getQuestions().remove(questionFromDb);
             }
         });
 
         listOfIds.forEach(i -> {
             if(listOfIdsFromDb.contains(i)){return;}
-
             Question questionFromDb = questionService.findById(i);
-            questionFromDb.getTests().add(testFromDb);
             testFromDb.getQuestions().add(questionFromDb);
         });
 

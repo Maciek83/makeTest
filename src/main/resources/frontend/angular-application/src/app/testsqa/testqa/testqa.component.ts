@@ -18,10 +18,14 @@ export class TestqaComponent implements OnInit {
     this.questions = this.route.snapshot.data.questions;
   }
 
-  navigateToEditGuestion(id: number)
+  navigateToEditQuestion(id: number)
   {
     this.questionService.setSelectedQuestion(this.questions, id);
     this.router.navigate(['/editquestion/'+id]);
+  }
+
+  navigateToEditTest(id: number){
+    this.router.navigate(['/edittest/'+id]);
   }
 
 }
