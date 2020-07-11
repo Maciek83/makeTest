@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../question.service';
 import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { QuestionEditModel, AnswerEditModel, QuestionDisplayModel } from '../question.models';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-editquestion',
@@ -13,7 +13,7 @@ export class EditquestionComponent implements OnInit {
   questionForm: FormGroup;
   id: number;
 
-  constructor(public questionService: QuestionService, private route: ActivatedRoute) { }
+  constructor(public questionService: QuestionService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -72,6 +72,7 @@ export class EditquestionComponent implements OnInit {
     this.questionService.editQuestion(this.id, model).subscribe();
 
     this.clearForm();
+    this.router.navigate(['question']);
   }
 
   private clearForm() {

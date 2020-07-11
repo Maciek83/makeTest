@@ -23,6 +23,10 @@ export class TestService {
         return this.http.post<TestDisplayModel>('api/test', addTestModel);
     }
 
+    updateTest(addTestModel: TestAddModel, id:number): Observable<TestDisplayModel>{
+        return this.http.patch<TestDisplayModel>('api/test/'+id, addTestModel);
+    }
+
     setSelectedTestToNull(){
         this.selectedTest = null;
     }

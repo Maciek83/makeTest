@@ -19,7 +19,7 @@ const appRoutes: Routes = [
   {path: 'editquestion/:id', component:EditquestionComponent},
   {path: 'test', component:TestsqaComponent, resolve:{tests: TestResolver, questions: QuestionsResolver}},
   {path: 'addtest', component:AddtestqaComponent, resolve:{questions: QuestionsResolver}},
-  {path: 'edittest/:id', component:EdittestqaComponent }
+  {path: 'edittest/:id', component:EdittestqaComponent, resolve:{questions: QuestionsResolver} }
 ]
 
 
