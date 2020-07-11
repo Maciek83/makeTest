@@ -8,9 +8,16 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name="answer")
 public class Answer extends BaseEntity {
     @Column(name = "content")
@@ -21,38 +28,5 @@ public class Answer extends BaseEntity {
     private Boolean correct;
     @ManyToOne(fetch = FetchType.LAZY)
     private Question question;
-
-    public Answer() {
-    }
-
-    public Answer(@NotNull @NotEmpty String content, @NotNull Boolean correct, Question question) {
-        this.content = content;
-        this.correct = correct;
-        this.question = question;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Boolean getCorrect() {
-        return correct;
-    }
-
-    public void setCorrect(Boolean correct) {
-        this.correct = correct;
-    }
-
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
 
 }

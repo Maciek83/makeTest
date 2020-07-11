@@ -6,7 +6,15 @@ import java.util.Set;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class QuestionCreateDto {
 
     @NotNull
@@ -14,28 +22,5 @@ public class QuestionCreateDto {
     private String content;
     Set<AnswerCreateDto> answers = new HashSet<>();
 
-    public QuestionCreateDto() {
-    }
-
-	public QuestionCreateDto(@NotNull @NotEmpty String content, Set<AnswerCreateDto> answers) {
-		this.content = content;
-		this.answers = answers;
-	}
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Set<AnswerCreateDto> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(Set<AnswerCreateDto> answers) {
-        this.answers = answers;
-    }
     
 }

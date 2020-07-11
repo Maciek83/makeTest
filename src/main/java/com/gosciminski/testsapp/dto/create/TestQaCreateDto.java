@@ -6,35 +6,19 @@ import java.util.Set;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class TestQaCreateDto {
     
     @NotNull
     @NotEmpty
     private String name;
     private Set<Long> questionsIds = new HashSet<>();
-
-    public TestQaCreateDto() {
-    }
-
-    public TestQaCreateDto(@NotNull @NotEmpty String name, Set<Long> questionsIds) {
-		this.name = name;
-		this.questionsIds = questionsIds;
-	}
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Long> getQuestionsIds() {
-        return questionsIds;
-    }
-
-    public void setQuestionsIds(Set<Long> questionsIds) {
-        this.questionsIds = questionsIds;
-    }
-    
 }

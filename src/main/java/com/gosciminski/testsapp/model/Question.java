@@ -15,8 +15,17 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "question")
 public class Question extends BaseEntity {
     
@@ -30,40 +39,5 @@ public class Question extends BaseEntity {
 
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "question")
     private Set<Answer> answers = new HashSet<>();
-
-
-    public Question() {
-    }
-
-    public Question(@NotNull @NotEmpty String content, Set<TestQa> tests, Set<Answer> answers) {
-		this.content = content;
-		this.tests = tests;
-		this.answers = answers;
-	}
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Set<TestQa> getTests() {
-        return tests;
-    }
-
-    public void setTests(Set<TestQa> tests) {
-        this.tests = tests;
-    }
-
-    public Set<Answer> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(Set<Answer> answers) {
-        this.answers = answers;
-    }
-
 
 }

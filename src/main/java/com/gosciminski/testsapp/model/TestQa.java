@@ -14,8 +14,17 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "testqa")
 public class TestQa extends BaseEntity{
     
@@ -30,29 +39,5 @@ public class TestQa extends BaseEntity{
         inverseJoinColumns = @JoinColumn(name = "testqa_id")
     )
     private Set<Question> questions = new HashSet<>();
-
-    public TestQa() {
-    }
-
-    public TestQa(@NotNull @NotEmpty String name, Set<Question> questions) {
-		this.name = name;
-		this.questions = questions;
-	}
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(Set<Question> questions) {
-        this.questions = questions;
-    }
     
 }
