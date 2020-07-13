@@ -10,10 +10,12 @@ import { AddtestqaComponent } from './testsqa/addtestqa/addtestqa.component';
 import { QuestionsResolver } from './questions/questions.resolver';
 import { EdittestqaComponent } from './testsqa/edittestqa/edittestqa.component';
 import { TestResolver } from './testsqa/test.resolver';
+import { LoginComponent } from './login/login.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component:HomeComponent},
+  {path: 'login', component: LoginComponent},
   {path: 'question', component:QuestionsComponent, resolve:{questions: QuestionsResolver}},
   {path: 'addquestion', component:AddquestionComponent},
   {path: 'editquestion/:id', component:EditquestionComponent},

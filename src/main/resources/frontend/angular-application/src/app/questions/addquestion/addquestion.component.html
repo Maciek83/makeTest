@@ -9,7 +9,7 @@
       <div [formGroupName]="i">
         <mat-form-field  appearance="fill">
           <mat-label for="content">Content of the answer</mat-label>
-          <input  type="text" id="content" formControlName="content" matInput> 
+          <input type="text" id="content" formControlName="content" matInput> 
         </mat-form-field> 
         <mat-checkbox formControlName="correct">Is Correct</mat-checkbox>
         <button mat-fab color="warn" class="marginleft20p" type="button" (click)="onRemoveQuestion(i)">Remove</button>

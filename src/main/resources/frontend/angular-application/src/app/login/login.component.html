@@ -1,0 +1,13 @@
+<form [formGroup]="loginForm" (ngSubmit)="login()" #f="ngForm" class="center column">
+    <mat-form-field appearance="fill">
+      <mat-label for="username">User name</mat-label>
+      <input type="text" id="username" formControlName="username" matInput> 
+    </mat-form-field>
+    <mat-error *ngIf="!loginForm.get('username').valid && loginForm.get('username').touched">Please enter user name</mat-error>
+    <mat-form-field appearance="fill">
+        <mat-label for="password">User password</mat-label>
+        <input type="password" id="password" formControlName="password" matInput> 
+    </mat-form-field>
+    <mat-error *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">Please enter user password</mat-error>
+    <button mat-raised-button color="primary" [disabled]="!loginForm.valid" type="submit" class="width10p20m">Login</button>  
+</form>

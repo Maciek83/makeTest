@@ -11,6 +11,7 @@ import com.gosciminski.testsapp.service.TestQaService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +42,7 @@ public class TestController {
     }
 
     @PostMapping(value = "/test")
-    public ResponseEntity<TestQaDisplayDto> createTest(@RequestBody TestQaCreateDto testQaCreateDto) throws TestQaException{
+    public ResponseEntity<TestQaDisplayDto> createTest(@RequestBody @Validated TestQaCreateDto testQaCreateDto) throws TestQaException{
         return new ResponseEntity<>(testQaService.save(testQaCreateDto), HttpStatus.CREATED);
     }
 
