@@ -17,7 +17,6 @@ export class RegisterComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
-
     this.registerForm = new FormGroup({
       'name': new FormControl(null, Validators.required),
       'email': new FormControl(null, [Validators.email, Validators.required]),
@@ -44,7 +43,8 @@ export class RegisterComponent implements OnInit {
     const passwordConfirmation = control.get('passwordconf').value;
 
     if(password !== passwordConfirmation){
-      return {'password': false};
+      control.get('passwordconf').setErrors({mustMatch: true});
+      return {'passwordconf': false};
     }
 
     return null;

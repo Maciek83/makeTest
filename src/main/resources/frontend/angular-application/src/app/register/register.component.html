@@ -19,5 +19,6 @@
         <input type="passwordconf" id="passwordconf" formControlName="passwordconf" matInput> 
     </mat-form-field>
     <mat-error *ngIf="!registerForm.get('passwordconf').valid && registerForm.get('passwordconf').touched">Please enter password confirmation</mat-error>
+    <mat-error *ngIf="registerForm.get('passwordconf').hasError('mustMatch') && registerForm.get('passwordconf').touched">Password dont match</mat-error>
     <button mat-raised-button color="primary" [disabled]="!registerForm.valid" type="submit" class="width10p20m">Register</button>  
 </form>
