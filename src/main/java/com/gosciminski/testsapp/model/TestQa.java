@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -39,5 +40,7 @@ public class TestQa extends BaseEntity{
         inverseJoinColumns = @JoinColumn(name = "testqa_id")
     )
     private Set<Question> questions = new HashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
     
 }

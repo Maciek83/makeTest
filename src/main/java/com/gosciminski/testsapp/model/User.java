@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 
@@ -38,5 +39,19 @@ public class User extends BaseEntity {
 	joinColumns = @JoinColumn(name="user_id"), 
 	inverseJoinColumns = @JoinColumn(name="role_id"))
 	@JsonManagedReference
-	private Set<Role> roles = new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
+    
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Question> questions = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<TestQa> tests = new HashSet<>();
+
+    public User(String email, String password, String name, Integer active, Set<Role> roles) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.active = active;
+        this.roles = roles;
+    }
 }

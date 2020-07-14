@@ -28,5 +28,7 @@ public class Answer extends BaseEntity {
     private Boolean correct;
     @ManyToOne(fetch = FetchType.LAZY)
     private Question question;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
 }

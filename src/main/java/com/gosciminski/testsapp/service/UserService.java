@@ -5,5 +5,6 @@ import com.gosciminski.testsapp.model.User;
 
 public interface UserService {
     User saveUser(UserCreatorDto user);
-	User findUserByName(String name);
+    User findUserByName(String name);
+    User getUser();
 }

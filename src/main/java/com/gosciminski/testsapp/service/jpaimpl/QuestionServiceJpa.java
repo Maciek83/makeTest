@@ -3,6 +3,7 @@ package com.gosciminski.testsapp.service.jpaimpl;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import com.gosciminski.testsapp.converter.QuestionCreateDtoToQuestion;
 import com.gosciminski.testsapp.converter.QuestionToQuestionDisplayDto;
@@ -14,6 +15,7 @@ import com.gosciminski.testsapp.model.Answer;
 import com.gosciminski.testsapp.model.Question;
 import com.gosciminski.testsapp.repisitory.QuestionRepository;
 import com.gosciminski.testsapp.service.QuestionService;
+import com.gosciminski.testsapp.service.UserService;
 
 import org.springframework.stereotype.Service;
 
@@ -22,13 +24,16 @@ public class QuestionServiceJpa implements QuestionService {
     private final QuestionRepository questionRepository;
     private final QuestionToQuestionDisplayDto questionToQuestionDisplayDto;
     private final QuestionCreateDtoToQuestion questionCreateDtoToQuestion;
+    private final UserService userService;
 
     public QuestionServiceJpa(QuestionRepository questionRepository,
             QuestionToQuestionDisplayDto questionToQuestionDisplayDto,
-            QuestionCreateDtoToQuestion questionCreateDtoToQuestion) {
+            QuestionCreateDtoToQuestion questionCreateDtoToQuestion,
+            UserService userService) {
         this.questionRepository = questionRepository;
         this.questionToQuestionDisplayDto = questionToQuestionDisplayDto;
         this.questionCreateDtoToQuestion = questionCreateDtoToQuestion;
+        this.userService = userService;
     }
 
     @Override
@@ -51,6 +56,7 @@ public class QuestionServiceJpa implements QuestionService {
         }
 
         Question tosave = questionCreateDtoToQuestion.convert(createDto);
+        tosave.setUser(userService.getUser());
         Question savedInDb = questionRepository.save(tosave);
         return questionToQuestionDisplayDto.convert(savedInDb);
     }
@@ -119,6 +125,14 @@ public class QuestionServiceJpa implements QuestionService {
 
         questionFromDb.getAnswers()
         .removeIf(a->!listOfIds.contains(a.getId()));
+    }
+
+    @Override
+    public List<QuestionDisplayDto> findAllByUser() {
+        List<Question> questions = questionRepository.findByUser(userService.getUser());
+        List<QuestionDisplayDto> questionsDisplayDto = new LinkedList<>();
+        questions.forEach(q -> questionsDisplayDto.add(questionToQuestionDisplayDto.convert(q)));
+        return questionsDisplayDto;
     }
 
 }

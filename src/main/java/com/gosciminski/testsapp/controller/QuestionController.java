@@ -31,7 +31,7 @@ public class QuestionController {
 
     @GetMapping(value = "/question")
     public ResponseEntity<List<QuestionDisplayDto>> findAll() {
-        return new ResponseEntity<>(questionService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(questionService.findAllByUser(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/question/{id}")
