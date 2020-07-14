@@ -11,17 +11,20 @@ import { QuestionsResolver } from './questions/questions.resolver';
 import { EdittestqaComponent } from './testsqa/edittestqa/edittestqa.component';
 import { TestResolver } from './testsqa/test.resolver';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { AuthGuard } from './services/auth.guard';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component:HomeComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'question', component:QuestionsComponent, resolve:{questions: QuestionsResolver}},
-  {path: 'addquestion', component:AddquestionComponent},
-  {path: 'editquestion/:id', component:EditquestionComponent},
-  {path: 'test', component:TestsqaComponent, resolve:{tests: TestResolver, questions: QuestionsResolver}},
-  {path: 'addtest', component:AddtestqaComponent, resolve:{questions: QuestionsResolver}},
-  {path: 'edittest/:id', component:EdittestqaComponent, resolve:{questions: QuestionsResolver} }
+  {path: 'register', component: RegisterComponent},
+  {path: 'question', component:QuestionsComponent, resolve:{questions: QuestionsResolver}, canActivate:[AuthGuard]},
+  {path: 'addquestion', component:AddquestionComponent, canActivate:[AuthGuard]},
+  {path: 'editquestion/:id', component:EditquestionComponent, canActivate:[AuthGuard]},
+  {path: 'test', component:TestsqaComponent, resolve:{tests: TestResolver, questions: QuestionsResolver}, canActivate:[AuthGuard]},
+  {path: 'addtest', component:AddtestqaComponent, resolve:{questions: QuestionsResolver}, canActivate:[AuthGuard]},
+  {path: 'edittest/:id', component:EdittestqaComponent, resolve:{questions: QuestionsResolver}, canActivate:[AuthGuard]}
 ]
 
 

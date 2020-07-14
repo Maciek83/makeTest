@@ -19,6 +19,7 @@ import { TestqaComponent } from './testsqa/testqa/testqa.component';
 import { AddtestqaComponent } from './testsqa/addtestqa/addtestqa.component';
 import { EdittestqaComponent } from './testsqa/edittestqa/edittestqa.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { LoginComponent } from './login/login.component';
     TestqaComponent,
     AddtestqaComponent,
     EdittestqaComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

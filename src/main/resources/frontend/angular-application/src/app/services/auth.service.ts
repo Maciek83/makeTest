@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { RegisterModel } from '../register/reqister.model';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -13,7 +15,7 @@ export class AuthService {
             authorization: 'Basic ' + btoa(credentials.username + ':' + credentials.password)
         } : {});
 
-        this.http.get('api/user', { headers: headers }).subscribe(response => {
+        this.http.get('api/login', { headers: headers }).subscribe(response => {
             if (response['name']) {
                 this.authenticated = true;
             } else {
@@ -23,8 +25,12 @@ export class AuthService {
         })
     }
 
+    register(registerModel: RegisterModel): Observable<any>{
+       return this.http.post('api/register', registerModel);
+    }
+
     logout() {
-        this.http.post('logout', {}).pipe(finalize(() => {
+        this.http.post('api/logout', {}).pipe(finalize(() => {
             this.authenticated = false;
             this.router.navigateByUrl('/login');
         })).subscribe();

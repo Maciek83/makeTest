@@ -5,6 +5,9 @@ import java.security.Principal;
 import com.gosciminski.testsapp.dto.create.UserCreatorDto;
 import com.gosciminski.testsapp.service.UserService;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +26,8 @@ public class UserController {
 		this.userService = userService;
 	}
 
-
     @CrossOrigin
-	@GetMapping(value = "/user")
+	@GetMapping(value = "/login")
 	public Principal user(Principal user) {
 		return user;
     }
@@ -34,6 +36,13 @@ public class UserController {
 	@PostMapping(value = "/register")
 	public void register(@RequestBody @Validated UserCreatorDto userCreator){
 		userService.saveUser(userCreator);
+	}
+
+	@CrossOrigin
+	@PostMapping(value = "/logout")
+	public ResponseEntity<String> logout(){
+		SecurityContextHolder.clearContext();
+		return new ResponseEntity<String>("Logout Successfully!", HttpStatus.OK);
 	}
 
 

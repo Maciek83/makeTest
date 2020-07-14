@@ -43,10 +43,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     @Order(SecurityProperties.BASIC_AUTH_ORDER)
     protected void configure(HttpSecurity http) throws Exception {
+
         http.httpBasic()
         .and()
         .authorizeRequests()
         .antMatchers("/*").permitAll()
+        .antMatchers("/h2-console/**").permitAll()
+        .antMatchers("api/login").permitAll()
+        .antMatchers("api/register").permitAll()
+        .antMatchers("api/question").hasRole("USER")
+        .antMatchers("api/question/{id}").hasRole("USER")
+        .antMatchers("api/test").hasRole("USER")
+        .antMatchers("api/test/{id}").hasRole("USER")
         .and()
         .httpBasic().authenticationEntryPoint(authenticationEntryPoint)
         .and()
