@@ -1,12 +1,11 @@
 package com.gosciminski.testsapp.controller;
 
 import java.util.List;
-import java.util.Set;
 
 import com.gosciminski.testsapp.dto.create.TestQaCreateDto;
 import com.gosciminski.testsapp.dto.display.TestQaDisplayDto;
 import com.gosciminski.testsapp.dto.edit.TestQaEditDto;
-import com.gosciminski.testsapp.exceptions.TestQaException;
+import com.gosciminski.testsapp.exceptions.TestQaZeroQuestionsException;
 import com.gosciminski.testsapp.service.TestQaService;
 
 import org.springframework.http.HttpStatus;
@@ -33,7 +32,7 @@ public class TestController {
     @GetMapping(value = "/test")
     public ResponseEntity<List<TestQaDisplayDto>> getAll()
     {
-        return new ResponseEntity<>(testQaService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(testQaService.findAllByUser(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/test/{id}")
@@ -42,12 +41,12 @@ public class TestController {
     }
 
     @PostMapping(value = "/test")
-    public ResponseEntity<TestQaDisplayDto> createTest(@RequestBody @Validated TestQaCreateDto testQaCreateDto) throws TestQaException{
+    public ResponseEntity<TestQaDisplayDto> createTest(@RequestBody @Validated TestQaCreateDto testQaCreateDto) throws TestQaZeroQuestionsException{
         return new ResponseEntity<>(testQaService.save(testQaCreateDto), HttpStatus.CREATED);
     }
 
     @PatchMapping(value = "/test/{id}")
-    public ResponseEntity<TestQaDisplayDto> editTest(@PathVariable("id") Long id, @RequestBody TestQaEditDto testEditDto) throws TestQaException{
+    public ResponseEntity<TestQaDisplayDto> editTest(@PathVariable("id") Long id, @RequestBody TestQaEditDto testEditDto) throws TestQaZeroQuestionsException{
         return new ResponseEntity<>(testQaService.update(id, testEditDto), HttpStatus.OK);
     }
     

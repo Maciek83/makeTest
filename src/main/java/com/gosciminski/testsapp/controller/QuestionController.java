@@ -7,7 +7,8 @@ import javax.validation.Valid;
 import com.gosciminski.testsapp.dto.create.QuestionCreateDto;
 import com.gosciminski.testsapp.dto.display.QuestionDisplayDto;
 import com.gosciminski.testsapp.dto.edit.QuestionEditDto;
-import com.gosciminski.testsapp.exceptions.QuestionException;
+import com.gosciminski.testsapp.exceptions.QuestionNoTrueAnswerException;
+import com.gosciminski.testsapp.exceptions.QuestionNotEnoughAnswersException;
 import com.gosciminski.testsapp.service.QuestionService;
 
 import org.springframework.http.HttpStatus;
@@ -41,13 +42,13 @@ public class QuestionController {
 
     @PostMapping(value = "/question")
     public ResponseEntity<QuestionDisplayDto> save(@Valid @RequestBody QuestionCreateDto questionCreateDto)
-            throws QuestionException {
+    throws QuestionNotEnoughAnswersException, QuestionNoTrueAnswerException {
         return new ResponseEntity<>(questionService.save(questionCreateDto), HttpStatus.CREATED);
     }
 
     @PatchMapping(value = "/question/{id}")
     public ResponseEntity<QuestionDisplayDto> update(@PathVariable("id") Long id, @Valid @RequestBody QuestionEditDto questionEditDto) 
-    throws QuestionException{
+    throws QuestionNotEnoughAnswersException, QuestionNoTrueAnswerException{
         return new ResponseEntity<>(questionService.update(id, questionEditDto), HttpStatus.OK);
     }
 
