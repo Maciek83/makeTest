@@ -61,6 +61,7 @@ public class QuestionServiceJpaTest {
         assertNotNull(result);
         assertEquals(result.size(),2);
 
+        
         verify(questionRepositoryMock, atLeastOnce()).findAll();
         verify(questionToQuestionDisplayDtoMock, times(2)).convert(any(Question.class));
     }
