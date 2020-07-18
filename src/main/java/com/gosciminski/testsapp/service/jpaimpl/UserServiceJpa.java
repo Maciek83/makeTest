@@ -7,6 +7,7 @@ import com.gosciminski.testsapp.conf.PdfUserDetails;
 import com.gosciminski.testsapp.conf.WebMvcConfiguration;
 import com.gosciminski.testsapp.dto.create.UserCreatorDto;
 import com.gosciminski.testsapp.enums.RoleType;
+import com.gosciminski.testsapp.exceptions.UserNotFoundException;
 import com.gosciminski.testsapp.model.Role;
 import com.gosciminski.testsapp.model.User;
 import com.gosciminski.testsapp.repisitory.UserRepository;
@@ -48,8 +49,13 @@ public class UserServiceJpa implements UserService {
 	}
 
 	@Override
-	public User getUser() {
+	public User getUser() throws UserNotFoundException {
 		User user = ((PdfUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+
+		if(user == null){
+			throw new UserNotFoundException();
+		}
+
 		return user;
 	}
     

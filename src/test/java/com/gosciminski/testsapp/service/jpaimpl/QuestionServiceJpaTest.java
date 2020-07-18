@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import com.gosciminski.testsapp.converter.QuestionCreateDtoToQuestion;
 import com.gosciminski.testsapp.converter.QuestionToQuestionDisplayDto;
@@ -18,6 +19,7 @@ import com.gosciminski.testsapp.dto.create.QuestionCreateDto;
 import com.gosciminski.testsapp.dto.display.QuestionDisplayDto;
 import com.gosciminski.testsapp.exceptions.QuestionNoTrueAnswerException;
 import com.gosciminski.testsapp.exceptions.QuestionNotEnoughAnswersException;
+import com.gosciminski.testsapp.exceptions.QuestionNotFoundException;
 import com.gosciminski.testsapp.model.Answer;
 import com.gosciminski.testsapp.model.Question;
 import com.gosciminski.testsapp.model.User;
@@ -132,6 +134,17 @@ public class QuestionServiceJpaTest {
         verify(userServiceMock, atLeastOnce()).getUser();
         verify(questionRepositoryMock, atLeastOnce()).save(any(Question.class));
         verify(questionToQuestionDisplayDtoMock, atLeastOnce()).convert(any(Question.class));
+    }
+
+    @Test
+    public void findById_ShoultThrowQuestionNotFoundException(){
+
+        when(userServiceMock.getUser()).thenReturn(new User());
+        when(questionRepositoryMock.findById(any(Long.class))).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(QuestionNotFoundException.class,()->{
+            questionServiceJpa.findById(1L);
+        });
     }
 
 }
