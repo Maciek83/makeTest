@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -18,9 +19,13 @@ import com.gosciminski.testsapp.converter.QuestionToQuestionDisplayDto;
 import com.gosciminski.testsapp.dto.create.AnswerCreateDto;
 import com.gosciminski.testsapp.dto.create.QuestionCreateDto;
 import com.gosciminski.testsapp.dto.display.QuestionDisplayDto;
+import com.gosciminski.testsapp.dto.edit.AnswerEditDto;
+import com.gosciminski.testsapp.dto.edit.QuestionEditDto;
 import com.gosciminski.testsapp.exceptions.QuestionNoTrueAnswerException;
 import com.gosciminski.testsapp.exceptions.QuestionNotEnoughAnswersException;
 import com.gosciminski.testsapp.exceptions.QuestionNotFoundException;
+import com.gosciminski.testsapp.exceptions.UserNotFoundException;
+import com.gosciminski.testsapp.model.Answer;
 import com.gosciminski.testsapp.model.Question;
 import com.gosciminski.testsapp.model.User;
 import com.gosciminski.testsapp.repisitory.QuestionRepository;
@@ -142,7 +147,7 @@ public class QuestionServiceJpaTest {
     }
 
     @Test
-    public void findById_ShouldThrowQuestionNotFoundException(){
+    public void findById_shouldThrowQuestionNotFoundException(){
 
         User user = new User();
         Question question = new Question();
@@ -152,7 +157,7 @@ public class QuestionServiceJpaTest {
         when(userServiceMock.getUser()).thenReturn(user);
         when(questionRepositoryMock.findById(1L)).thenReturn(Optional.of(question));
 
-        Assertions.assertThrows(QuestionNotFoundException.class,()->{
+        Assertions.assertThrows(QuestionNotFoundException.class,() -> {
             questionServiceJpa.findById(1L);
         });
 
@@ -161,7 +166,7 @@ public class QuestionServiceJpaTest {
     }
 
     @Test
-    public void findById_ShouldFindQuestion(){
+    public void findById_shouldFindQuestion(){
 
         User user = new User();
         Question question = new Question();
@@ -182,7 +187,7 @@ public class QuestionServiceJpaTest {
     }
 
     @Test
-    public void findQuestionDisplayDtoByid_shouldFind(){
+    public void findQuestionDisplayDtoByid_shouldFindQuestion(){
 
         doReturn(new Question()).when(questionServiceJpaSpy).findById(1L);
         when(questionToQuestionDisplayDtoMock.convert(any(Question.class))).thenReturn(new QuestionDisplayDto());
@@ -191,6 +196,122 @@ public class QuestionServiceJpaTest {
 
         assertNotNull(result);
         verify(questionToQuestionDisplayDtoMock, atLeastOnce()).convert(any(Question.class));
+    }
+
+    @Test
+    public void findQuestionDisplayDtoByid_shouldThrowQuestionNotFoundException(){
+        doThrow(QuestionNotFoundException.class).when(questionServiceJpaSpy).findById(1L);
+
+        Assertions.assertThrows(QuestionNotFoundException.class, () -> {
+            questionServiceJpaSpy.findQuestionDisplayDtoByid(1L);
+        });
+    }
+
+    @Test
+    public void update_shouldThrowQuestionNotEnoughAnswersException(){
+
+        QuestionEditDto questionEditDto = new QuestionEditDto();
+        
+        Assertions.assertThrows(QuestionNotEnoughAnswersException.class, () -> {
+            questionServiceJpaSpy.update(1L, questionEditDto);
+        });
+
+    }
+
+    @Test
+    public void update_shouldThrowQuestionNoTrueAnswerException(){
+        QuestionEditDto questionEditDto = new QuestionEditDto();
+        AnswerEditDto answerEditDto = new AnswerEditDto();
+        AnswerEditDto answerEditDto2 = new AnswerEditDto();
+        answerEditDto.setCorrect(false);
+        answerEditDto2.setCorrect(false);
+        questionEditDto.getAnswerEditDto().add(answerEditDto);
+        questionEditDto.getAnswerEditDto().add(answerEditDto2);
+
+        Assertions.assertThrows(QuestionNoTrueAnswerException.class, () -> {
+            questionServiceJpaSpy.update(1L, questionEditDto);
+        });
+    }
+
+    @Test
+    public void update_shouldThrowQuestionNotFoundException(){
+        QuestionEditDto questionEditDto = new QuestionEditDto();
+        questionEditDto.setContent("question");
+        AnswerEditDto answerEditDto = new AnswerEditDto();
+        AnswerEditDto answerEditDto2 = new AnswerEditDto();
+        answerEditDto.setCorrect(true);
+        answerEditDto2.setCorrect(false);
+        questionEditDto.getAnswerEditDto().add(answerEditDto);
+        questionEditDto.getAnswerEditDto().add(answerEditDto2);
+
+        doThrow(QuestionNotFoundException.class).when(questionServiceJpaSpy).findById(1L);
+
+        Assertions.assertThrows(QuestionNotFoundException.class, () -> {
+            questionServiceJpaSpy.update(1L, questionEditDto);
+        });
+
+    }
+
+    @Test
+    public void update_shouldUpdateQuestion(){
+        QuestionEditDto questionEditDto = new QuestionEditDto();
+        questionEditDto.setContent("question");
+        AnswerEditDto answerEditDto = new AnswerEditDto();
+        AnswerEditDto answerEditDto2 = new AnswerEditDto();
+        answerEditDto.setCorrect(true);
+        answerEditDto2.setCorrect(false);
+        questionEditDto.getAnswerEditDto().add(answerEditDto);
+        questionEditDto.getAnswerEditDto().add(answerEditDto2);
+
+        Question question = new Question();
+        Answer answer = new Answer();
+        answer.setCorrect(true);
+        answer.setId(22L);
+        Answer answer2 = new Answer();
+        answer2.setCorrect(false);
+        answer2.setId(23L);
+        question.getAnswers().add(answer);
+        question.getAnswers().add(answer2);
+
+        doReturn(question).when(questionServiceJpaSpy).findById(1L);
+        when(questionRepositoryMock.save(question)).thenReturn(question);
+        when(questionToQuestionDisplayDtoMock.convert(question)).thenReturn(new QuestionDisplayDto());
+
+        QuestionDisplayDto result = questionServiceJpaSpy.update(1L, questionEditDto);
+
+        assertNotNull(result);
+
+        verify(questionServiceJpaSpy, atLeastOnce()).findById(1L);
+        verify(questionRepositoryMock, atLeastOnce()).save(any(Question.class));
+        verify(questionToQuestionDisplayDtoMock, atLeastOnce()).convert(any(Question.class));
+    }
+
+    @Test
+    public void findAllByUser_shouldThrownUserNotFoundException(){
+        when(userServiceMock.getUser()).thenThrow(UserNotFoundException.class);
+
+        Assertions.assertThrows(UserNotFoundException.class, () -> {
+            questionServiceJpa.findAllByUser();
+        });
+
+        verify(userServiceMock, atLeastOnce()).getUser();
+    }
+
+    @Test
+    public void findAllByUser_shouldFind(){
+
+        when(userServiceMock.getUser()).thenReturn(new User());
+        when(questionRepositoryMock.findByUser(any(User.class))).thenReturn(questions);
+        when(questionToQuestionDisplayDtoMock.convert(any(Question.class))).thenReturn(new QuestionDisplayDto());
+
+        List<QuestionDisplayDto> result = questionServiceJpa.findAllByUser();
+
+        assertNotNull(result);
+        assertEquals(questions.size(), result.size());
+
+        verify(questionRepositoryMock, atLeastOnce()).findByUser(any(User.class));
+        verify(userServiceMock, atLeastOnce()).getUser();
+        verify(questionToQuestionDisplayDtoMock, times(2)).convert(any(Question.class));
     }
 
 }
