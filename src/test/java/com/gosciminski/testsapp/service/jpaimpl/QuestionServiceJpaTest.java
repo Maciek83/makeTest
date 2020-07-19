@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -20,7 +21,6 @@ import com.gosciminski.testsapp.dto.display.QuestionDisplayDto;
 import com.gosciminski.testsapp.exceptions.QuestionNoTrueAnswerException;
 import com.gosciminski.testsapp.exceptions.QuestionNotEnoughAnswersException;
 import com.gosciminski.testsapp.exceptions.QuestionNotFoundException;
-import com.gosciminski.testsapp.model.Answer;
 import com.gosciminski.testsapp.model.Question;
 import com.gosciminski.testsapp.model.User;
 import com.gosciminski.testsapp.repisitory.QuestionRepository;
@@ -31,6 +31,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
@@ -51,6 +52,10 @@ public class QuestionServiceJpaTest {
     @InjectMocks
     QuestionServiceJpa questionServiceJpa;
 
+    @Spy
+    @InjectMocks
+    QuestionServiceJpa questionServiceJpaSpy;
+
     List<Question> questions = new LinkedList<>();
 
     @BeforeEach
@@ -60,7 +65,7 @@ public class QuestionServiceJpaTest {
     }
 
     @Test
-    public void findAll_SounldResturnAll(){
+    public void findAll_ShouldReturnAll(){
 
         when(questionRepositoryMock.findAll()).thenReturn(questions);
         when(questionToQuestionDisplayDtoMock.convert(any(Question.class))).thenReturn(new QuestionDisplayDto());
@@ -137,14 +142,55 @@ public class QuestionServiceJpaTest {
     }
 
     @Test
-    public void findById_ShoultThrowQuestionNotFoundException(){
+    public void findById_ShouldThrowQuestionNotFoundException(){
 
-        when(userServiceMock.getUser()).thenReturn(new User());
-        when(questionRepositoryMock.findById(any(Long.class))).thenReturn(Optional.empty());
+        User user = new User();
+        Question question = new Question();
+        question.setUser(null);
+        question.setId(1L);
+
+        when(userServiceMock.getUser()).thenReturn(user);
+        when(questionRepositoryMock.findById(1L)).thenReturn(Optional.of(question));
 
         Assertions.assertThrows(QuestionNotFoundException.class,()->{
             questionServiceJpa.findById(1L);
         });
+
+        verify(userServiceMock, atLeastOnce()).getUser();
+        verify(questionRepositoryMock, atLeastOnce()).findById(1L);
+    }
+
+    @Test
+    public void findById_ShouldFindQuestion(){
+
+        User user = new User();
+        Question question = new Question();
+        question.setId(1L);
+        question.setUser(user);
+
+        when(userServiceMock.getUser()).thenReturn(user);
+        when(questionRepositoryMock.findById(1L)).thenReturn(Optional.of(question));
+
+        Question result = questionServiceJpa.findById(1L);
+
+        assertNotNull(result);
+        assertEquals(question.getId(), result.getId());
+        assertEquals(question.getUser(), result.getUser());
+
+        verify(userServiceMock, atLeastOnce()).getUser();
+        verify(questionRepositoryMock, atLeastOnce()).findById(1L);
+    }
+
+    @Test
+    public void findQuestionDisplayDtoByid_shouldFind(){
+
+        doReturn(new Question()).when(questionServiceJpaSpy).findById(1L);
+        when(questionToQuestionDisplayDtoMock.convert(any(Question.class))).thenReturn(new QuestionDisplayDto());
+
+        QuestionDisplayDto result = questionServiceJpaSpy.findQuestionDisplayDtoByid(1L);
+
+        assertNotNull(result);
+        verify(questionToQuestionDisplayDtoMock, atLeastOnce()).convert(any(Question.class));
     }
 
 }
