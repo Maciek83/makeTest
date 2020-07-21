@@ -26,12 +26,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userService.findUserByName(username);
 
 		if (user == null) {
-			throw new UsernameNotFoundException("User not found");
+			throw new UsernameNotFoundException("User not found " + username);
 		} else {
 			PdfUserDetails pdfUserDetails = new PdfUserDetails(user);
 			return pdfUserDetails;
 		}
 
-    }
+	}
+	
     
 }

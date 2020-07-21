@@ -3,7 +3,6 @@ package com.gosciminski.testsapp.service.jpaimpl;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.gosciminski.testsapp.conf.PdfUserDetails;
 import com.gosciminski.testsapp.conf.WebMvcConfiguration;
 import com.gosciminski.testsapp.dto.create.UserCreatorDto;
 import com.gosciminski.testsapp.enums.RoleType;
@@ -15,6 +14,7 @@ import com.gosciminski.testsapp.service.UserService;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Service("userService")
 public class UserServiceJpa implements UserService {
@@ -50,7 +50,10 @@ public class UserServiceJpa implements UserService {
 
 	@Override
 	public User getUser() throws UserNotFoundException {
-		User user = ((PdfUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails) principal).getUsername();
+
+		User user = findUserByName(username);
 
 		if(user == null){
 			throw new UserNotFoundException();

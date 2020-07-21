@@ -1,7 +1,7 @@
 package com.gosciminski.testsapp.conf;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.gosciminski.testsapp.model.User;
@@ -12,7 +12,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class PdfUserDetails implements UserDetails {
 
+    private static final long serialVersionUID = 1L;
     private User user;
+
+    List<GrantedAuthority> authorities = new LinkedList<>();
 
     public PdfUserDetails(User user) {
 		this.user = user;
@@ -28,7 +31,6 @@ public class PdfUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
 
 		user.getRoles().stream().forEach(r -> authorities.add(new SimpleGrantedAuthority(r.getRoleType().toString())));
 

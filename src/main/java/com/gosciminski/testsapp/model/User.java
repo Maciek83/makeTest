@@ -54,4 +54,6 @@ public class User extends BaseEntity {
         this.active = active;
         this.roles = roles;
     }
+
+    
 }

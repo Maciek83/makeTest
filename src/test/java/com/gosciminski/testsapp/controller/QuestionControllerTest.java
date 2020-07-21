@@ -1,6 +1,10 @@
 package com.gosciminski.testsapp.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gosciminski.testsapp.dto.create.AnswerCreateDto;
@@ -14,6 +18,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,11 +26,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import static org.mockito.BDDMockito.given;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-
 
 @ExtendWith(MockitoExtension.class)
 public class QuestionControllerTest {
@@ -67,7 +67,6 @@ public class QuestionControllerTest {
     }
 
     @Test
-    @WithMockUser("maciek")
     public void save() throws Exception {
 
         given(questionServiceMock.save(any())).willReturn(validDisplayQuestion);
@@ -81,7 +80,6 @@ public class QuestionControllerTest {
     }
 
     @Test
-    @WithMockUser("maciek")
     public void findById() throws Exception {
         given(questionServiceMock.findQuestionDisplayDtoByid(1L)).willReturn(validDisplayQuestion);
 
@@ -91,4 +89,5 @@ public class QuestionControllerTest {
         assertEquals(response.getStatus(), HttpStatus.OK.value());
         assertEquals(response.getContentAsString(), jsonQuestionDisplayDto.write(validDisplayQuestion).getJson());
     }
+
 }
