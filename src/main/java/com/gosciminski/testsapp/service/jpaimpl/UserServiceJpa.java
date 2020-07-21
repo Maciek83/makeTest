@@ -19,11 +19,11 @@ import org.springframework.stereotype.Service;
 @Service("userService")
 public class UserServiceJpa implements UserService {
     private final UserRepository userRepository;
-    private final WebMvcConfiguration webMvcConfig;
+	private final WebMvcConfiguration webMvcConfig;
 
     public UserServiceJpa(UserRepository userRepository, WebMvcConfiguration webMvcConfig) {
         this.userRepository = userRepository;
-        this.webMvcConfig = webMvcConfig;
+		this.webMvcConfig = webMvcConfig;
     }
 
 	@Override
