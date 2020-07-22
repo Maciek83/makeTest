@@ -42,7 +42,6 @@ public class QuestionController {
         return new ResponseEntity<>(questionService.findQuestionDisplayDtoByid(id), HttpStatus.OK);
     }
 
-    @Secured("USER")
     @PostMapping(value = "/question")
     public ResponseEntity<QuestionDisplayDto> save(@Valid @RequestBody QuestionCreateDto questionCreateDto)
     throws QuestionNotEnoughAnswersException, QuestionNoTrueAnswerException {
