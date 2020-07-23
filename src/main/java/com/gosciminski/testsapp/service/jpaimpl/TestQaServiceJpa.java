@@ -70,6 +70,7 @@ public class TestQaServiceJpa implements TestQaService {
             questions.add(questionFromDb);
         });
         newTest.setQuestions(questions);
+        newTest.setUser(userService.getUser());
 
         TestQa savedTest = testRepository.save(newTest);
         return testQaToTestQaDisplayDto.convert(savedTest);

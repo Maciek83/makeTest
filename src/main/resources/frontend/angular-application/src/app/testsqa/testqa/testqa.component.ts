@@ -28,4 +28,8 @@ export class TestqaComponent implements OnInit {
     this.router.navigate(['/edittest/'+id]);
   }
 
+  share(id: number){
+    this.testService.shareTest(id).subscribe();
+  }
+
 }

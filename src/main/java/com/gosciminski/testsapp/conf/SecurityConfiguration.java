@@ -55,7 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .antMatchers("api/question/{id}").hasRole("USER")
         .antMatchers("api/test").hasRole("USER")
         .antMatchers("api/test/{id}").hasRole("USER")
-        .antMatchers("api/testshare/{id}").hasRole("USER")
+        .antMatchers("api/testshare").hasRole("USER")
         .and()
         .httpBasic().authenticationEntryPoint(authenticationEntryPoint)
         .and()

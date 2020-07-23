@@ -8,7 +8,6 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.gosciminski.testsapp.conf.PdfUserDetails;
 import com.gosciminski.testsapp.conf.WebMvcConfiguration;
 import com.gosciminski.testsapp.dto.create.UserCreatorDto;
 import com.gosciminski.testsapp.model.User;
