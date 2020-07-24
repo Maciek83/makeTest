@@ -88,4 +88,5 @@ public class UserServiceJpaTest {
         verify(userServiceJpaSpy, atLeastOnce()).findUserByName(any(String.class));
         verify(userRepositoryMock, atLeastOnce()).save(any(User.class));
     }
+
 }

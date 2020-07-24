@@ -5,9 +5,9 @@ import java.util.Random;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SercerGenerator {
+public class SecretGeneratorImp implements SecretGenerator {
     
-    public String generateSecret(){
+    public String generateSecret() {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
         int targetStringLength = 10;
