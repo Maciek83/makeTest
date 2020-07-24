@@ -140,6 +140,7 @@ public class TestQaServiceJpaTest {
 
         when(questionServiceMock.findById(any(Long.class))).thenReturn(new Question());
         when(testRepositoryMock.save(any(TestQa.class))).thenReturn(new TestQa());
+        when(userServiceMock.getUser()).thenReturn(new User());
         when(testQaToTestQaDisplayDtoMock.convert(any(TestQa.class))).thenReturn(new TestQaDisplayDto());
 
         TestQaDisplayDto result = testQaServiceJap.save(createDto);
@@ -148,6 +149,7 @@ public class TestQaServiceJpaTest {
 
         verify(questionServiceMock, times(2)).findById(any(Long.class));
         verify(testRepositoryMock, atLeastOnce()).save(any(TestQa.class));
+        verify(userServiceMock, atLeastOnce()).getUser();
         verify(testQaToTestQaDisplayDtoMock, atLeastOnce()).convert(any(TestQa.class));
     }
 

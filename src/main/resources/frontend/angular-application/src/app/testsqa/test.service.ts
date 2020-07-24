@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
-import { TestDisplayModel, TestAddModel, TestDisplaySolveModel } from './test.models';
+import { TestDisplayModel, TestAddModel, TestDisplaySolveModel, ShareTestModel } from './test.models';
 import { Observable } from 'rxjs';
 
 @Injectable({providedIn:'root'})
@@ -23,8 +23,8 @@ export class TestService {
         return this.http.post<TestDisplayModel>('api/test', addTestModel);
     }
 
-    shareTest(id: number): Observable<TestDisplaySolveModel>{
-        return this.http.post<TestDisplaySolveModel>('api/testshare', id);
+    shareTest(model: ShareTestModel): Observable<TestDisplaySolveModel>{
+        return this.http.post<TestDisplaySolveModel>('api/testshare', model);
     }
 
     updateTest(addTestModel: TestAddModel, id:number): Observable<TestDisplayModel>{

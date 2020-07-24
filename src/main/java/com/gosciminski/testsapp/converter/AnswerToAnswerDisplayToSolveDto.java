@@ -11,7 +11,8 @@ public class AnswerToAnswerDisplayToSolveDto implements Converter<Answer, Answer
 
 	@Override
 	public AnswerDisplayToSolveDto convert(Answer source) {
-        AnswerDisplayToSolveDto result = new AnswerDisplayToSolveDto();
+		AnswerDisplayToSolveDto result = new AnswerDisplayToSolveDto();
+		result.setId(source.getId());
         result.setContent(source.getContent());
 		return result;
 	}

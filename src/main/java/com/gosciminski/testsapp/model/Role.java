@@ -33,25 +33,4 @@ public class Role extends BaseEntity{
 	@JsonBackReference
     private Set<User> users = new HashSet<>();
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((roleType == null) ? 0 : roleType.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Role other = (Role) obj;
-        if (roleType != other.roleType)
-            return false;
-        return true;
-    }
 }

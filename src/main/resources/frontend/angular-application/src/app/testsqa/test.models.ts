@@ -15,3 +15,7 @@ export interface TestDisplaySolveModel{
 export class TestAddModel{
     constructor(public name: string, public questionsIds: number[]){}
 }
+
+export class ShareTestModel{
+    constructor(public id: number){}
+}
