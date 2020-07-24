@@ -12,6 +12,11 @@ export interface TestDisplaySolveModel{
     questionDisplayDto:QuestionDisplaySolveModel[]
 }
 
+export interface TestShareDisplayModel{
+    name:string,
+    shareUrl:string
+}
+
 export class TestAddModel{
     constructor(public name: string, public questionsIds: number[]){}
 }

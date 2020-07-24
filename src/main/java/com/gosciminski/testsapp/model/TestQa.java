@@ -7,8 +7,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -43,7 +43,7 @@ public class TestQa extends BaseEntity{
     private Set<Question> questions = new HashSet<>();
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-    @OneToOne(cascade = CascadeType.ALL)
-    private TestQaShared testQaShared;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "test")
+    private Set<TestQaShared> testsQaShared = new HashSet<>();
     
 }

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
-import { TestDisplayModel, TestAddModel, TestDisplaySolveModel, ShareTestModel } from './test.models';
+import { TestDisplayModel, TestAddModel, TestDisplaySolveModel, ShareTestModel, TestShareDisplayModel } from './test.models';
 import { Observable } from 'rxjs';
 
 @Injectable({providedIn:'root'})
@@ -12,6 +12,10 @@ export class TestService {
 
     fetchTests(): Observable<TestDisplayModel[]>{
         return this.http.get<TestDisplayModel[]>('api/test');
+    }
+
+    fetchTestsShare(): Observable<TestShareDisplayModel[]>{
+        return this.http.get<TestShareDisplayModel[]>('api/testshare');
     }
 
     fetchTestToEdit(id: number) {

@@ -13,6 +13,7 @@ import { TestResolver } from './testsqa/test.resolver';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './services/auth.guard';
+import { TestShareResolver } from './testsqa/testshare.resolver';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -22,7 +23,7 @@ const appRoutes: Routes = [
   {path: 'question', component:QuestionsComponent, resolve:{questions: QuestionsResolver}, canActivate:[AuthGuard]},
   {path: 'addquestion', component:AddquestionComponent, canActivate:[AuthGuard]},
   {path: 'editquestion/:id', component:EditquestionComponent, canActivate:[AuthGuard]},
-  {path: 'test', component:TestsqaComponent, resolve:{tests: TestResolver, questions: QuestionsResolver}, canActivate:[AuthGuard]},
+  {path: 'test', component:TestsqaComponent, resolve:{tests: TestResolver, questions: QuestionsResolver, testsShare: TestShareResolver}, canActivate:[AuthGuard]},
   {path: 'addtest', component:AddtestqaComponent, resolve:{questions: QuestionsResolver}, canActivate:[AuthGuard]},
   {path: 'edittest/:id', component:EdittestqaComponent, resolve:{questions: QuestionsResolver}, canActivate:[AuthGuard]}
 ]
