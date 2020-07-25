@@ -1,0 +1,19 @@
+<div class='row'>
+    <div class='column'>
+      <mat-table [dataSource]="testsShare" class="mat-elevation-z8">
+  
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="url">
+          <mat-header-cell *matHeaderCellDef> Url </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.shareUrl}} </mat-cell>
+        </ng-container>
+  
+        <mat-header-row *matHeaderRowDef="displayedColumnsShared"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumnsShared;"></mat-row>
+      </mat-table>
+    </div>
+  </div>

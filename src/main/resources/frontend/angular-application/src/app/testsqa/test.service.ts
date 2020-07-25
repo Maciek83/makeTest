@@ -14,10 +14,6 @@ export class TestService {
         return this.http.get<TestDisplayModel[]>('api/test');
     }
 
-    fetchTestsShare(): Observable<TestShareDisplayModel[]>{
-        return this.http.get<TestShareDisplayModel[]>('api/testshare');
-    }
-
     fetchTestToEdit(id: number) {
         this.http.get<TestDisplayModel>('api/test/' + id)
         .subscribe(data => this.selectedTest = data);

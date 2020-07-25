@@ -10,6 +10,7 @@
 <mat-menu #beforeMenu="matMenu" xPosition="before">
   <button mat-menu-item routerLink="/test">View tests</button>
   <button mat-menu-item routerLink="/addtest">Compose test</button>
+  <button mat-menu-item routerLink="/testshare">View shared tests</button>
 </mat-menu>
 
 <button *ngIf="isAuthenticated()" mat-button (click)="logout()">Logout</button>
