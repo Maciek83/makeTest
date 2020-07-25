@@ -21,6 +21,7 @@ import { EdittestqaComponent } from './testsqa/edittestqa/edittestqa.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { TestqashareComponent } from './testsqa/testqashare/testqashare.component';
+import { TestqadisplaytosolveComponent } from './testsqa/testqadisplaytosolve/testqadisplaytosolve.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { TestqashareComponent } from './testsqa/testqashare/testqashare.componen
     EdittestqaComponent,
     LoginComponent,
     RegisterComponent,
-    TestqashareComponent
+    TestqashareComponent,
+    TestqadisplaytosolveComponent
   ],
   imports: [
     BrowserModule,

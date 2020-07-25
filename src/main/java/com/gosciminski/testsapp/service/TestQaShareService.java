@@ -8,4 +8,5 @@ import com.gosciminski.testsapp.dto.display.TestQaSharedDisplayDto;
 public interface TestQaShareService {
     TestQaDisplayToSolveDto save(Long id);
     List<TestQaSharedDisplayDto> findAllByUser(String appUrl);
+    TestQaDisplayToSolveDto findTestToSolve(Long id, String secret);
 }

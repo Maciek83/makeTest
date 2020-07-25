@@ -10,6 +10,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShareTestDto {
+public class ShareTestCreateDto {
     private String id;
 }

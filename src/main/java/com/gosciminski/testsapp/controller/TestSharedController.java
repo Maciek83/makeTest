@@ -2,7 +2,7 @@ package com.gosciminski.testsapp.controller;
 
 import java.util.List;
 
-import com.gosciminski.testsapp.dto.create.ShareTestDto;
+import com.gosciminski.testsapp.dto.create.ShareTestCreateDto;
 import com.gosciminski.testsapp.dto.display.TestQaDisplayToSolveDto;
 import com.gosciminski.testsapp.dto.display.TestQaSharedDisplayDto;
 import com.gosciminski.testsapp.service.TestQaShareService;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -21,21 +22,29 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping("/api")
 public class TestSharedController {
 
-    private final TestQaShareService testQaShareService;
+  private final TestQaShareService testQaShareService;
 
-    public TestSharedController(TestQaShareService testQaShareService) {
-		this.testQaShareService = testQaShareService;
-    }
-    
-    @GetMapping(value = "/testshare")
-    public ResponseEntity<List<TestQaSharedDisplayDto>> findAll(){
-      String appUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
-      return new ResponseEntity<>(testQaShareService.findAllByUser(appUrl), HttpStatus.OK);
-    }
-    
-    @PostMapping(value = "/testshare")
-    public ResponseEntity<TestQaDisplayToSolveDto> createTest(@RequestBody @Validated ShareTestDto shareTestDto) {
-        Long id = Long.parseLong(shareTestDto.getId());
-        return new ResponseEntity<>(testQaShareService.save(id), HttpStatus.CREATED);
-    }
+  public TestSharedController(TestQaShareService testQaShareService) {
+    this.testQaShareService = testQaShareService;
+  }
+
+  @GetMapping(value = "/testshare")
+  public ResponseEntity<List<TestQaSharedDisplayDto>> findAll() {
+    String appUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+    return new ResponseEntity<>(testQaShareService.findAllByUser(appUrl), HttpStatus.OK);
+  }
+
+  @GetMapping(value = "/testsharesolve")
+  public ResponseEntity<TestQaDisplayToSolveDto> findTestToSolve(@RequestParam(name="id",required = true) String id,
+      @RequestParam(name="secret",required = true) String secret) {
+    Long idValue = Long.parseLong(id);
+    return new ResponseEntity<>(testQaShareService.findTestToSolve(idValue, secret), HttpStatus.OK);
+  }
+
+  @PostMapping(value = "/testshare")
+  public ResponseEntity<TestQaDisplayToSolveDto> createTest(
+      @RequestBody @Validated ShareTestCreateDto shareTestCreateDto) {
+    Long id = Long.parseLong(shareTestCreateDto.getId());
+    return new ResponseEntity<>(testQaShareService.save(id), HttpStatus.CREATED);
+  }
 }

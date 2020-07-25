@@ -7,6 +7,7 @@ import com.gosciminski.testsapp.converter.TestQaSharedToTestQaSharedDisplayDto;
 import com.gosciminski.testsapp.converter.TestQaToTestQaDisplayToSolveDto;
 import com.gosciminski.testsapp.dto.display.TestQaDisplayToSolveDto;
 import com.gosciminski.testsapp.dto.display.TestQaSharedDisplayDto;
+import com.gosciminski.testsapp.exceptions.TestQaSharedNotFoundException;
 import com.gosciminski.testsapp.model.TestQa;
 import com.gosciminski.testsapp.model.TestQaShared;
 import com.gosciminski.testsapp.model.User;
@@ -64,5 +65,11 @@ public class TestQaShareServiceJpa implements TestQaShareService {
         return testsDto;
     }
 
+    @Override
+    public TestQaDisplayToSolveDto findTestToSolve(Long id, String secret) {
+        TestQaShared testShared = testQaSharedRepository.findBySecretAndId(secret, id).orElseThrow(() -> new TestQaSharedNotFoundException(id ,secret));
+        TestQa test = testShared.getTest();
+        return testQaToTestQaDisplayToSolveDto.convert(test);
+    }
     
 }

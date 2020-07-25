@@ -15,12 +15,14 @@ import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './services/auth.guard';
 import { TestShareResolver } from './testsqa/testshare.resolver';
 import { TestqashareComponent } from './testsqa/testqashare/testqashare.component';
+import { TestqadisplaytosolveComponent } from './testsqa/testqadisplaytosolve/testqadisplaytosolve.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component:HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
+  {path: 'testsolve', component: TestqadisplaytosolveComponent},
   {path: 'testshare', component: TestqashareComponent, resolve:{testsShare: TestShareResolver}, canActivate:[AuthGuard]},
   {path: 'question', component:QuestionsComponent, resolve:{questions: QuestionsResolver}, canActivate:[AuthGuard]},
   {path: 'addquestion', component:AddquestionComponent, canActivate:[AuthGuard]},
