@@ -18,6 +18,10 @@ export interface QuestionDisplaySolveModel{
     answers:AnswerDisplaySolveModel[]
 }
 
+export class QuestionSolveModel{
+    constructor(public id:number, public answers: AnswerSolveModel[]){}
+}
+
 export interface AnswerDisplaySolveModel{
     id:number,
     content:string
@@ -37,4 +41,8 @@ export class AnswerCreateModel{
 
 export class AnswerEditModel{
     constructor(public id:number, public correct:boolean, public content:string){};
+}
+
+export class AnswerSolveModel{
+    constructor(public id:number, public correct:boolean){}
 }
