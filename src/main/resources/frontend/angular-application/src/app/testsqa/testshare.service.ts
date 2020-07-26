@@ -5,9 +5,11 @@ import { TestShareDisplayModel, TestDisplaySolveModel } from './test.models';
 import { ActivatedRoute } from '@angular/router';
 
 @Injectable({providedIn:'root'})
-export class TestShareService{
-    
-    constructor(private http: HttpClient) { };
+export class TestShareService {
+
+
+    constructor(private http: HttpClient, private route: ActivatedRoute) { }
+
 
     fetchTestsShare(): Observable<TestShareDisplayModel[]>{
         return this.http.get<TestShareDisplayModel[]>('api/testshare');
@@ -16,7 +18,7 @@ export class TestShareService{
     getTestToSolve(id: string, secret: string): Observable<TestDisplaySolveModel>{
         
         let params = new HttpParams();
-        params = params.append('secret',secret);
+        params = params.append('secret', secret);
         params = params.append('id', id);
 
         return this.http.get<TestDisplaySolveModel>('api/testsharesolve',
