@@ -12,7 +12,7 @@
           <input type="text" id="content" formControlName="content" matInput> 
         </mat-form-field> 
         <mat-checkbox formControlName="correct">Is Correct</mat-checkbox>
-        <button mat-fab color="warn" class="marginleft20p" type="button" (click)="onRemoveQuestion(i)">Remove</button>
+        <button mat-fab color="warn" class="marginleft20px" type="button" (click)="onRemoveQuestion(i)">Remove</button>
         <mat-error *ngIf="getControls()[i].invalid && getControls()[i].touched">Please enter answer content.</mat-error>
       </div>
     </div>
