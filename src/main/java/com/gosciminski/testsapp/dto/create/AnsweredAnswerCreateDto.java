@@ -1,8 +1,5 @@
 package com.gosciminski.testsapp.dto.create;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -15,11 +12,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TestQaCreateDto {
-    
+public class AnsweredAnswerCreateDto {
+
     @NotNull
     @NotEmpty
-    private String name;
+    private Long id;
     
-    private Set<Long> questionsIds = new HashSet<>();
+    @NotNull
+    private Boolean correct;
 }

@@ -57,6 +57,7 @@ public class QuestionServiceJpa implements QuestionService {
         }
 
         Question tosave = questionCreateDtoToQuestion.convert(createDto);
+        tosave.getAnswers().forEach(a -> a.setUser(userService.getUser()));
         tosave.setUser(userService.getUser());
         Question savedInDb = questionRepository.save(tosave);
         return questionToQuestionDisplayDto.convert(savedInDb);

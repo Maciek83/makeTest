@@ -19,7 +19,7 @@ export interface QuestionDisplaySolveModel{
 }
 
 export class QuestionSolveModel{
-    constructor(public id:number, public answers: AnswerSolveModel[]){}
+    constructor(public id:number, public answeredAnswers: AnsweredAnswerModel[]){}
 }
 
 export interface AnswerDisplaySolveModel{
@@ -43,6 +43,6 @@ export class AnswerEditModel{
     constructor(public id:number, public correct:boolean, public content:string){};
 }
 
-export class AnswerSolveModel{
+export class AnsweredAnswerModel{
     constructor(public id:number, public correct:boolean){}
 }

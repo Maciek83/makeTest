@@ -15,11 +15,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TestQaCreateDto {
-    
+public class QuestionSolvedCreateDto {
+
     @NotNull
     @NotEmpty
-    private String name;
-    
-    private Set<Long> questionsIds = new HashSet<>();
+    private Long id;
+
+    private Set<AnsweredAnswerCreateDto> answeredAnswers = new HashSet<>();
+
 }

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TestDisplaySolveModel, TestSoveModel } from '../test.models';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { QuestionSolveModel, AnswerSolveModel } from 'src/app/questions/question.models';
+import { QuestionSolveModel, AnsweredAnswerModel } from 'src/app/questions/question.models';
+import { TestSolveService } from '../testsolve.service';
 
 @Component({
   selector: 'app-testqadisplaytosolve',
@@ -15,7 +16,7 @@ export class TestqadisplaytosolveComponent implements OnInit {
   testSolveForm: FormGroup;
   solveModel: TestSoveModel;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private testSolveService: TestSolveService) { }
 
   ngOnInit(): void {
     this.solveModel = new TestSoveModel("",0,[]);
@@ -74,12 +75,13 @@ export class TestqadisplaytosolveComponent implements OnInit {
       let answers = (<FormArray>q.get('answers')).controls;
       let questionSolveModel = new QuestionSolveModel(q.value.id,[]);
       answers.forEach(a =>{
-          questionSolveModel.answers.push(new AnswerSolveModel(a.value.id, a.value.correct))
+          questionSolveModel.answeredAnswers.push(new AnsweredAnswerModel(a.value.id, a.value.correct))
       })
       
       this.solveModel.questions.push(questionSolveModel);
     });
     
     console.log(this.solveModel);
+    this.testSolveService.solveTest(this.solveModel).subscribe();
   }
 }
