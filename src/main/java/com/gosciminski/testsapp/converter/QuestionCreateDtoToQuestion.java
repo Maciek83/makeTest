@@ -1,8 +1,5 @@
 package com.gosciminski.testsapp.converter;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.gosciminski.testsapp.dto.create.QuestionCreateDto;
 import com.gosciminski.testsapp.model.Answer;
 import com.gosciminski.testsapp.model.Question;

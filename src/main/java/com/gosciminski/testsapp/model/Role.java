@@ -26,7 +26,9 @@ import lombok.Setter;
 @Table(name = "role")
 public class Role extends BaseEntity{
 
-    @Enumerated(EnumType.STRING)
+	private static final long serialVersionUID = -4590075028522537182L;
+
+	@Enumerated(EnumType.STRING)
 	private RoleType roleType;
 	
 	@ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)

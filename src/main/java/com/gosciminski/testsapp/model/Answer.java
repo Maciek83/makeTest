@@ -20,15 +20,23 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name="answer")
 public class Answer extends BaseEntity {
+    
     private static final long serialVersionUID = -318979059202528181L;
+
     @Column(name = "content")
     @NotNull
     @NotEmpty
     private String content;
+
+    @Column(name = "correct")
     @NotNull
     private Boolean correct;
+
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private Question question;
+
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 

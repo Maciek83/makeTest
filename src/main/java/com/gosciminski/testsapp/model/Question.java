@@ -28,6 +28,8 @@ import lombok.Setter;
 @Table(name = "question")
 public class Question extends BaseEntity {
     
+    private static final long serialVersionUID = 6657243240148536113L;
+
     @Column(name = "content")
     @NotNull
     @NotEmpty
@@ -39,6 +41,7 @@ public class Question extends BaseEntity {
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "question")
     private Set<Answer> answers = new HashSet<>();
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 

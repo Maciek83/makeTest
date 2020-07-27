@@ -27,9 +27,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "user")
 public class User extends BaseEntity {
+
+    private static final long serialVersionUID = -3060299873770067757L;
+
     @Column(unique = true)
     private String email;
     private String password;
+    
     @Column(unique = true)
     private String name;
     private Integer active;

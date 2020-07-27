@@ -12,7 +12,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -29,11 +28,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "testqa")
 public class TestQa extends BaseEntity{
-    
+
+    private static final long serialVersionUID = -7721796065516111088L;
+
     @Column(name = "name")
     @NotNull
     @NotEmpty
     private String name;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(
         name="test_question",
@@ -41,8 +43,11 @@ public class TestQa extends BaseEntity{
         inverseJoinColumns = @JoinColumn(name = "testqa_id")
     )
     private Set<Question> questions = new HashSet<>();
+
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "test")
     private Set<TestQaShared> testsQaShared = new HashSet<>();
     
