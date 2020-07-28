@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TestDisplaySolveModel, TestSoveModel } from '../test.models';
+import { TestDisplaySolveModel, TestSoveModel, TestSoveInfoModel } from '../test.models';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { QuestionSolveModel, AnsweredAnswerModel } from 'src/app/questions/question.models';
 import { TestSolveService } from '../testsolve.service';
@@ -81,7 +81,9 @@ export class TestqadisplaytosolveComponent implements OnInit {
       this.solveModel.questions.push(questionSolveModel);
     });
     
-    console.log(this.solveModel);
-    this.testSolveService.solveTest(this.solveModel).subscribe();
+    this.testSolveService.solveTest(this.solveModel).subscribe
+    (
+      d=> console.log(d)
+    );
   }
 }

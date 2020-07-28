@@ -46,3 +46,14 @@ export class AnswerEditModel{
 export class AnsweredAnswerModel{
     constructor(public id:number, public correct:boolean){}
 }
+
+export interface AnswerDisplaySolveInfoModel{
+    content:string,
+    correct:boolean
+}
+
+export interface QuestionSolveInfoModel{
+    content:string,
+    correct:boolean,
+    answerAnswered:AnswerDisplaySolveInfoModel[]
+}

@@ -5,7 +5,6 @@ import { TestShareService } from './testshare.service';
 
 @Injectable({providedIn:'root'})
 export class TestSolveResolver implements Resolve<TestDisplaySolveModel>{
-
     constructor(private testShareService: TestShareService){}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): TestDisplaySolveModel | import("rxjs").Observable<TestDisplaySolveModel> | Promise<TestDisplaySolveModel> {
@@ -13,5 +12,4 @@ export class TestSolveResolver implements Resolve<TestDisplaySolveModel>{
         let secret = route.queryParamMap.get('secret');
         return this.testShareService.getTestToSolve(id, secret);
     }
-    
 }

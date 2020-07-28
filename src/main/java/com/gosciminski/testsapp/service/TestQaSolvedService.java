@@ -1,7 +1,8 @@
 package com.gosciminski.testsapp.service;
 
 import com.gosciminski.testsapp.dto.create.TestSolvedCreateDto;
+import com.gosciminski.testsapp.dto.display.TestSolvedInfoDto;
 
 public interface TestQaSolvedService {
-    void save(TestSolvedCreateDto source);
+    TestSolvedInfoDto save(TestSolvedCreateDto source);
 }

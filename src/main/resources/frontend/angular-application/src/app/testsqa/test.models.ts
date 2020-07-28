@@ -1,4 +1,4 @@
-import { QuestionDisplayModel, QuestionDisplaySolveModel, QuestionSolveModel } from '../questions/question.models';
+import { QuestionDisplayModel, QuestionDisplaySolveModel, QuestionSolveModel, QuestionSolveInfoModel } from '../questions/question.models';
 
 export interface TestDisplayModel{
     id:number,
@@ -27,4 +27,10 @@ export class ShareTestModel{
 
 export class TestSoveModel{
     constructor(public name:string ,public id:number, public questions:QuestionSolveModel[]){}
+}
+
+export interface TestSoveInfoModel{
+    name:string,
+    userName:string,
+    questionSolved:QuestionSolveInfoModel[]
 }

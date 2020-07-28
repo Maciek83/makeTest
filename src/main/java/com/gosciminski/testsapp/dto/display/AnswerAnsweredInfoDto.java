@@ -1,6 +1,4 @@
-package com.gosciminski.testsapp.dto.create;
-
-import javax.validation.constraints.NotNull;
+package com.gosciminski.testsapp.dto.display;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,11 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AnsweredAnswerCreateDto {
-
-    @NotNull
-    private Long id;
-    
-    @NotNull
+public class AnswerAnsweredInfoDto {
+    private String content;
     private Boolean correct;
 }

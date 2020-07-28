@@ -14,6 +14,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -48,46 +49,4 @@ public class Answer extends BaseEntity {
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "answer")
     private Set<AnsweredAnswer> answeredAnswers = new HashSet<>();
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ((content == null) ? 0 : content.hashCode());
-        result = prime * result + ((correct == null) ? 0 : correct.hashCode());
-        result = prime * result + ((question == null) ? 0 : question.hashCode());
-        result = prime * result + ((user == null) ? 0 : user.hashCode());
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (!super.equals(obj))
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Answer other = (Answer) obj;
-        if (content == null) {
-            if (other.content != null)
-                return false;
-        } else if (!content.equals(other.content))
-            return false;
-        if (correct == null) {
-            if (other.correct != null)
-                return false;
-        } else if (!correct.equals(other.correct))
-            return false;
-        if (question == null) {
-            if (other.question != null)
-                return false;
-        } else if (!question.equals(other.question))
-            return false;
-        if (user == null) {
-            if (other.user != null)
-                return false;
-        } else if (!user.equals(other.user))
-            return false;
-        return true;
-    }
 }
