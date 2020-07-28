@@ -18,7 +18,6 @@ import lombok.Setter;
 public class QuestionSolvedCreateDto {
 
     @NotNull
-    @NotEmpty
     private Long id;
 
     private Set<AnsweredAnswerCreateDto> answeredAnswers = new HashSet<>();

@@ -139,4 +139,9 @@ public class QuestionServiceJpa implements QuestionService {
         return questionsDisplayDto;
     }
 
+    @Override
+    public Question findByIdAnonymus(Long id) throws QuestionNotFoundException {
+        return questionRepository.findById(id).orElseThrow(() -> new QuestionNotFoundException(id));
+    }
+
 }

@@ -15,7 +15,6 @@ import lombok.Setter;
 public class AnsweredAnswerCreateDto {
 
     @NotNull
-    @NotEmpty
     private Long id;
     
     @NotNull

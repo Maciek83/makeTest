@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
@@ -32,9 +33,10 @@ public class TestQaSolved extends BaseEntity{
     @NotEmpty
     private String name;
 
-    @NotNull
-    private TestQa test;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private TestQa testQa;
     
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "testQaSolved")
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "testQaSolved")
     private Set<QuestionSolved> questioSolved = new HashSet<>();
+
 }

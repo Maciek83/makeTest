@@ -125,4 +125,14 @@ public class TestQaServiceJpa implements TestQaService {
         return testQaToTestQaDisplayDto.convert(testAfterSaving);
     }
 
+    @Override
+    public TestQa findByIdAnonymus(Long id) throws TestQaNotFoundException {
+        return testRepository.findById(id).orElseThrow(()-> new TestQaNotFoundException(id));
+    }
+
+    @Override
+    public TestQa save(TestQa testQa) {
+        return testRepository.save(testQa);
+    }
+
 }

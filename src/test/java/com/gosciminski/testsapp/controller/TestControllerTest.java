@@ -95,7 +95,7 @@ public class TestControllerTest {
 
     @Test
     public void createTest_shouldCreate() throws Exception {
-        given(testQaServiceMock.save(any())).willReturn(testQaDisplayDto);
+        given(testQaServiceMock.save(any(TestQaCreateDto.class))).willReturn(testQaDisplayDto);
 
         MockHttpServletResponse response = mockMvc.perform(post("/api/test/")
                 .contentType(MediaType.APPLICATION_JSON).content(jsonTestQaCreateDto.write(testCreator).getJson()))

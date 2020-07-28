@@ -18,8 +18,7 @@ import lombok.Setter;
 public class TestSolvedCreateDto {
 
     @NotNull
-    @NotEmpty
-    private String id;
+    private Long id;
 
     @NotNull
     @NotEmpty

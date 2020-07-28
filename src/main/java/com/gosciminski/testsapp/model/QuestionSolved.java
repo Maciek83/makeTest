@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -28,15 +27,13 @@ public class QuestionSolved extends BaseEntity{
     private static final long serialVersionUID = -3611243387988109046L;
 
     @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
     private Question question;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "quesionSolved")
     private Set<AnsweredAnswer> answerAnswered = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private TestQaSolved testQaSolved;
 
-    @Column(name = "correct")
-    @NotNull
-    private Boolean correct;
 }

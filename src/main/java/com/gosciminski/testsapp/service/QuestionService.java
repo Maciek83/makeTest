@@ -14,6 +14,7 @@ public interface QuestionService {
     List<QuestionDisplayDto> findAll();
     List<QuestionDisplayDto> findAllByUser();
     Question findById(Long id) throws QuestionNotFoundException;
+    Question findByIdAnonymus(Long id) throws QuestionNotFoundException;
     QuestionDisplayDto findQuestionDisplayDtoByid(Long id);
     QuestionDisplayDto save(QuestionCreateDto createDto) throws QuestionNotEnoughAnswersException, QuestionNoTrueAnswerException;
     QuestionDisplayDto update(Long id, QuestionEditDto editDto) throws QuestionNotEnoughAnswersException, QuestionNoTrueAnswerException;

@@ -2,6 +2,7 @@ package com.gosciminski.testsapp.controller;
 
 import com.gosciminski.testsapp.dto.create.TestSolvedCreateDto;
 import com.gosciminski.testsapp.dto.display.TestQaDisplayToSolveDto;
+import com.gosciminski.testsapp.service.TestQaSolvedService;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -14,9 +15,17 @@ import org.springframework.http.HttpStatus;
 @RestController
 @RequestMapping("/api")
 public class TestSolvedController {
+
+    private final TestQaSolvedService testQaSolvedService;
+    
+    public TestSolvedController(TestQaSolvedService testQaSolvedService) {
+		this.testQaSolvedService = testQaSolvedService;
+	}
     
     @PostMapping(value = "/testsolved")
-    public ResponseEntity<TestSolvedCreateDto> solveTest( @RequestBody @Validated TestSolvedCreateDto testSolved) {
+    public ResponseEntity<TestSolvedCreateDto> solveTest(@RequestBody @Validated TestSolvedCreateDto testSolved) {
+        testQaSolvedService.save(testSolved);
         return new ResponseEntity(testSolved, HttpStatus.OK);
     }
+	
 }

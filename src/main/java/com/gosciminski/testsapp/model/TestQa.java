@@ -50,5 +50,8 @@ public class TestQa extends BaseEntity{
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "test")
     private Set<TestQaShared> testsQaShared = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "testQa")
+    private Set<TestQaSolved> testsQaSolved = new HashSet<>();
     
 }
