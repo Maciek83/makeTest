@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TestDisplaySolveModel, TestSoveModel, TestSoveInfoModel } from '../test.models';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import { QuestionSolveModel, AnsweredAnswerModel } from 'src/app/questions/question.models';
 import { TestSolveService } from '../testsolve.service';
 
@@ -15,6 +15,7 @@ export class TestqadisplaytosolveComponent implements OnInit {
   displayModel: TestDisplaySolveModel;
   testSolveForm: FormGroup;
   solveModel: TestSoveModel;
+  submited: boolean = false;
 
   constructor(private route: ActivatedRoute, private testSolveService: TestSolveService) { }
 
@@ -39,7 +40,7 @@ export class TestqadisplaytosolveComponent implements OnInit {
       'name': new FormControl(null, Validators.required),
       'id': new FormControl(this.displayModel.id, Validators.required),
       'questions': new FormArray([])
-    });
+    },[this.numberOfQuestionsValidator]);
 
     let questionArray = (<FormArray>this.testSolveForm.get('questions'));
 
@@ -67,6 +68,7 @@ export class TestqadisplaytosolveComponent implements OnInit {
   }
 
   onSubmit(){
+
     this.solveModel.id = this.testSolveForm.value.id;
     this.solveModel.name = this.testSolveForm.value.name;
 
@@ -83,7 +85,41 @@ export class TestqadisplaytosolveComponent implements OnInit {
     
     this.testSolveService.solveTest(this.solveModel).subscribe
     (
-      d=> console.log(d)
+      d => console.log(d)
     );
+
+    this.submited = true;
   }
+
+  numberOfQuestionsValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    
+    const formArrayQuestion = (<FormArray>control.get('questions')).controls;
+    
+    let x:number = 0;
+    let answers: number = 0;
+    let answersValidationModel: AnswersValidationModel[] = [];
+
+    for(let i=0; i < formArrayQuestion.length; i++){
+      const formArrayAnswers = (<FormArray>formArrayQuestion[i].get('answers'));
+      let validationModel = new AnswersValidationModel();
+      answersValidationModel.push(validationModel);
+      for(let ii=0 ; ii < formArrayAnswers.length; ii++){
+        if(formArrayAnswers.controls[ii].value.correct === true){
+          validationModel.numberOfCorrect++;
+        }
+      }  
+    }
+
+    for(let i=0; i < answersValidationModel.length; i++){
+      if(answersValidationModel[i].numberOfCorrect === 0){
+        return {'answers': false};
+      }
+    }
+
+    return null;
+  }
+}
+
+export class AnswersValidationModel{
+  numberOfCorrect:number = 0;
 }

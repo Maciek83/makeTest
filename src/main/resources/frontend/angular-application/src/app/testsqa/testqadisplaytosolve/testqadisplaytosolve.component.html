@@ -1,4 +1,4 @@
-<form [formGroup]="testSolveForm" (ngSubmit)="onSubmit()"  class="center column">
+<form *ngIf="!submited" [formGroup]="testSolveForm" (ngSubmit)="onSubmit()"  class="center column">
     <h2>Test: {{displayModel.name}}</h2>
     <mat-form-field appearance="fill">
         <mat-label for="content">Enter your name</mat-label>
@@ -21,5 +21,5 @@
             </div>
         </div>
     </div>
-    <button mat-raised-button color="primary" type="submit" class="width10p20m">Solve</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!testSolveForm.valid" class="width10p20m">Solve</button>
 </form>
