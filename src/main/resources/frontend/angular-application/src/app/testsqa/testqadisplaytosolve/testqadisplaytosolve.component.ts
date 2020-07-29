@@ -13,6 +13,7 @@ import { TestSolveService } from '../testsolve.service';
 export class TestqadisplaytosolveComponent implements OnInit {
 
   displayModel: TestDisplaySolveModel;
+  testSolveModelInfo :TestSoveInfoModel;
   testSolveForm: FormGroup;
   solveModel: TestSoveModel;
   submited: boolean = false;
@@ -85,7 +86,7 @@ export class TestqadisplaytosolveComponent implements OnInit {
     
     this.testSolveService.solveTest(this.solveModel).subscribe
     (
-      d => console.log(d)
+      d => this.testSolveModelInfo = d
     );
 
     this.submited = true;
