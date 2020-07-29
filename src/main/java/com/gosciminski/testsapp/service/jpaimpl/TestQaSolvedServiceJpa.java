@@ -1,9 +1,9 @@
 package com.gosciminski.testsapp.service.jpaimpl;
 
+import com.gosciminski.testsapp.converter.TestQaSolvedToTestSolvedInfoDto;
 import com.gosciminski.testsapp.dto.create.TestSolvedCreateDto;
-import com.gosciminski.testsapp.dto.display.AnswerAnsweredInfoDto;
-import com.gosciminski.testsapp.dto.display.QuestionSolvedInfoDto;
 import com.gosciminski.testsapp.dto.display.TestSolvedInfoDto;
+import com.gosciminski.testsapp.exceptions.QuestionNoTrueAnswerException;
 import com.gosciminski.testsapp.model.Answer;
 import com.gosciminski.testsapp.model.AnsweredAnswer;
 import com.gosciminski.testsapp.model.Question;
@@ -25,17 +25,25 @@ public class TestQaSolvedServiceJpa implements TestQaSolvedService {
     private final TestQaService testQaService;
     private final QuestionService questionService;
     private final AnswerService answerService;
+    private final TestQaSolvedToTestSolvedInfoDto converter;
     
 	public TestQaSolvedServiceJpa(TestQaSolvedRepository testQaSolvedRepository, TestQaService testQaService,
-			QuestionService questionService, AnswerService answerService) {
+			QuestionService questionService, AnswerService answerService, TestQaSolvedToTestSolvedInfoDto converter) {
 		this.testQaSolvedRepository = testQaSolvedRepository;
 		this.testQaService = testQaService;
 		this.questionService = questionService;
-		this.answerService = answerService;
+        this.answerService = answerService;
+        this.converter = converter;
 	}
 
     @Override
     public TestSolvedInfoDto save(TestSolvedCreateDto source) {
+
+        source.getQuestions().forEach(q -> {
+            if(!q.getAnsweredAnswers().stream().anyMatch(a -> a.getCorrect() == true)){
+                throw new QuestionNoTrueAnswerException();
+            };
+        });
         
         TestQaSolved testToSave = new TestQaSolved();
         testToSave.setName(source.getName());
@@ -68,53 +76,9 @@ public class TestQaSolvedServiceJpa implements TestQaSolvedService {
         TestQaSolved savedSolvedTest = testQaSolvedRepository.save(testToSave);
         testQaService.save(testFromDb);
 
-        TestSolvedInfoDto infoToUser = prepareResponseToSolvedTest(savedSolvedTest);
+        TestSolvedInfoDto infoToUser = converter.convert(savedSolvedTest);
 
         return infoToUser;
-
     }
 
-    private TestSolvedInfoDto prepareResponseToSolvedTest(TestQaSolved testSolved){
-        TestSolvedInfoDto result = new TestSolvedInfoDto();
-
-        result.setName(testSolved.getTestQa().getName());
-        result.setUserName(testSolved.getName());
-
-        testSolved.getQuestioSolved().forEach(qs -> 
-        {
-            QuestionSolvedInfoDto qsDto = new QuestionSolvedInfoDto();
-            qsDto.setContent(qs.getQuestion().getContent());
-            result.getQuestionSolved().add(qsDto);
-
-            qs.getAnswerAnswered().forEach(aa -> {
-                
-                AnswerAnsweredInfoDto answerAnsweredDto = new AnswerAnsweredInfoDto();
-
-                if(aa.getAnswer().getCorrect() != aa.getCorrect())
-                {
-                    answerAnsweredDto.setCorrect(false);
-                    answerAnsweredDto.setContent(aa.getAnswer().getContent());
-                }
-                else
-                {
-                    answerAnsweredDto.setCorrect(true);
-                    answerAnsweredDto.setContent(aa.getAnswer().getContent());
-                }
-
-                qsDto.getAnswerAnswered().add(answerAnsweredDto);
-            });
-
-            if(qsDto.getAnswerAnswered().stream().filter(a -> a.getCorrect() == false).findAny().isPresent())
-            {
-                qsDto.setCorrect(false);
-            }
-            else
-            {
-                qsDto.setCorrect(true);
-            }
-
-        });
-
-        return result;
-    }
 }
