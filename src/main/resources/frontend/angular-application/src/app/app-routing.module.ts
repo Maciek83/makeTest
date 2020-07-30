@@ -18,6 +18,7 @@ import { TestqashareComponent } from './testsqa/testqashare/testqashare.componen
 import { TestqadisplaytosolveComponent } from './testsqa/testqadisplaytosolve/testqadisplaytosolve.component';
 import { TestSolveResolver } from './testsqa/testsolve.resolver';
 import { TestSolveGetAll } from './testsqa/testsolvegetall.resolver';
+import { TestshareformComponent } from './testsqa/testshareform/testshareform.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -25,6 +26,7 @@ const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'testsolve', component: TestqadisplaytosolveComponent, resolve:{testSolve: TestSolveResolver}},
+  {path: 'testshareform/:id', component: TestshareformComponent, canActivate:[AuthGuard]},
   {path: 'testshare', component: TestqashareComponent, resolve:{testsShare: TestShareResolver, testsSolved: TestSolveGetAll}, canActivate:[AuthGuard]},
   {path: 'question', component:QuestionsComponent, resolve:{questions: QuestionsResolver}, canActivate:[AuthGuard]},
   {path: 'addquestion', component:AddquestionComponent, canActivate:[AuthGuard]},

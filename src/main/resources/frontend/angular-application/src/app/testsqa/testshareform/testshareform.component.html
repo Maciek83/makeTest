@@ -1,1 +1,8 @@
-<p>testshareform works!</p>
+<form [formGroup]="testShareForm" (ngSubmit)="onSubmit()" class="center column">
+    <mat-form-field appearance="fill">
+      <mat-label for="points">Enter points to pass. Max points {{testService.getSelectedTest().questionDisplayDto.length}}</mat-label>
+      <input type="number" id="points" formControlName="points" matInput> 
+    </mat-form-field>
+    <mat-error *ngIf="!testShareForm.get('points').valid && testShareForm.get('points').touched">Please enter valid points</mat-error>
+    <button mat-raised-button color="primary" [disabled]="!testShareForm.valid" type="submit" class="width10p20m">Share</button>  
+  </form>

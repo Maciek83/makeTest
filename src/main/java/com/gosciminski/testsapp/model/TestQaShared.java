@@ -27,7 +27,7 @@ public class TestQaShared extends BaseEntity{
     private TestQa test;
 
     @Column(name = "points")
-    @NotEmpty
+    @NotNull
     private Long pointsToPass;
 
     @Column(name = "secret")

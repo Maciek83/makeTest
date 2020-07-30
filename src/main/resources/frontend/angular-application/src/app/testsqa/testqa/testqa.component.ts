@@ -3,7 +3,6 @@ import { TestService } from '../test.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { QuestionService } from 'src/app/questions/question.service';
 import { QuestionDisplayModel } from 'src/app/questions/question.models';
-import { ShareTestModel } from '../test.models';
 
 @Component({
   selector: 'app-testqa',
@@ -27,6 +26,10 @@ export class TestqaComponent implements OnInit {
 
   navigateToEditTest(id: number){
     this.router.navigate(['/edittest/'+id]);
+  }
+
+  navigateToShareTest(id: number){
+    this.router.navigate(['/testshareform/'+id]);
   }
 
 }

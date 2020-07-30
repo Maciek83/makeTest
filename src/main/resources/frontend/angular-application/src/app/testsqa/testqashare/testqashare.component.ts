@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { TestShareDisplayModel, TestSoveInfoModel } from '../test.models';
-import { TestService } from '../test.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -15,7 +14,7 @@ export class TestqashareComponent implements OnInit {
   testsShare: TestShareDisplayModel[];
   testsSolved: TestSoveInfoModel[];
 
-  constructor(public testService: TestService, private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.testsShare = this.route.snapshot.data.testsShare;
