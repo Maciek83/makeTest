@@ -39,4 +39,7 @@ public class TestQaSolved extends BaseEntity{
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "testQaSolved")
     private Set<QuestionSolved> questioSolved = new HashSet<>();
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 }

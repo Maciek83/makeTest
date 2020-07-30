@@ -54,6 +54,9 @@ public class User extends BaseEntity {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
     private Set<TestQaShared> testsShared = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<TestQaSolved> testsSolved = new HashSet<>();
+
     public User(String email, String password, String name, Integer active, Set<Role> roles) {
         this.email = email;
         this.password = password;

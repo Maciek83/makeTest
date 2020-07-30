@@ -1,5 +1,8 @@
 package com.gosciminski.testsapp.service.jpaimpl;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import com.gosciminski.testsapp.converter.TestQaSolvedToTestSolvedInfoDto;
 import com.gosciminski.testsapp.dto.create.TestSolvedCreateDto;
 import com.gosciminski.testsapp.dto.display.TestSolvedInfoDto;
@@ -15,6 +18,7 @@ import com.gosciminski.testsapp.service.AnswerService;
 import com.gosciminski.testsapp.service.QuestionService;
 import com.gosciminski.testsapp.service.TestQaService;
 import com.gosciminski.testsapp.service.TestQaSolvedService;
+import com.gosciminski.testsapp.service.UserService;
 
 import org.springframework.stereotype.Service;
 
@@ -26,52 +30,53 @@ public class TestQaSolvedServiceJpa implements TestQaSolvedService {
     private final QuestionService questionService;
     private final AnswerService answerService;
     private final TestQaSolvedToTestSolvedInfoDto converter;
-    
-	public TestQaSolvedServiceJpa(TestQaSolvedRepository testQaSolvedRepository, TestQaService testQaService,
-			QuestionService questionService, AnswerService answerService, TestQaSolvedToTestSolvedInfoDto converter) {
-		this.testQaSolvedRepository = testQaSolvedRepository;
-		this.testQaService = testQaService;
-		this.questionService = questionService;
+    private final UserService userService;
+
+    public TestQaSolvedServiceJpa(TestQaSolvedRepository testQaSolvedRepository, TestQaService testQaService,
+            QuestionService questionService, AnswerService answerService, TestQaSolvedToTestSolvedInfoDto converter, UserService userService) {
+        this.testQaSolvedRepository = testQaSolvedRepository;
+        this.testQaService = testQaService;
+        this.questionService = questionService;
         this.answerService = answerService;
         this.converter = converter;
-	}
+        this.userService = userService;
+    }
 
     @Override
     public TestSolvedInfoDto save(TestSolvedCreateDto source) {
 
         source.getQuestions().forEach(q -> {
-            if(!q.getAnsweredAnswers().stream().anyMatch(a -> a.getCorrect() == true)){
+            if (!q.getAnsweredAnswers().stream().anyMatch(a -> a.getCorrect() == true)) {
                 throw new QuestionNoTrueAnswerException();
-            };
+            }
+            ;
         });
-        
+
         TestQaSolved testToSave = new TestQaSolved();
         testToSave.setName(source.getName());
         TestQa testFromDb = testQaService.findByIdAnonymus(source.getId());
         testToSave.setTestQa(testFromDb);
+        testToSave.setUser(testFromDb.getUser());
         testFromDb.getTestsQaSolved().add(testToSave);
 
-        source.getQuestions().forEach(
-            q -> 
-            {
-                QuestionSolved questionToSave = new QuestionSolved();
-                Question questionFromDb = questionService.findByIdAnonymus(q.getId());
-                questionToSave.setQuestion(questionFromDb);
-                testToSave.getQuestioSolved().add(questionToSave);
-                questionToSave.setTestQaSolved(testToSave);
-                questionFromDb.getQuestionSolved().add(questionToSave);
+        source.getQuestions().forEach(q -> {
+            QuestionSolved questionToSave = new QuestionSolved();
+            Question questionFromDb = questionService.findByIdAnonymus(q.getId());
+            questionToSave.setQuestion(questionFromDb);
+            testToSave.getQuestioSolved().add(questionToSave);
+            questionToSave.setTestQaSolved(testToSave);
+            questionFromDb.getQuestionSolved().add(questionToSave);
 
-                q.getAnsweredAnswers().forEach(a ->{
-                    AnsweredAnswer answerToSave = new AnsweredAnswer();
-                    answerToSave.setCorrect(a.getCorrect());
-                    Answer answerFromDb = answerService.findById(a.getId());
-                    answerToSave.setAnswer(answerFromDb);
-                    questionToSave.getAnswerAnswered().add(answerToSave);
-                    answerToSave.setQuesionSolved(questionToSave);
-                    answerFromDb.getAnsweredAnswers().add(answerToSave);
-                });
-            }
-        );
+            q.getAnsweredAnswers().forEach(a -> {
+                AnsweredAnswer answerToSave = new AnsweredAnswer();
+                answerToSave.setCorrect(a.getCorrect());
+                Answer answerFromDb = answerService.findById(a.getId());
+                answerToSave.setAnswer(answerFromDb);
+                questionToSave.getAnswerAnswered().add(answerToSave);
+                answerToSave.setQuesionSolved(questionToSave);
+                answerFromDb.getAnsweredAnswers().add(answerToSave);
+            });
+        });
 
         TestQaSolved savedSolvedTest = testQaSolvedRepository.save(testToSave);
         testQaService.save(testFromDb);
@@ -79,6 +84,14 @@ public class TestQaSolvedServiceJpa implements TestQaSolvedService {
         TestSolvedInfoDto infoToUser = converter.convert(savedSolvedTest);
 
         return infoToUser;
+    }
+
+    @Override
+    public List<TestSolvedInfoDto> findAllByUser() {
+        List<TestQaSolved> solvedTests = testQaSolvedRepository.findByUser(userService.getUser());
+        List<TestSolvedInfoDto> solvedTestsInfoDto = new LinkedList<>();
+        solvedTests.forEach(t-> solvedTestsInfoDto.add(converter.convert(t)));
+        return solvedTestsInfoDto;
     }
 
 }

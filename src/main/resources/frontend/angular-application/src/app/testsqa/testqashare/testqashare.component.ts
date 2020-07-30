@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TestShareDisplayModel } from '../test.models';
+import { TestShareDisplayModel, TestSoveInfoModel } from '../test.models';
 import { TestService } from '../test.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -11,12 +11,15 @@ import { ActivatedRoute } from '@angular/router';
 export class TestqashareComponent implements OnInit {
 
   displayedColumnsShared: string[] = ['name','url'];
+  displayedColumnsSolved: string[] = ['name','username'];
   testsShare: TestShareDisplayModel[];
+  testsSolved: TestSoveInfoModel[];
 
   constructor(public testService: TestService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.testsShare = this.route.snapshot.data.testsShare;
+    this.testsSolved = this.route.snapshot.data.testsSolved;
   }
 
 }

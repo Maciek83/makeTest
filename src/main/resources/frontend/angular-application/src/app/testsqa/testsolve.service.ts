@@ -12,4 +12,8 @@ export class TestSolveService{
         return this.http.post<TestSoveInfoModel>('api/testsolved', model);
     }
 
+    getSolvedTests() : Observable<TestSoveInfoModel[]>{
+        return this.http.get<TestSoveInfoModel[]>('api/testsolved');
+    }
+
 }
