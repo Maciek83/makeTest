@@ -22,7 +22,7 @@ export class TestAddModel{
 }
 
 export class ShareTestModel{
-    constructor(public id: number){}
+    constructor(public id: number, public points: number){}
 }
 
 export class TestSoveModel{

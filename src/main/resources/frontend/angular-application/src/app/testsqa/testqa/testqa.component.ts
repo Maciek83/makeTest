@@ -29,9 +29,4 @@ export class TestqaComponent implements OnInit {
     this.router.navigate(['/edittest/'+id]);
   }
 
-  share(id: number){
-    const model = new ShareTestModel(id);
-    this.testService.shareTest(model).subscribe();
-  }
-
 }

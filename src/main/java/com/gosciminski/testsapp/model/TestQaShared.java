@@ -26,6 +26,10 @@ public class TestQaShared extends BaseEntity{
     @ManyToOne(fetch = FetchType.EAGER)
     private TestQa test;
 
+    @Column(name = "points")
+    @NotEmpty
+    private Long pointsToPass;
+
     @Column(name = "secret")
     @NotNull
     @NotEmpty

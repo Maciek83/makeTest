@@ -11,5 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShareTestCreateDto {
-    private String id;
+    private Long id;
+    private Long points;
 }

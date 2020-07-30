@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { TestShareDisplayModel, TestDisplaySolveModel } from './test.models';
+import { TestShareDisplayModel, TestDisplaySolveModel, ShareTestModel } from './test.models';
 import { ActivatedRoute } from '@angular/router';
 
 @Injectable({providedIn:'root'})
@@ -13,6 +13,10 @@ export class TestShareService {
 
     fetchTestsShare(): Observable<TestShareDisplayModel[]>{
         return this.http.get<TestShareDisplayModel[]>('api/testshare');
+    }
+
+    shareTest(model: ShareTestModel): Observable<TestDisplaySolveModel>{
+        return this.http.post<TestDisplaySolveModel>('api/testshare', model);
     }
 
     getTestToSolve(id: string, secret: string): Observable<TestDisplaySolveModel>{

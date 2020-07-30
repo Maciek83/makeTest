@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.gosciminski.testsapp.converter.TestQaSharedToTestQaSharedDisplayDto;
 import com.gosciminski.testsapp.converter.TestQaToTestQaDisplayToSolveDto;
+import com.gosciminski.testsapp.dto.create.ShareTestCreateDto;
 import com.gosciminski.testsapp.dto.display.TestQaDisplayToSolveDto;
 import com.gosciminski.testsapp.dto.display.TestQaSharedDisplayDto;
 import com.gosciminski.testsapp.exceptions.TestQaSharedNotFoundException;
@@ -40,13 +41,19 @@ public class TestQaShareServiceJpa implements TestQaShareService {
     }
 
     @Override
-    public TestQaDisplayToSolveDto save(Long id) {
+    public TestQaDisplayToSolveDto save(ShareTestCreateDto source) {
 
-        TestQa source = testService.findById(id);
+        TestQa testFromDb = testService.findById(source.getId());
+
+        if(source.getPoints() > testFromDb.getQuestions().size() || source.getPoints() <= 0){
+            
+        }
+
         TestQaShared toSave = new TestQaShared();
-        toSave.setTest(source);
+        toSave.setTest(testFromDb);
         toSave.setSecret(secretGenerator.generateSecret());
-        source.getTestsQaShared().add(toSave);
+        toSave.setPointsToPass(source.getPoints());
+        testFromDb.getTestsQaShared().add(toSave);
         User loggedInUser = userService.getUser();
         loggedInUser.getTestsShared().add(toSave);
         toSave.setUser(loggedInUser);

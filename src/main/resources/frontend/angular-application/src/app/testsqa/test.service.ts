@@ -23,9 +23,7 @@ export class TestService {
         return this.http.post<TestDisplayModel>('api/test', addTestModel);
     }
 
-    shareTest(model: ShareTestModel): Observable<TestDisplaySolveModel>{
-        return this.http.post<TestDisplaySolveModel>('api/testshare', model);
-    }
+
 
     updateTest(addTestModel: TestAddModel, id:number): Observable<TestDisplayModel>{
         return this.http.patch<TestDisplayModel>('api/test/'+id, addTestModel);

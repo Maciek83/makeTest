@@ -44,7 +44,6 @@ public class TestSharedController {
   @PostMapping(value = "/testshare")
   public ResponseEntity<TestQaDisplayToSolveDto> createTest(
       @RequestBody @Validated ShareTestCreateDto shareTestCreateDto) {
-    Long id = Long.parseLong(shareTestCreateDto.getId());
-    return new ResponseEntity<>(testQaShareService.save(id), HttpStatus.CREATED);
+    return new ResponseEntity<>(testQaShareService.save(shareTestCreateDto), HttpStatus.CREATED);
   }
 }
