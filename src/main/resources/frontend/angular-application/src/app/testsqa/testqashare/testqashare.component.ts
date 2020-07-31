@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TestShareDisplayModel, TestSoveInfoModel } from '../test.models';
 import { ActivatedRoute } from '@angular/router';
+import { TestSolveService } from '../testsolve.service';
 
 @Component({
   selector: 'app-testqashare',
@@ -17,8 +18,8 @@ export class TestqashareComponent implements OnInit {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.testsShare = this.route.snapshot.data.testsShare;
     this.testsSolved = this.route.snapshot.data.testsSolved;
+    this.testsShare = this.route.snapshot.data.testsShare;
   }
 
 }

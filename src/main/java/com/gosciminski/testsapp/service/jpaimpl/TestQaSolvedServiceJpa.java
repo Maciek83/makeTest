@@ -68,7 +68,7 @@ public class TestQaSolvedServiceJpa implements TestQaSolvedService {
 
         TestQa testFromDb = testQaService.findByIdAnonymus(source.getId());
         testSolvedToSave.setTestQa(testFromDb);
-        testSolvedToSave.setUser(testFromDb.getUser());
+        testSolvedToSave.setUser(userService.getUser());
         testFromDb.getTestsQaSolved().add(testSolvedToSave);
 
         source.getQuestions().forEach(q -> {

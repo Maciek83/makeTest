@@ -37,8 +37,11 @@ export class TestshareformComponent implements OnInit {
 
   onSubmit(){
       this.model = new ShareTestModel(this.id, this.testShareForm.value.points);
-      this.testShareService.shareTest(this.model).subscribe();
-      this.router.navigate(['/testshare/']);
+      this.testShareService.shareTest(this.model).subscribe(
+        (data) =>{
+          this.router.navigate(['/testshare/']);
+        }
+      );
   }
 
   validPoints(control: AbstractControl): { [key: string]: boolean } | null {
