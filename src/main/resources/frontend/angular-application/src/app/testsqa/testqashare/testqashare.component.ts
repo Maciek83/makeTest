@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 export class TestqashareComponent implements OnInit {
 
   displayedColumnsShared: string[] = ['name','url'];
-  displayedColumnsSolved: string[] = ['name','username'];
+  displayedColumnsSolved: string[] = ['name','username','points','maxpoints','passed','report'];
   testsShare: TestShareDisplayModel[];
   testsSolved: TestSoveInfoModel[];
 

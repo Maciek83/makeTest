@@ -36,6 +36,15 @@ public class TestQaSolved extends BaseEntity{
     @NotEmpty
     private String email;
 
+    @Column(name = "points")
+    private Long points;
+
+    @Column(name = "maxpoints")
+    private Long maxPoints;
+
+    @Column(name = "passed")
+    private Boolean passed;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private TestQa testQa;
     

@@ -49,7 +49,8 @@ export class AnsweredAnswerModel{
 
 export interface AnswerDisplaySolveInfoModel{
     content:string,
-    correct:boolean
+    correct:boolean,
+    userAnswer:boolean
 }
 
 export interface QuestionSolveInfoModel{

@@ -12,4 +12,5 @@ import lombok.Setter;
 public class AnswerAnsweredInfoDto {
     private String content;
     private Boolean correct;
+    private Boolean userAnswer;
 }

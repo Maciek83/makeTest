@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.gosciminski.testsapp.converter.TestQaSolvedToTestSolvedInfoDto;
 import com.gosciminski.testsapp.dto.create.TestSolvedCreateDto;
+import com.gosciminski.testsapp.dto.display.QuestionSolvedInfoDto;
 import com.gosciminski.testsapp.dto.display.TestSolvedInfoDto;
 import com.gosciminski.testsapp.exceptions.QuestionNoTrueAnswerException;
 import com.gosciminski.testsapp.model.Answer;
@@ -36,7 +37,8 @@ public class TestQaSolvedServiceJpa implements TestQaSolvedService {
     private final TestQaShareService testQaShareService;
 
     public TestQaSolvedServiceJpa(TestQaSolvedRepository testQaSolvedRepository, TestQaService testQaService,
-            QuestionService questionService, AnswerService answerService, TestQaSolvedToTestSolvedInfoDto converter, UserService userService, TestQaShareService testQaShareService) {
+            QuestionService questionService, AnswerService answerService, TestQaSolvedToTestSolvedInfoDto converter,
+            UserService userService, TestQaShareService testQaShareService) {
         this.testQaSolvedRepository = testQaSolvedRepository;
         this.testQaService = testQaService;
         this.questionService = questionService;
@@ -56,16 +58,18 @@ public class TestQaSolvedServiceJpa implements TestQaSolvedService {
             ;
         });
 
+        TestQaShared testSharedFromDb = testQaShareService.findById(source.getTestShareId());
+
         TestQaSolved testSolvedToSave = new TestQaSolved();
+        testSolvedToSave.setPoints(0L);
         testSolvedToSave.setName(source.getName());
         testSolvedToSave.setEmail(source.getEmail());
+        testSolvedToSave.setMaxPoints(testSharedFromDb.getPointsToPass());
 
         TestQa testFromDb = testQaService.findByIdAnonymus(source.getId());
         testSolvedToSave.setTestQa(testFromDb);
         testSolvedToSave.setUser(testFromDb.getUser());
         testFromDb.getTestsQaSolved().add(testSolvedToSave);
-
-        TestQaShared testSharedFromDb = testQaShareService.findById(source.getTestShareId());
 
         source.getQuestions().forEach(q -> {
             QuestionSolved questionToSave = new QuestionSolved();
@@ -86,17 +90,27 @@ public class TestQaSolvedServiceJpa implements TestQaSolvedService {
             });
         });
 
+        testSolvedToSave.getQuestioSolved().forEach(qs -> {
+
+            if(!qs.getAnswerAnswered().stream().filter(aq -> aq.getAnswer().getCorrect() != aq.getCorrect()).findAny().isPresent())
+            {
+                testSolvedToSave.setPoints(testSolvedToSave.getPoints()+1);
+            }
+
+        });
+
+        if(testSolvedToSave.getPoints() >= testSolvedToSave.getMaxPoints()){
+            
+            testSolvedToSave.setPassed(true);
+        }
+        else{
+            testSolvedToSave.setPassed(false);
+        }
+
         TestQaSolved savedSolvedTest = testQaSolvedRepository.save(testSolvedToSave);
         testQaService.save(testFromDb);
 
         TestSolvedInfoDto infoToUser = converter.convert(savedSolvedTest);
-
-        if(testSharedFromDb.getPointsToPass().longValue() <= infoToUser.getPoints().longValue()){
-            infoToUser.setPassed(true);
-        }
-        else{
-            infoToUser.setPassed(false);
-        }
 
         return infoToUser;
     }
@@ -105,7 +119,10 @@ public class TestQaSolvedServiceJpa implements TestQaSolvedService {
     public List<TestSolvedInfoDto> findAllByUser() {
         List<TestQaSolved> solvedTests = testQaSolvedRepository.findByUser(userService.getUser());
         List<TestSolvedInfoDto> solvedTestsInfoDto = new LinkedList<>();
-        solvedTests.forEach(t-> solvedTestsInfoDto.add(converter.convert(t)));
+        solvedTests.forEach(t -> {
+            solvedTestsInfoDto.add(converter.convert(t));
+        });
+
         return solvedTestsInfoDto;
     }
 

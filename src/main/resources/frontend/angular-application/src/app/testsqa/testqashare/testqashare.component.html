@@ -1,14 +1,15 @@
 <div class='row'>
   <div class='column'>
+    <h3>Shared tests</h3>
     <mat-table [dataSource]="testsShare" class="mat-elevation-z8">
 
       <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> Name of test </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="url">
-        <mat-header-cell *matHeaderCellDef> Url </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> Url to share </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.shareUrl}} </mat-cell>
       </ng-container>
 
@@ -19,7 +20,9 @@
 </div>
 
 <div class='row'>
+  
   <div class='column'>
+    <h3>Solved tests</h3>
     <mat-table [dataSource]="testsSolved" class="mat-elevation-z8">
 
       <ng-container matColumnDef="name">
@@ -30,6 +33,28 @@
       <ng-container matColumnDef="username">
         <mat-header-cell *matHeaderCellDef> User Name </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.userName}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="points">
+        <mat-header-cell *matHeaderCellDef> Points </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.points}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="maxpoints">
+        <mat-header-cell *matHeaderCellDef> Max Points </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.maxPoints}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="passed">
+        <mat-header-cell *matHeaderCellDef> Passed </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.passed}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="report">
+        <mat-header-cell *matHeaderCellDef> Report </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-raised-button color="primary" type="button">Go to report</button>
+        </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumnsSolved"></mat-header-row>

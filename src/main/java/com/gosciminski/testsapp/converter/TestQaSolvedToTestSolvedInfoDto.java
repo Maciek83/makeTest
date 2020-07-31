@@ -4,6 +4,7 @@ import com.gosciminski.testsapp.dto.display.AnswerAnsweredInfoDto;
 import com.gosciminski.testsapp.dto.display.QuestionSolvedInfoDto;
 import com.gosciminski.testsapp.dto.display.TestSolvedInfoDto;
 import com.gosciminski.testsapp.model.TestQaSolved;
+import com.gosciminski.testsapp.service.TestQaShareService;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -11,12 +12,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class TestQaSolvedToTestSolvedInfoDto implements Converter<TestQaSolved, TestSolvedInfoDto>{
 
+
 	@Override
 	public TestSolvedInfoDto convert(TestQaSolved source) {
         TestSolvedInfoDto result = new TestSolvedInfoDto();
 
         result.setName(source.getTestQa().getName());
         result.setUserName(source.getName());
+        result.setMaxPoints(source.getMaxPoints());
+        result.setPoints(source.getPoints());
+        result.setPassed(source.getPassed());
 
         source.getQuestioSolved().forEach(qs -> 
         {
@@ -27,6 +32,7 @@ public class TestQaSolvedToTestSolvedInfoDto implements Converter<TestQaSolved, 
             qs.getAnswerAnswered().forEach(aa -> {
                 
                 AnswerAnsweredInfoDto answerAnsweredDto = new AnswerAnsweredInfoDto();
+                answerAnsweredDto.setUserAnswer(aa.getCorrect());
 
                 if(aa.getAnswer().getCorrect() != aa.getCorrect())
                 {
@@ -49,10 +55,10 @@ public class TestQaSolvedToTestSolvedInfoDto implements Converter<TestQaSolved, 
             else
             {
                 qsDto.setCorrect(true);
-                result.addPoint();
             }
 
         });
+
         return result;
     }
 }

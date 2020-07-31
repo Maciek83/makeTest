@@ -33,6 +33,7 @@ export interface TestSoveInfoModel{
     name:string,
     userName:string,
     points:number,
+    maxPoints:number,
     passed:boolean,
     questionSolved:QuestionSolveInfoModel[]
 }
