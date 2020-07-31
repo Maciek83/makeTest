@@ -25,7 +25,7 @@ const appRoutes: Routes = [
   {path: 'home', component:HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'testsolve', component: TestqadisplaytosolveComponent, resolve:{testSolve: TestSolveResolver}},
+  {path: 'testsolve/:id', component: TestqadisplaytosolveComponent, resolve:{testSolve: TestSolveResolver}},
   {path: 'testshareform/:id', component: TestshareformComponent, canActivate:[AuthGuard]},
   {path: 'testshare', component: TestqashareComponent, resolve:{testsShare: TestShareResolver, testsSolved: TestSolveGetAll}, canActivate:[AuthGuard]},
   {path: 'question', component:QuestionsComponent, resolve:{questions: QuestionsResolver}, canActivate:[AuthGuard]},

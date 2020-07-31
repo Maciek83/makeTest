@@ -15,5 +15,11 @@ import lombok.Setter;
 public class TestSolvedInfoDto {
     private String name;
     private String userName;
+    private Long points = 0L;
+    private Boolean passed;
     private List<QuestionSolvedInfoDto> questionSolved = new LinkedList<>();
+
+    public void addPoint(){
+        points++;
+    }
 }

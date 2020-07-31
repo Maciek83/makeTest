@@ -29,9 +29,12 @@ public class TestQaSolved extends BaseEntity{
     private static final long serialVersionUID = -3984049117337851462L;
 
     @Column(name = "name")
-    @NotNull
     @NotEmpty
     private String name;
+
+    @Column(name = "email")
+    @NotEmpty
+    private String email;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private TestQa testQa;

@@ -35,10 +35,9 @@ public class TestSharedController {
   }
 
   @GetMapping(value = "/testsharesolve")
-  public ResponseEntity<TestQaDisplayToSolveDto> findTestToSolve(@RequestParam(name="id",required = true) String id,
+  public ResponseEntity<TestQaDisplayToSolveDto> findTestToSolve(@RequestParam(name="id",required = true) Long id,
       @RequestParam(name="secret",required = true) String secret) {
-    Long idValue = Long.parseLong(id);
-    return new ResponseEntity<>(testQaShareService.findTestToSolve(idValue, secret), HttpStatus.OK);
+    return new ResponseEntity<>(testQaShareService.findTestToSolve(id, secret), HttpStatus.OK);
   }
 
   @PostMapping(value = "/testshare")

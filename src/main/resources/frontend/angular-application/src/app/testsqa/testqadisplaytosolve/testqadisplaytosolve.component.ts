@@ -17,11 +17,15 @@ export class TestqadisplaytosolveComponent implements OnInit {
   testSolveForm: FormGroup;
   solveModel: TestSoveModel;
   submited: boolean = false;
+  id:number;
 
   constructor(private route: ActivatedRoute, private testSolveService: TestSolveService) { }
 
   ngOnInit(): void {
-    this.solveModel = new TestSoveModel("",0,[]);
+    this.solveModel = new TestSoveModel("","",0,0,[]);
+
+    this.id = +this.route.snapshot.params['id'];
+    console.log(this.id);
 
     this.displayModel = this.route.snapshot.data.testSolve;
     this.setupForm();
@@ -39,6 +43,7 @@ export class TestqadisplaytosolveComponent implements OnInit {
 
     this.testSolveForm = new FormGroup({
       'name': new FormControl(null, Validators.required),
+      'email': new FormControl(null,[Validators.required, Validators.email]),
       'id': new FormControl(this.displayModel.id, Validators.required),
       'questions': new FormArray([])
     },[this.numberOfQuestionsValidator]);
@@ -72,6 +77,9 @@ export class TestqadisplaytosolveComponent implements OnInit {
 
     this.solveModel.id = this.testSolveForm.value.id;
     this.solveModel.name = this.testSolveForm.value.name;
+    this.solveModel.email = this.testSolveForm.value.email;
+
+    this.solveModel.testShareId = this.id;
 
     this.getQuestionControlArray().forEach(q =>{
       
@@ -95,9 +103,7 @@ export class TestqadisplaytosolveComponent implements OnInit {
   numberOfQuestionsValidator(control: AbstractControl): { [key: string]: boolean } | null {
     
     const formArrayQuestion = (<FormArray>control.get('questions')).controls;
-    
-    let x:number = 0;
-    let answers: number = 0;
+
     let answersValidationModel: AnswersValidationModel[] = [];
 
     for(let i=0; i < formArrayQuestion.length; i++){

@@ -49,11 +49,10 @@ public class TestQaSolvedToTestSolvedInfoDto implements Converter<TestQaSolved, 
             else
             {
                 qsDto.setCorrect(true);
+                result.addPoint();
             }
 
         });
-
         return result;
-	}
-    
+    }
 }

@@ -38,4 +38,5 @@ public class TestQaShared extends BaseEntity{
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
 }

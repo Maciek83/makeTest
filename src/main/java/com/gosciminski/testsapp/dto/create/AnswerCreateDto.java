@@ -17,7 +17,6 @@ public class AnswerCreateDto {
     @NotNull
     private Boolean correct;
     
-    @NotNull
     @NotEmpty
     private String content;
 

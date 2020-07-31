@@ -78,5 +78,10 @@ public class TestQaShareServiceJpa implements TestQaShareService {
         TestQa test = testShared.getTest();
         return testQaToTestQaDisplayToSolveDto.convert(test);
     }
+
+    @Override
+    public TestQaShared findById(Long id) {
+        return testQaSharedRepository.findById(id).orElseThrow();
+    }
     
 }

@@ -1,5 +1,6 @@
 package com.gosciminski.testsapp.dto.create;
 
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +12,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShareTestCreateDto {
+
+    @NotNull
     private Long id;
+    
+    @NotNull
     private Long points;
 }

@@ -12,11 +12,13 @@ import com.gosciminski.testsapp.model.AnsweredAnswer;
 import com.gosciminski.testsapp.model.Question;
 import com.gosciminski.testsapp.model.QuestionSolved;
 import com.gosciminski.testsapp.model.TestQa;
+import com.gosciminski.testsapp.model.TestQaShared;
 import com.gosciminski.testsapp.model.TestQaSolved;
 import com.gosciminski.testsapp.repisitory.TestQaSolvedRepository;
 import com.gosciminski.testsapp.service.AnswerService;
 import com.gosciminski.testsapp.service.QuestionService;
 import com.gosciminski.testsapp.service.TestQaService;
+import com.gosciminski.testsapp.service.TestQaShareService;
 import com.gosciminski.testsapp.service.TestQaSolvedService;
 import com.gosciminski.testsapp.service.UserService;
 
@@ -31,15 +33,17 @@ public class TestQaSolvedServiceJpa implements TestQaSolvedService {
     private final AnswerService answerService;
     private final TestQaSolvedToTestSolvedInfoDto converter;
     private final UserService userService;
+    private final TestQaShareService testQaShareService;
 
     public TestQaSolvedServiceJpa(TestQaSolvedRepository testQaSolvedRepository, TestQaService testQaService,
-            QuestionService questionService, AnswerService answerService, TestQaSolvedToTestSolvedInfoDto converter, UserService userService) {
+            QuestionService questionService, AnswerService answerService, TestQaSolvedToTestSolvedInfoDto converter, UserService userService, TestQaShareService testQaShareService) {
         this.testQaSolvedRepository = testQaSolvedRepository;
         this.testQaService = testQaService;
         this.questionService = questionService;
         this.answerService = answerService;
         this.converter = converter;
         this.userService = userService;
+        this.testQaShareService = testQaShareService;
     }
 
     @Override
@@ -52,19 +56,23 @@ public class TestQaSolvedServiceJpa implements TestQaSolvedService {
             ;
         });
 
-        TestQaSolved testToSave = new TestQaSolved();
-        testToSave.setName(source.getName());
+        TestQaSolved testSolvedToSave = new TestQaSolved();
+        testSolvedToSave.setName(source.getName());
+        testSolvedToSave.setEmail(source.getEmail());
+
         TestQa testFromDb = testQaService.findByIdAnonymus(source.getId());
-        testToSave.setTestQa(testFromDb);
-        testToSave.setUser(testFromDb.getUser());
-        testFromDb.getTestsQaSolved().add(testToSave);
+        testSolvedToSave.setTestQa(testFromDb);
+        testSolvedToSave.setUser(testFromDb.getUser());
+        testFromDb.getTestsQaSolved().add(testSolvedToSave);
+
+        TestQaShared testSharedFromDb = testQaShareService.findById(source.getTestShareId());
 
         source.getQuestions().forEach(q -> {
             QuestionSolved questionToSave = new QuestionSolved();
             Question questionFromDb = questionService.findByIdAnonymus(q.getId());
             questionToSave.setQuestion(questionFromDb);
-            testToSave.getQuestioSolved().add(questionToSave);
-            questionToSave.setTestQaSolved(testToSave);
+            testSolvedToSave.getQuestioSolved().add(questionToSave);
+            questionToSave.setTestQaSolved(testSolvedToSave);
             questionFromDb.getQuestionSolved().add(questionToSave);
 
             q.getAnsweredAnswers().forEach(a -> {
@@ -78,10 +86,17 @@ public class TestQaSolvedServiceJpa implements TestQaSolvedService {
             });
         });
 
-        TestQaSolved savedSolvedTest = testQaSolvedRepository.save(testToSave);
+        TestQaSolved savedSolvedTest = testQaSolvedRepository.save(testSolvedToSave);
         testQaService.save(testFromDb);
 
         TestSolvedInfoDto infoToUser = converter.convert(savedSolvedTest);
+
+        if(testSharedFromDb.getPointsToPass().longValue() <= infoToUser.getPoints().longValue()){
+            infoToUser.setPassed(true);
+        }
+        else{
+            infoToUser.setPassed(false);
+        }
 
         return infoToUser;
     }

@@ -26,11 +26,13 @@ export class ShareTestModel{
 }
 
 export class TestSoveModel{
-    constructor(public name:string ,public id:number, public questions:QuestionSolveModel[]){}
+    constructor(public name:string, public email:string, public id:number, public testShareId:number, public questions:QuestionSolveModel[]){}
 }
 
 export interface TestSoveInfoModel{
     name:string,
     userName:string,
+    points:number,
+    passed:boolean,
     questionSolved:QuestionSolveInfoModel[]
 }

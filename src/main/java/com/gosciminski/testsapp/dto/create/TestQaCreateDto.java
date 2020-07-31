@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +16,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class TestQaCreateDto {
     
-    @NotNull
     @NotEmpty
     private String name;
     
