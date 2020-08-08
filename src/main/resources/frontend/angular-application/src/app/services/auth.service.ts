@@ -30,7 +30,7 @@ export class AuthService {
     }
 
     logout() {
-        this.http.post('api/logout', {}).pipe(finalize(() => {
+        this.http.post('logout', {}).pipe(finalize(() => {
             this.authenticated = false;
             this.router.navigateByUrl('/login');
         })).subscribe();

@@ -37,13 +37,4 @@ public class UserController {
 	public void register(@RequestBody @Validated UserCreatorDto userCreator){
 		userService.saveUser(userCreator);
 	}
-
-	@CrossOrigin
-	@PostMapping(value = "/logout")
-	public ResponseEntity<String> logout(){
-		SecurityContextHolder.clearContext();
-		return new ResponseEntity<String>("Logout Successfully!", HttpStatus.OK);
-	}
-
-
 }
