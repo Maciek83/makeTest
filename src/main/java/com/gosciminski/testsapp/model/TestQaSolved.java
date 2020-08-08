@@ -42,6 +42,9 @@ public class TestQaSolved extends BaseEntity{
     @Column(name = "maxpoints")
     private Long maxPoints;
 
+    @Column(name = "poitstopass")
+    private Long pointsToPass;
+
     @Column(name = "passed")
     private Boolean passed;
 

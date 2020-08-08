@@ -49,7 +49,7 @@ export class TestshareformComponent implements OnInit {
     let points = control.get('points').value;
     let maxpoints = control.get('maxpoints').value;
 
-    if(points < 0 || points > maxpoints){
+    if(points < 0 || points > maxpoints || points == 0){
       return {'points': false};
     }
     return null;

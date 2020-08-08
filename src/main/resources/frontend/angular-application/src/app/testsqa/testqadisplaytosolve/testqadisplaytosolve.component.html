@@ -32,14 +32,24 @@
 </form>
 <div *ngIf="submited && testSolveForm != null" class="center column">
     <div class="justyfy-middle">
-        {{testSolveModelInfo.name}}
-        <br>
-        {{testSolveModelInfo.userName}}
+        <h3>Test: {{testSolveModelInfo.name}}</h3>
     </div>
-    <div class="justyfy-middle" *ngFor="let question of testSolveModelInfo.questionSolved; let i = index">
-        i {{question.content}} - {{question.correct}}
-        <div class="justyfy-middle" *ngFor="let answer of question.answerAnswered">
-            {{answer.content}} - {{answer.correct}}
+    <div class="justyfy-middle">
+        <h4>Passed: {{testSolveModelInfo.passed}}</h4>
+    </div>
+    <div class="justyfy-middle">
+        <h4>User Name: {{testSolveModelInfo.userName}}</h4>
+    </div>
+    <div class="justyfy-middle">
+        <h4>Points recived: {{testSolveModelInfo.points}}</h4>
+    </div>
+    <div class="justyfy-middle">
+        <h4>Points to pass: {{testSolveModelInfo.maxPoints}}</h4>
+    </div>
+    <div class="justyfy-middle-block" *ngFor="let question of testSolveModelInfo.questionSolved; let i = index">
+        <p  [ngClass]="{'correct': question.correct==true, 'incorrect': question.correct==false}">{{i+1}}. Question content: {{question.content}}</p>
+       <div class="justyfy-middle-block" *ngFor="let answer of question.answerAnswered">
+           <p [ngClass]="{'correct': answer.correct==true, 'incorrect': answer.correct==false}">Answer content: {{answer.content}} - User Answer: {{answer.userAnswer}}</p>
         </div>
     </div>
 </div>

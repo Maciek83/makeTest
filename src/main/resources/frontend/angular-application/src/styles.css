@@ -21,6 +21,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   align-items: center;
 }
 
+.justyfy-middle-block{
+  display: block;
+  justify-content: center;
+  align-items: center;
+}
+
+.correct{
+  color: green;
+}
+
+.incorrect{
+  color:red;
+}
+
 .marginleft20px{
   margin-left: 20px !important;
 }

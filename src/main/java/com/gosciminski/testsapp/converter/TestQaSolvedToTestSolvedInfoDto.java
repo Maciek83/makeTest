@@ -4,7 +4,6 @@ import com.gosciminski.testsapp.dto.display.AnswerAnsweredInfoDto;
 import com.gosciminski.testsapp.dto.display.QuestionSolvedInfoDto;
 import com.gosciminski.testsapp.dto.display.TestSolvedInfoDto;
 import com.gosciminski.testsapp.model.TestQaSolved;
-import com.gosciminski.testsapp.service.TestQaShareService;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

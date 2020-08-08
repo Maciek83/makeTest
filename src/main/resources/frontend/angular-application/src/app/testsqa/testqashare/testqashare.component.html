@@ -53,7 +53,21 @@
       <ng-container matColumnDef="report">
         <mat-header-cell *matHeaderCellDef> Report </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button mat-raised-button color="primary" type="button">Go to report</button>
+          <mat-accordion>
+            <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Show Report
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="justyfy-middle-block" *ngFor="let question of element.questionSolved; let i = index">
+                <p  [ngClass]="{'correct': question.correct==true, 'incorrect': question.correct==false}">{{i+1}}. Question content: {{question.content}}</p>
+               <div class="justyfy-middle-block" *ngFor="let answer of question.answerAnswered">
+                   <p [ngClass]="{'correct': answer.correct==true, 'incorrect': answer.correct==false}">Answer content: {{answer.content}} - User Answer: {{answer.userAnswer}}</p>
+                </div>
+            </div>
+            </mat-expansion-panel>
+          </mat-accordion>
         </mat-cell>
       </ng-container>
 

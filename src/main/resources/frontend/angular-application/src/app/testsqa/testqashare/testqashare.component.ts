@@ -9,7 +9,7 @@ import { TestSolveService } from '../testsolve.service';
   styleUrls: ['./testqashare.component.css']
 })
 export class TestqashareComponent implements OnInit {
-
+  panelOpenState = false;
   displayedColumnsShared: string[] = ['name','url'];
   displayedColumnsSolved: string[] = ['name','username','points','maxpoints','passed','report'];
   testsShare: TestShareDisplayModel[];

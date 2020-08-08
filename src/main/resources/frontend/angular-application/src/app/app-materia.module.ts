@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 const impexp = [
@@ -21,7 +22,8 @@ const impexp = [
   MatCardModule,
   MatButtonToggleModule,
   MatTableModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatExpansionModule
 ]
 
 @NgModule({
