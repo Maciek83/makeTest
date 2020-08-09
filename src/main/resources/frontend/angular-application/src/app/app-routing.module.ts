@@ -19,10 +19,12 @@ import { TestqadisplaytosolveComponent } from './testsqa/testqadisplaytosolve/te
 import { TestSolveResolver } from './testsqa/testsolve.resolver';
 import { TestSolveGetAll } from './testsqa/testsolvegetall.resolver';
 import { TestshareformComponent } from './testsqa/testshareform/testshareform.component';
+import { AdminpanelComponent } from './adminpanel/adminpanel.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component:HomeComponent},
+  {path: 'adminpanel', component:AdminpanelComponent, canActivate:[AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'testsolve/:id', component: TestqadisplaytosolveComponent, resolve:{testSolve: TestSolveResolver}},

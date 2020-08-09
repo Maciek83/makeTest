@@ -1,17 +1,6 @@
 <button routerLink="/home" mat-button>Home</button>
 
-<button *ngIf="isAuthenticated()"  mat-button [matMenuTriggerFor]="belowMenu">Questions</button>
-<mat-menu  #belowMenu="matMenu" yPosition="below">
-  <button  mat-menu-item routerLink="/question">View questions</button>
-  <button  mat-menu-item routerLink="/addquestion">Add question</button>
-</mat-menu>
-
-<button *ngIf="isAuthenticated()" mat-button [matMenuTriggerFor]="beforeMenu">Tests</button>
-<mat-menu #beforeMenu="matMenu" xPosition="before">
-  <button mat-menu-item routerLink="/test">View tests</button>
-  <button mat-menu-item routerLink="/addtest">Compose test</button>
-  <button mat-menu-item routerLink="/testshare">View shared tests</button>
-</mat-menu>
+<button *ngIf="isAuthenticated()"  routerLink="/adminpanel"  mat-button>Admin Panel</button>
 
 <button *ngIf="isAuthenticated()" mat-button (click)="logout()">Logout</button>
 <button *ngIf="!isAuthenticated()" routerLink="/login" mat-button>Login</button>

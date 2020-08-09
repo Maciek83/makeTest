@@ -24,6 +24,7 @@ import { TestqashareComponent } from './testsqa/testqashare/testqashare.componen
 import { TestqadisplaytosolveComponent } from './testsqa/testqadisplaytosolve/testqadisplaytosolve.component';
 import { TestshareformComponent } from './testsqa/testshareform/testshareform.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { AdminpanelComponent } from './adminpanel/adminpanel.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     RegisterComponent,
     TestqashareComponent,
     TestqadisplaytosolveComponent,
-    TestshareformComponent
+    TestshareformComponent,
+    AdminpanelComponent
   ],
   imports: [
     BrowserModule,
