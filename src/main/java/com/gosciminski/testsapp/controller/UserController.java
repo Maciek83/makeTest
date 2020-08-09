@@ -5,9 +5,6 @@ import java.security.Principal;
 import com.gosciminski.testsapp.dto.create.UserCreatorDto;
 import com.gosciminski.testsapp.service.UserService;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

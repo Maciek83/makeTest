@@ -55,6 +55,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     flex-wrap: wrap;
     width: 100%;
   }
+
+.bigfont{
+  font-size: large;
+}
   
 .column {
     display: flex;

@@ -48,20 +48,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .and()
         .authorizeRequests()
         .antMatchers("/*").permitAll()
-        .antMatchers("/h2-console/**").permitAll()
         .antMatchers("api/login").permitAll()
         .antMatchers("api/register").permitAll()
         .antMatchers("api/question").hasRole("USER")
         .antMatchers("api/question/{id}").hasRole("USER")
         .antMatchers("api/test").hasRole("USER")
+        .antMatchers("api/testsharesolve").hasRole("USER")
         .antMatchers("api/test/{id}").hasRole("USER")
         .antMatchers("api/testshare").hasRole("USER")
         .and()
         .httpBasic().authenticationEntryPoint(authenticationEntryPoint)
         .and()
+        .logout()
+        .and()
         .csrf().disable();
-
-        http.headers().frameOptions().disable();
     }
 
     @Override
