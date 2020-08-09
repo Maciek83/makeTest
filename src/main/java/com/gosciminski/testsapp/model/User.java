@@ -40,12 +40,11 @@ public class User extends BaseEntity {
     private String name;
     private Integer active;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinTable(name="user_role",
 	joinColumns = @JoinColumn(name="user_id"), 
 	inverseJoinColumns = @JoinColumn(name="role_id"))
     @JsonManagedReference
-    @JsonIgnore
     private Set<Role> roles = new HashSet<>();
     
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")

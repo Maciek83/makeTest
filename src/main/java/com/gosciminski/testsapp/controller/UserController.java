@@ -24,7 +24,7 @@ public class UserController {
 	}
 
     @CrossOrigin
-	@GetMapping(value = "/login")
+	@GetMapping(value = "/user")
 	public Principal user(Principal user) {
 		return user;
     }

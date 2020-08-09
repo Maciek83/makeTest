@@ -3695,7 +3695,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"](credentials ? {
             authorization: 'Basic ' + btoa(credentials.username + ':' + credentials.password)
           } : {});
-          this.http.get('api/login', {
+          this.http.get('api/user', {
             headers: headers
           }).subscribe(function (response) {
             if (response['name']) {

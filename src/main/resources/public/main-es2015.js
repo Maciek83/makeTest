@@ -1823,7 +1823,7 @@ class AuthService {
         const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"](credentials ? {
             authorization: 'Basic ' + btoa(credentials.username + ':' + credentials.password)
         } : {});
-        this.http.get('api/login', { headers: headers }).subscribe(response => {
+        this.http.get('api/user', { headers: headers }).subscribe(response => {
             if (response['name']) {
                 this.authenticated = true;
             }
