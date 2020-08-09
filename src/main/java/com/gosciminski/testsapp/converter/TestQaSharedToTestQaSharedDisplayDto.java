@@ -15,7 +15,7 @@ public class TestQaSharedToTestQaSharedDisplayDto implements Converter<TestQaSha
 	public TestQaSharedDisplayDto convert(TestQaShared source) {
         TestQaSharedDisplayDto result = new TestQaSharedDisplayDto();
 		result.setName(source.getTest().getName());
-        result.setShareUrl(appUrl + "/testsolve/"+ source.getId() +"?secret=" + source.getSecret() + "&id=" + source.getId());
+        result.setShareUrl(appUrl + "/#/testsolve/"+ source.getId() +"?secret=" + source.getSecret() + "&id=" + source.getId());
 		return result;
     }
 

@@ -23,6 +23,7 @@ import { RegisterComponent } from './register/register.component';
 import { TestqashareComponent } from './testsqa/testqashare/testqashare.component';
 import { TestqadisplaytosolveComponent } from './testsqa/testqadisplaytosolve/testqadisplaytosolve.component';
 import { TestshareformComponent } from './testsqa/testshareform/testshareform.component';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 
 @NgModule({
@@ -57,7 +58,9 @@ import { TestshareformComponent } from './testsqa/testshareform/testshareform.co
     provide: HTTP_INTERCEPTORS,
     useClass: HttpInterceptorClass,
     multi: true
-  }],
+  },
+  {provide: LocationStrategy, useClass: HashLocationStrategy}
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
