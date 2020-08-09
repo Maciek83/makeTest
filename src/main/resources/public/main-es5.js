@@ -676,6 +676,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     var _testsqa_testshareform_testshareform_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(
     /*! ./testsqa/testshareform/testshareform.component */
     "./src/app/testsqa/testshareform/testshareform.component.ts");
+    /* harmony import */
+
+
+    var _angular_common__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(
+    /*! @angular/common */
+    "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
 
     var AppModule = function AppModule() {
       _classCallCheck(this, AppModule);
@@ -693,6 +699,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_9__["HTTP_INTERCEPTORS"],
         useClass: _interceptor_http_interceptor__WEBPACK_IMPORTED_MODULE_14__["HttpInterceptorClass"],
         multi: true
+      }, {
+        provide: _angular_common__WEBPACK_IMPORTED_MODULE_24__["LocationStrategy"],
+        useClass: _angular_common__WEBPACK_IMPORTED_MODULE_24__["HashLocationStrategy"]
       }],
       imports: [[_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_12__["FormsModule"], _angular_forms__WEBPACK_IMPORTED_MODULE_12__["ReactiveFormsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_9__["HttpClientModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_3__["BrowserAnimationsModule"], _app_materia_module__WEBPACK_IMPORTED_MODULE_6__["AppMateriaModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_5__["AppRoutingModule"]]]
     });
@@ -716,6 +725,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_9__["HTTP_INTERCEPTORS"],
             useClass: _interceptor_http_interceptor__WEBPACK_IMPORTED_MODULE_14__["HttpInterceptorClass"],
             multi: true
+          }, {
+            provide: _angular_common__WEBPACK_IMPORTED_MODULE_24__["LocationStrategy"],
+            useClass: _angular_common__WEBPACK_IMPORTED_MODULE_24__["HashLocationStrategy"]
           }],
           bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]]
         }]
